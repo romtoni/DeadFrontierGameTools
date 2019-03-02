@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script type="text/javascript" src="menu_tools.js"></script>
+<script type="text/javascript" src="main_program_travelling_time.js"></script>
+<script type="text/javascript" src="db_travelling_time.js"></script>
+
+<link rel="stylesheet" href="style.css">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>DF - Estimate Travelling Time</title>
+</head>
+
+<body class="settings">
+<fieldset>
+
+<form id="myform" name="myform">
+<table width="100%" border="0">
+<tr>
+<td bgcolor="#333333">
+		<font color="#FFFFFF"><h1 align="center" >DEAD FRONTIER - ESTIMATE TRAVELLING TIME TOOL</h1></font>
+    </td>
+    </tr>
+</table>
+<table width="100%" border="0">
+  <tr>
+    <td colspan="5"><hr /></td>
+  </tr>
+  <tr>
+    <td width="15%">Routes</td>
+    <td width="55%"><select name="route" id="route" onchange="check_route(this.value)">
+    <option value="">--Select--</option>
+    <option value="nh_to_ds">Natsya Holdout to Dogg's Stockade</option>
+    <option value="nh_to_p13">Natsya Holdout to Precint-13</option>
+    <option value="nh_to_fp">Natsya Holdout to Fort Pastor</option>
+    <option value="nh_to_sb">Natsya Holdout to Secronom Bunker</option>
+    <option value="ds_to_nh">Dogg's Stockade to Natsya Holdout</option>
+    <option value="ds_to_p13">Dogg's Stockade to Precint-13</option>
+    <option value="ds_to_fp">Dogg's Stockade to Fort Pastor</option>
+    <option value="ds_to_sb">Dogg's Stockade to Secronom Bunker</option>
+    <option value="p13_to_nh">Precint-13 to Natsya Holdout</option>
+    <option value="p13_to_ds">Precint-13 to Dogg's Stockade</option>
+    <option value="p13_to_fp">Precint-13 to Fort Pastor</option>
+    <option value="p13_to_sb">Precint-13 to Secronom Bunker</option>
+    <option value="fp_to_nh">Fort Pastor to Natsya Holdout</option>
+    <option value="fp_to_ds">Fort Pastor to Dogg's Stockade</option>
+    <option value="fp_to_p13">Fort Pastor to Precint-13</option>
+    <option value="fp_to_sb">Fort Pastor to Secronom Bunker</option>
+    <option value="sb_to_nh">Secronom Bunker to Natsya Holdout</option>
+    <option value="sb_to_ds">Secronom Bunker to Dogg's Stockade</option>
+    <option value="sb_to_p13">Secronom Bunker to Precint-13</option>
+    <option value="sb_to_fp">Secronom Bunker to Fort Pastor</option>
+    <option value="others">Other Routes</option>
+    </select></td>
+    <td width="30%" align="right">Other Tools
+          <select name="list_tools" id="list_tools" onchange="check_tools(this.value)" class="changeable">
+          			<option value="estimate_grinding_tool"x>Estimate Grinding Performance Tools</option>
+          			<option value="estimate_dying_tool">Estimate Dying Tools</option>
+          			<option value="estimate_travelling_time" selected="selected" >Estimate Travelling Time</option>
+          			<option value="stat_calculator" >Stat Calculator</option>
+          			<option value="loot_simulator" >Loot Simulator</option>
+          </select>          </td>
+  </tr>
+  <tr>
+    <td>Total Blocks</td>
+    <td><input type='text' id='total_blocks' name="total_blocks" value="0"  readonly="readonly"  size="3" class="inputnumber"/></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Endurance Points</td>
+    <td><input type='text' id='endurance' name="endurance" value="25"  size="3" class="inputnumber_editable" onchange="check_endurance(this.value)"/></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Agility Points</td>
+    <td><input type='text' id='agility' name="agility" value="25"  size="3" class="inputnumber_editable" onchange="check_agility(this.value)"/></td>
+    <td>&nbsp;</td>
+  </tr>
+  
+  <tr>
+    <td colspan="3"><table width="100%" border="0">
+      <td width="15%">Character Level</td>
+          <td width="31%"> 
+            <input name="level" id="level" size="3" value="0" onchange="check_level(this.value)" type="text" class='inputnumber_editable'/></td>
+          <td width="24%"><input name="implant_maxslot" id="implant_maxslot" size="3" value="0" disabled="disabled" readonly="readonly" type="text"class='inputnumber' />
+            Max Implant Slot</td>
+          <td width="30%"><input name="implant_remainingslot" id="implant_remainingslot" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
+            Remaining Implant Slot</td>
+          </tr>
+        <tr class="">
+          <td>Implant</td>
+          <td>
+             <input name="rage_implant" id="rage_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Rage Implant </td>
+          <td><input name="rage_implant_slot" id="rage_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'rage_implant', this.value);" type="text" class='inputnumber_editable'/>
+            Slot(s)</td>
+          <td>&nbsp;</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="experience_implant" id="experience_implant" onclick="check_implant(this.id)" type="checkbox" class='inputnumber'/>
+            Experience Implant </td>
+          <td><input name="experience_implant_slot" id="experience_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'experience_implant', this.value);" type="text" class='inputnumber_editable'/>
+            Slot(s)</td>
+          <td>&nbsp;</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="agility_implant" id="agility_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Agility Implant </td>
+          <td><input name="agility_implant_slot" id="agility_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'agility_implant', this.value);" type="text"class='inputnumber_editable' />
+            Slot(s)</td>
+          <td><input name="bonus_speed_agility_implant" id="bonus_speed_agility_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
+% Bonus Speed Implant</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="survival_implant" id="survival_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Survival Implant </td>
+          <td><input name="survival_implant_slot" id="survival_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'survival_implant', this.value);" type="text"class='inputnumber_editable' />
+            Slot(s)</td>
+          <td>&nbsp;</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="notoriety_implant" id="notoriety_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Notoriety Implant </td>
+          <td><input name="notoriety_implant_slot" id="notoriety_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'notoriety_implant', this.value);" type="text" class='inputnumber_editable'/>
+            Slot(s)</td>
+          <td>&nbsp;</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="hunter_implant" id="hunter_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Hunter Implant </td>
+          <td><input name="hunter_implant_slot" id="hunter_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'hunter_implant', this.value);" type="text" class='inputnumber_editable'/>
+            Slot(s)</td>
+          <td>&nbsp;</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="scavenger_implant" id="scavenger_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Scavenger Implant </td>
+          <td><input name="scavenger_implant_slot" id="scavenger_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'scavenger_implant', this.value);" type="text" class='inputnumber_editable'/>
+            Slot(s)</td>
+          <td>&nbsp;</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="ingenuity_implant" id="ingenuity_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Ingenuity Implant </td>
+          <td><input name="ingenuity_implant_slot" id="ingenuity_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'ingenuity_implant', this.value);" type="text" class='inputnumber_editable'/>
+            Slot(s)</td>
+          <td>&nbsp;</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="wealth_implant" id="wealth_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Wealth Implant </td>
+          <td><input name="wealth_implant_slot" id="wealth_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'wealth_implant', this.value);" type="text" class='inputnumber_editable'/>
+            Slot(s)</td>
+          <td>&nbsp;</td>
+          </tr>
+        <tr class="">
+          <td>Elite Implant</td>
+          <td>
+            <input name="violence_implant" id="violence_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Violence Implant </td>
+          <td><input name="violence_implant_slot" id="violence_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'violence_implant', this.value);" type="text" class='inputnumber_editable'/>
+            Slot(s)</td>
+          <td>&nbsp;</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="perception_implant" id="perception_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Perception Implant </td>
+          <td><input name="perception_implant_slot" id="perception_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'perception_implant', this.value);" type="text" class='inputnumber_editable'/>
+            Slot(s)</td>
+          <td>&nbsp;</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="hyper_implant" id="hyper_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Hyper Implant </td>
+          <td><input name="hyper_implant_slot" id="hyper_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'hyper_implant', this.value);" type="text" class='inputnumber_editable'/>
+            Slot(s)</td>
+          <td><input name="bonus_speed_hyper_implant" id="bonus_speed_hyper_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
+% Bonus Speed Implant</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="ironskin_implant" id="ironskin_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Ironskin Implant</td>
+          <td><input name="ironskin_implant_slot" id="ironskin_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'ironskin_implant', this.value);" type="text" class='inputnumber_editable'/>
+            Slot(s)</td>
+          <td>&nbsp;</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="salvage_implant" id="salvage_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Salvage Implant</td>
+          <td><input name="salvage_implant_slot" id="salvage_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'salvage_implant', this.value);" type="text" class='inputnumber_editable'/>
+            Slot(s)</td>
+          <td>&nbsp;</td>
+          </tr>
+        <tr class="">
+          <td>Unique Implant</td>
+          <td>
+            <input name="motl_implant" id="motl_implant" onclick="check_implant(this.id)" type="checkbox"/>
+            MoTL Implant </td>
+          <td><select name="motl_implant_slot" id="motl_implant_slot" onchange="count_slot(implant_maxslot.value, 'motl_implant', this.value);" disabled="disabled"class='inputnumber_editable'>
+              <option value="0" selected="selected">0</option>
+              <option value="1">1</option>
+            </select>
+            Slot </td>
+          <td><input name="bonus_speed_motl_implant" id="bonus_speed_motl_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
+% Bonus Speed Implant</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="destruction_implant" id="destruction_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Destruction Implant </td>
+          <td><select name="destruction_implant_slot" id="destruction_implant_slot" onchange="count_slot(implant_maxslot.value, 'destruction_implant', this.value);" disabled="disabled"class='inputnumber_editable'>
+              <option value="0" selected="selected">0</option>
+              <option value="1">1</option>
+            </select>
+            Slot</td>
+          <td>&nbsp;</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="genius_implant" id="genius_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Genius Implant </td>
+          <td><select name="genius_implant_slot" id="genius_implant_slot" onchange="count_slot(implant_maxslot.value, 'genius_implant', this.value);" disabled="disabled"class='inputnumber_editable'>
+              <option value="0" selected="selected">0</option>
+              <option value="1">1</option>
+            </select>
+            Slot</td>
+          <td>&nbsp;</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="haste_implant" id="haste_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Haste Implant</td>
+          <td><select name="haste_implant_slot" id="haste_implant_slot" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'haste_implant', this.value);"class='inputnumber_editable'>
+              <option value="0" selected="selected">0</option>
+              <option value="1">1</option>
+            </select>
+            Slot</td>
+          <td><input name="bonus_speed_haste_implant" id="bonus_speed_haste_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
+% Bonus Speed Implant</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td>
+            <input name="looter_implant" id="looter_implant" onclick="check_implant(this.id)" type="checkbox" />
+            Looter Implant</td>
+          <td><select name="looter_implant_slot" id="looter_implant_slot" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'looter_implant', this.value);"class='inputnumber_editable'>
+              <option value="0" selected="selected">0</option>
+              <option value="1">1</option>
+            </select>
+            Slot</td>
+          <td>&nbsp;</td>
+          </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td><input name="jackofall_implant" id="jackofall_implant" onclick="check_implant(this.id)" type="checkbox"/>
+            Jack of All Implant </td>
+          <td><select name="jackofall_implant_slot" id="jackofall_implant_slot" onchange="count_slot(implant_maxslot.value, 'jackofall_implant', this.value);" disabled="disabled"class='inputnumber_editable'>
+              <option value="0" selected="selected">0</option>
+              <option value="1">1</option>
+            </select>
+            Slot </td>
+          <td><input name="bonus_speed_jackofall_implant" id="bonus_speed_jackofall_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
+% Bonus Speed Implant</td>
+        </tr>
+        <tr class="">
+          <td>General Boost</td>
+          <td><input name="damage_boost" id="damage_boost" onclick="check_boost(this.id)" type="checkbox" />
+            Damage Boost</td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td><input name="exp_boost" id="exp_boost" onclick="check_boost(this.id)" type="checkbox" />
+            Exp Boost</td>
+          <td colspan="2">&nbsp;</td>
+    </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td><input name="speed_boost" id="speed_boost" onclick="check_boost(this.id)" type="checkbox" />
+            Speed Boost</td>
+          <td colspan="2"><input name="bonus_speed_boost" id="bonus_speed_boost" size="3" value="0" readonly="readonly"  type="text" class='inputnumber'/>
+% Bonus Speed Boost</td>
+    </tr>
+        
+        <tr class="">
+          <td>Clan Boost</td>
+          <td><input name="clan_damage_boost" id="clan_damage_boost" onclick="check_boost(this.id)" type="checkbox" />
+            Clan Damage Boost</td>
+          <td colspan="2">&nbsp;</td>
+    </tr>
+        <tr class="">
+          <td>&nbsp;</td>
+          <td><input name="clan_exp_boost" id="clan_exp_boost" onclick="check_boost(this.id)" type="checkbox" />
+            Clan Exp Boost</td>
+          <td colspan="2">&nbsp;</td>
+        <tr class="">
+          <td>Weekend Event Speed</td>
+          <td><select name="weekend_event_speed" id="weekend_event_speed" onchange="check_weekend_event_speed(this.value)">
+              <option value="" selected="selected">--Select--</option>
+              <option value="Y">Yes</option>
+              <option value="N">No</option>
+          </select></td>
+          <td colspan="2"><input name="bonus_weekend_event_speed" id="bonus_weekend_event_speed" size="3" value="0" disabled="disabled" type="text"class='inputnumber_editable' />
+            % Bonus Speed Event</td>
+        </tr>
+    </table></td>
+    </tr>
+  <tr>
+    <td colspan="3"><hr /></td>
+    </tr>
+  <tr>
+    <td>Modified Agility Points</td>
+    <td><input type='text' id='modified_agility' name="modified_agility" value="25" readonly="readonly" size="3" class="inputnumber"/></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Walk Speed</td>
+    <td><input type="text" name="walkspeed" id="walkspeed" value="0" readonly="readonly" class="inputnumber" size="10"/> m/s</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Run Speed</td>
+    <td><input type="text" name="runspeed" id="runspeed" value="0" readonly="readonly" class="inputnumber" size="10"/> m/s</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Speed Duration</td>
+    <td><input type="text" name="speed_duration" id="speed_duration" value="0" readonly="readonly" class="inputnumber" size="3"/> seconds</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Time Used</td>
+    <td><input type='text' id='default_time_used_per_block' name="default_time_used_per_block" value="0" readonly="readonly"  size="3" class="inputnumber"/> seconds<strong> (In-Out Running Straight per Block)</strong></td>
+    <td>
+    <input type='hidden' id='multiplier' name="multiplier" value="0" readonly="readonly"  size="3" class="inputnumber"/>
+    <input type='hidden' id='time_used_per_agility' name="time_used_per_agility" value="0" readonly="readonly"  size="3" class="inputnumber"/>
+    <input type='hidden' id='energy_used_per_agility' name="energy_used_per_agility" value="0" readonly="readonly"  size="3" class="inputnumber"/>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3"><hr /></td>
+    </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+    <input type="button" name="btnprocess" id="btnprocess" value="Process" onclick="process_travelling_time()"/>
+    <input type="reset" name="btnreset" id="btnreset" value="Reset" />
+    <input type="button" name="btndownload" id="btndownload" value="Download Excel Formula" onclick="download_excel_travelling_time_formula()"/>    </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="3"><hr /></td>
+    </tr>
+  <tr>
+    <td colspan="3"><table width="100%" border="0">
+      <tr>
+        <td colspan="2" align="" bgcolor="#333333"><font color="#FFFFFF"><strong>Estimated Travelling Time</strong></font></td>
+      </tr>
+      <tr>
+        <td width="15%">Travelling Formula</td>
+        <td width="85%">Total Running Time + Total Energy Recovery Time = Total Rough Time Used</td>
+      </tr>
+      <tr>
+        <td>Result</td>
+        <td><label id="lbl_estimated_travelling_time"> 0 Minutes</label>        </td>
+      </tr>
+      
+    </table></td>
+    </tr>
+     <tr>
+    <td colspan="6">  <hr>  </td>
+  </tr>
+  <tr>
+    <td colspan="6" bgcolor="#333333"><font color="#FFFFFF">
+    <h2 align="center">Best View With Mozilla Firefox and Google Chrome at 1366 x 768 pixels</h2>
+    </font></td>
+  </tr>
+  <tr>
+<td colspan="6" align="right">    <font align="right" color="white">Made by Hurricanos @ 2017</font></td>
+</tr>
+<tr>
+                  <td colspan="8" align="center">
+                  <!--<audio autoplay loop>
+                      <source src="df_night_three.m4a" type="audio/ogg">
+                    </audio>-->
+                  </td>
+              </tr>
+</table>
+</form>
+</fieldset>
+</body>
+</html>

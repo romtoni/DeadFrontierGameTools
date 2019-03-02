@@ -1,0 +1,445 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<script type="text/javascript" src="menu_tools.js"></script>
+<script type="text/javascript" src="main_program_dye_enhance_junkies.js"></script>
+<script type="text/javascript" src="db_dye_enhance_items.js"></script>
+
+<link rel="stylesheet" href="style.css">
+       
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>DF - Dye and Enhance Junkies</title>
+</head>
+
+<body class="settings" onload="display()">
+<form name="myform" id="myform">
+<table border="1" width="50%" align="center">
+<tr>
+<td>
+<table width="100%" border="0" align="center">
+<tr>
+<td bgcolor="#333333">
+		<font color="#FFFFFF"><h1 align="center" >DEAD FRONTIER - DYE AND ENHANCE JUNKIES</h1></font>
+    </td>
+    </tr>
+  </table>  
+  <table width="100%" border="0" align="center">
+    <tr>
+      <td colspan="4"><table width="100%" border="0">
+        <tr class="td">
+          <td width="24%">Mode Choices</td>
+          <td width="33%">  
+            <select name="mode_choices" id="mode_choices" onchange="check_mode_choices(this.value)">
+              <option value="enhance" selected="selected">Enhance</option>
+              <option value="dye">Dye</option>
+          </select></td>
+          <td width="43%"  align="right">Other Tools
+          <select name="list_tools" id="list_tools" onchange="check_tools(this.value)" class="changeable">
+          			<option value="estimate_grinding_tool">Estimate Grinding Performance Tools</option>
+          			<option value="estimate_dying_tool">Estimate Dying Tools</option>
+          			<option value="estimate_travelling_time" >Estimate Travelling Time</option>
+          			<option value="stat_calculator" >Stat Calculator</option>
+          			<option value="loot_simulator" >Loot Simulator</option>
+          			<option value="dye_enhance_junkies" selected="selected" >Dye and Enhance Junkies</option>
+          </select>          </td>
+        </tr>
+      </table></td>
+      </tr>
+    <tr>
+      <td width="24%">Bsnk</td>
+      <td width="76%"><input type="text" name="bank" id="bank" value="999999999999" class="inputnumber_editable"/> Dollars</td>
+    </tr>
+    <tr>
+      <td colspan="4"><hr  /></td>
+    </tr>
+    <tr>
+      <td colspan="4"><table width="100%" border="0" id="table_enhance" >
+        
+    <tr>
+      <td width="29%">Item Choices</td>
+      <td width="71%">
+      <select name="item_choices" id="item_choices" onchange="get_enhance_cost(this.value)">
+      			<option value="" selected="selected">--Select--</option>
+              	<option value="firepoker">(Weapon)  Melee - Fire Poker</option>
+                <option value="baseballbat">(Weapon)  Melee - Baseball Bat</option>
+                <option value="penknife">(Weapon)  Melee - Pen Knife</option>
+                <option value="huntingknife">(Weapon)  Melee - Hunting Knife</option>
+                <option value="chefknife">(Weapon)  Melee - Chef Knife</option>
+                <option value="cricketbat">(Weapon)  Melee - Cricket Bat</option>
+                <option value="golfclub">(Weapon)  Melee - Golf Club</option>
+                <option value="fireaxe">(Weapon)  Melee - Fire Axe</option>
+                <option value="combatknife">(Weapon)  Melee - Combat Knife</option>
+                <option value="bowieknife">(Weapon)  Melee - Bowie Knife</option>
+                <option value="ironpipe">(Weapon)  Melee - Iron Pipe</option>
+                <option value="nailbat">(Weapon)  Melee - Nail Bat</option>
+                <option value="razor">(Weapon)  Melee - Razor</option>
+                <option value="crowbar">(Weapon)  Melee - Crowbar</option>
+                <option value="scalpel">(Weapon)  Melee - Scalpel</option>
+                <option value="kris">(Weapon)  Melee - Kris</option>
+                <option value="shovel">(Weapon)  Melee - Shovel</option>
+                <option value="trenchknife">(Weapon)  Melee - Trench Knife</option>
+                <option value="woodaxe">(Weapon)  Melee - Wood Axe</option>
+                <option value="machete">(Weapon)  Melee - Machete</option>
+                <option value="kukri">(Weapon)  Melee - Kukri</option>
+                <option value="sabre">(Weapon)  Melee - Sabre</option>
+                <option value="sledgehammer">(Weapon)  Melee - Sledge Hammer</option>
+                <option value="battleaxe">(Weapon)  Melee - Battle Axe</option>
+                <option value="katana">(Weapon)  Melee - Katana</option>
+                <option value="wakizashi">(Weapon)  Melee - Wakizashi</option>
+                <option value="nodachi">(Weapon)  Melee - Nodachi</option>
+                <option value="spiker">(Weapon)  Melee - Spiker</option>
+                <option value="dualblade">(Weapon)  Melee - Dual Blade</option>
+                <option value="sharktail">(Weapon)  Melee (Limited Edition) - Sharktail</option>
+                <option value="gutsplitter">(Weapon)  Melee (Limited Edition) - Gut Splitter</option>
+                <option value="dilmarps">(Weapon)  Chainsaw - Dilmar PS</option>
+                <option value="ronanpro">(Weapon)  Chainsaw - Ronan Pro</option>
+                <option value="steelms800">(Weapon)  Chainsaw - Steel MS800</option>
+                <option value="grinder">(Weapon)  Chainsaw - Grinder</option>
+                <option value="steel090">(Weapon)  Chainsaw - Steel 090</option>
+                <option value="ripsawg12">(Weapon)  Chainsaw - Ripsaw G12</option>
+                <option value="goretooth44g">(Weapon)  Chainsaw - Goretooth 44G</option>
+                <option value="buzzbladern8">(Weapon)  Chainsaw (Limited Edition) - Buzzblade RN8</option>
+                <option value="grinderx3">(Weapon)  Chainsaw (Limited Edition) - Grinder X3</option>
+                <option value="betatomcat">(Weapon)  Pistol - Beta Tomcat</option>
+                <option value="williamsppk">(Weapon)  Pistol - Williams PPK</option>
+                <option value="gerringhp">(Weapon)  Pistol - Gering HP</option>
+                <option value="fiftyseven">(Weapon)  Pistol - Fifty Seven</option>
+                <option value="lock19">(Weapon)  Pistol - Lock 19</option>
+                <option value="koltpython">(Weapon)  Pistol - Kolt Python</option>
+                <option value="beta8000">(Weapon)  Pistol - Beta 8000</option>
+                <option value="ck75">(Weapon)  Pistol - CK 75</option>
+                <option value="luger">(Weapon)  Pistol - Luger</option>
+                <option value="lock17">(Weapon)  Pistol - Lock 17</option>
+                <option value="lock25">(Weapon)  Pistol - Lock 25</option>
+                <option value="webster1942">(Weapon)  Pistol - Webster 1942</option>
+                <option value="ck99">(Weapon)  Pistol - CK 99</option>
+                <option value="sicapollo">(Weapon)  Pistol - SIC Apollo</option>
+                <option value="usp">(Weapon)  Pistol - USP</option>
+                <option value="koltanaconda">(Weapon)  Pistol - Kolt Anaconda</option>
+                <option value="ck97b">(Weapon)  Pistol - CK97B</option>
+                <option value="desertfox">(Weapon)  Pistol - Desert Fox</option>
+                <option value="sw500">(Weapon)  Pistol - SW 500</option>
+                <option value="alphabull">(Weapon)  Pistol - Alpha Bull</option>
+                <option value="475magnum">(Weapon)  Pistol - 475 Magnum</option>
+                <option value="greyhawk55">(Weapon)  Pistol - Greyhawk</option>
+                <option value="doubleshotaax">(Weapon)  Pistol - Doubleshot AAX</option>
+                <option value="vlockxd11">(Weapon)  Pistol (Limited Edition) - Vlock XD11</option>
+                <option value="desertrat">(Weapon)  Pistol (Limited Edition) - Desert Rat</option>
+                <option value="betarx4">(Weapon)  Rifle - Beta RX4</option>
+                <option value="mini41">(Weapon)  Rifle - Mini-41</option>
+                <option value="sl8">(Weapon)  Rifle - SL8</option>
+                <option value="m24">(Weapon)  Rifle - M24</option>
+                <option value="m1garand">(Weapon)  Rifle - M1 Garand</option>
+                <option value="chesterfield">(Weapon)  Rifle - Chesterfield</option>
+                <option value="m21">(Weapon)  Rifle - M21</option>
+                <option value="glacialwarfare">(Weapon)  Rifle - Glacial Warfare</option>
+                <option value="msg9">(Weapon)  Rifle - MSG-9</option>
+                <option value="sic550">(Weapon)  Rifle - SIC 550</option>
+                <option value="hawkop96">(Weapon)  Rifle - Hawk OP96</option>
+                <option value="m82a2">(Weapon)  Rifle - M82A2</option>
+                <option value="dragonsvd">(Weapon)  Rifle - Dragon SVD</option>
+                <option value="vssvintorez">(Weapon)  Rifle - VSS Vintorez</option>
+                <option value="577rex">(Weapon)  Rifle - 577 Rex</option>
+                <option value="ironsight33f">(Weapon)  Rifle - Ironsight</option>
+                <option value="worgcarbine">(Weapon)  Rifle - Worg Carbine</option>
+                <option value="marksmang8">(Weapon)  Rifle (Limited Edition) - Marksman G8</option>
+                <option value="longshotpp10">(Weapon)  Rifle (Limited Edition) - Longshot PP10</option>
+                <option value="mancinim1">(Weapon)  Shotgun - Mancini M1</option>
+                <option value="highlander">(Weapon)  Shotgun - Highlander</option>
+                <option value="washington870">(Weapon)  Shotgun - Washington 870</option>
+                <option value="sega20">(Weapon)  Shotgun - Sega-20</option>
+                <option value="chester1300">(Weapon)  Shotgun - Chester 1300</option>
+                <option value="washington1100">(Weapon)  Shotgun - Washington 1100</option>
+                <option value="wall500">(Weapon)  Shotgun - WALL 500</option>
+                <option value="spsa12">(Weapon)  Shotgun - SPSA 12</option>
+                <option value="mannberg500">(Weapon)  Shotgun - Mannberg 500</option>
+                <option value="sweeper">(Weapon)  Shotgun - Sweeper</option>
+                <option value="usan12">(Weapon)  Shotgun - USAN-12</option>
+                <option value="aa12">(Weapon)  Shotgun - AA-12</option>
+                <option value="painshot10">(Weapon)  Shotgun - Painshot 10</option>
+                <option value="acebarrelgz3">(Weapon)  Shotgun - Ace Barrel GZ3</option>
+                <option value="biforcec7">(Weapon)  Shotgun (Limited Edition) - Biforce C7</option>
+                <option value="buckblast99a">(Weapon)  Shotgun (Limited Edition) - Buckblast 99A</option>
+                <option value="skorpion">(Weapon)  SMG - Skorpion</option>
+                <option value="uzi">(Weapon)  SMG - UZI</option>
+                <option value="fmp90">(Weapon)  SMG - FM P90</option>
+                <option value="mp5">(Weapon)  SMG - MP5</option>
+                <option value="pp90">(Weapon)  SMG - PP90</option>
+                <option value="grammm11">(Weapon)  SMG - Gramm M11</option>
+                <option value="ump">(Weapon)  SMG - UMP</option>
+                <option value="chicagotypewriter">(Weapon)  SMG - Chicago Typewriter</option>
+                <option value="k50m">(Weapon)  SMG - K-50M</option>
+                <option value="crissvictor">(Weapon)  SMG - Criss Vector</option>
+                <option value="uziel14mm">(Weapon)  SMG - Uziel 14MM</option>
+                <option value="streetdog99">(Weapon)  SMG - Street Dog 99</option>
+                <option value="handshocka8">(Weapon)  SMG (Limited Edition) - Handshock A8</option>
+                <option value="ninecutterx">(Weapon)  SMG (Limited Edition) - Nine Cutter-X</option>
+                <option value="m16">(Weapon)  Assault Rifle - M16</option>
+                <option value="fmfnc">(Weapon)  Assault Rifle - FM FNC</option>
+                <option value="sa80">(Weapon)  Assault Rifle - SA80</option>
+                <option value="mesaacr">(Weapon)  Assault Rifle - Mesa ACR</option>
+                <option value="stellaug">(Weapon)  Assault Rifle - Stell AUG</option>
+                <option value="xm8">(Weapon)  Assault Rifle - XM8</option>
+                <option value="fmfal">(Weapon)  Assault Rifle - FM FAL</option>
+                <option value="ak47">(Weapon)  Assault Rifle - AK 47</option>
+                <option value="m4">(Weapon)  Assault Rifle - M4</option>
+                <option value="hammerhead47">(Weapon)  Assault Rifle - Hammerhead47</option>
+                <option value="fmmitrail">(Weapon)  HMG - FM Mitrail</option>
+                <option value="fmmag">(Weapon)  HMG - FM MAG</option>
+                <option value="m60">(Weapon)  HMG - M60</option>
+                <option value="xlgunner8">(Weapon)  HMG (Limited Edition) - XLGunner-8</option>
+                <option value="vulcan">(Weapon)  Minigun - Vulcan</option>
+                <option value="scar9000">(Weapon)  Minigun - SCAR 9000</option>
+                <option value="gau19">(Weapon)  Minigun (Limited Edition) - GAU-19</option>
+                <option value="wraithcannon">(Weapon)  Minigun (Limited Edition) - Wraith Cannon</option>
+                <option value="m79">(Weapon)  Explosive - M79</option>
+                <option value="hk69">(Weapon)  Explosive - HK69</option>
+                <option value="gm94">(Weapon)  Explosive - GM94</option>
+                <option value="rg6">(Weapon)  Explosive - RG6</option>
+                <option value="falconmm1">(Weapon)  Explosive - Falcon-MM1</option>
+                <option value="xm25">(Weapon)  Explosive - XM25</option>
+                <option value="paw20">(Weapon)  Explosive - PAW-20</option>
+                <option value="immolatorad">(Weapon)  Explosive - Immolator AD</option>
+                <option value="junker6">(Weapon)  Explosive - Junker 6</option>
+                <option value="bishopce9">(Weapon)  Explosive - Bishop CE9</option>
+                <option value="boomerpx">(Weapon)  Explosive - Boomer PX</option>
+                <option value="titaniumblades">(Weapon)  Special Gear - Titanium Blades</option>
+                <option value="rebellion">(Weapon)  Special Gear - Rebellion</option>
+                <option value="xduskkris">(Weapon)  Special Gear - X-Dusk Kris</option>
+                <option value="xduskrazor">(Weapon)  Special Gear - X-Dusk Razor</option>
+                <option value="xdusksaw">(Weapon)  Special Gear - X-Dusk Saw</option>
+                <option value="xduskenforcer">(Weapon)  Special Gear - X-Dusk Enforcer</option>
+                <option value="xduskcarbine">(Weapon)  Special Gear - X-Dusk Carbine</option>
+                <option value="xduskstriker">(Weapon)  Special Gear - X-Dusk Striker</option>
+                <option value="xdusksmg">(Weapon)  Special Gear - X-Dusk SMG</option>
+                <option value="xduskmag">(Weapon)  Special Gear - X-Dusk MAG</option>
+                <option value="xdusklauncher">(Weapon)  Special Gear - X-Dusk Launcher</option>
+                <option value="duskkris">(Weapon)  Special Gear - Dusk Kris</option>
+                <option value="duskrazor">(Weapon)  Special Gear - Dusk Razor</option>
+                <option value="dusksaw">(Weapon)  Special Gear - Dusk Saw</option>
+                <option value="duskenforcer">(Weapon)  Special Gear - Dusk Enforcer</option>
+                <option value="duskcarbine">(Weapon)  Special Gear - Dusk Carbine</option>
+                <option value="duskstriker">(Weapon)  Special Gear - Dusk Striker</option>
+                <option value="dusksmg">(Weapon)  Special Gear - Dusk SMG</option>
+                <option value="duskmag">(Weapon)  Special Gear - Dusk MAG</option>
+                <option value="dusklauncher">(Weapon)  Special Gear - Dusk Launcher</option>
+                <option value="corpsecrusher">(Weapon)  Special Gear (Limited Edition) - Corpse Crusher</option>
+                <option value="corpsegrinder">(Weapon)  Special Gear (Limited Edition) - Corpse Grinder</option>
+                <option value="corpseshooter">(Weapon)  Special Gear (Limited Edition) - Corpse Shooter</option>
+                <option value="corpseblaster">(Weapon)  Special Gear (Limited Edition) - Corpse Blaster</option>
+                <option value="corpsepiercer">(Weapon)  Special Gear (Limited Edition) - Corpse Piercer</option>
+                <option value="corpsedestroyer">(Weapon)  Special Gear (Limited Edition) - Corpse Destroyer</option>
+                <option value="corpseerruptor">(Weapon)  Special Gear (Limited Edition) - Corpse Erruptor</option>
+                <option value="corpseripper">(Weapon)  Special Gear (Limited Edition) - Corpse Ripper</option>
+                <option value="sportsarmour">(Armor)  Non Strength - Sports Armour</option>
+                  <option value="zylonvest">(Armor)  Non Strength - Zylon Vest</option>
+                  <option value="kevlarvest">(Armor)  Non Strength - Kevlar Vest</option>
+                  <option value="meshslx">(Armor)  Non Strength - Mesh SLX</option>
+                  <option value="meshrx2">(Armor)  Non Strength - Mesh RX2</option>
+                  <option value="exterminatormesh">(Armor)  Non Strength - Exterminator Mesh</option>
+                  <option value="exterminatormeshgt">(Armor)  Non Strength - Exterminator Mesh GT</option>
+                  <option value="nomadmesh">(Armor)  Non Strength - Nomad Mesh</option>
+                  <option value="duskmesh">(Armor)  Non Strength - Dusk Mesh</option>
+                  <option value="scavengermesh">(Armor)  Non Strength - Scavenger Mesh</option>
+                  <option value="shinobumesh">(Armor)  Non Strength - Shinobu Mesh</option>
+                  <option value="xduskmesh">(Armor)  Non Strength - X-Dusk Mesh</option>
+                  <option value="hazardmesh">(Armor)  Non Strength - Hazard Mesh</option>
+                  <option value="flakjacket">(Armor)  Strength - Flak Jacket</option>
+                  <option value="sn42">(Armor)  Strength - SN-42</option>
+                  <option value="corpsecarapace">(Armor)  Strength - Corpse Carapace</option>
+                  <option value="reactiveslx">(Armor)  Strength - Reactive SLX</option>
+                  <option value="reactivext800">(Armor)  Strength - Reactive XT800</option>
+                  <option value="exterminatorreactive">(Armor)  Strength - Exterminator Reactive</option>
+                  <option value="exterminatorreactivext">(Armor)  Strength - Exterminator Reactive XT</option>
+                  <option value="bioreactive">(Armor)  Strength - Bio Reactive</option>
+                  <option value="duskreactive">(Armor)  Strength - Dusk Reactive</option>
+                  <option value="steelcasereactive">(Armor)  Strength - Steelcase Reactive</option>
+                  <option value="tatakaureactive">(Armor)  Strength - Tatakau Reactive</option>
+                  <option value="xduskreactive">(Armor)  Strength - X-Dusk Reactive</option>
+                  <option value="scarabreactive">(Armor)  Strength - Scarab Reactive</option>
+                  <option value="vengeanceguard">(Armor)  Strength - Vengeance Guard</option>
+                </select>      </td>
+    </tr>
+    <tr>
+      <td>Enhance Cost</td>
+      <td><input type="text" name="enhance_cost" id="enhance_cost" class="inputnumber" readonly="readonly" size="3" /> 
+        Dollars</td>
+    </tr>
+    <tr id="tr_weapon_enhance_target">
+      <td>Target Weapon Enhance</td>
+      <td><input type="text" name="weapon_item_target" id="weapon_item_target" readonly="readonly"  disabled="disabled"/> 
+        MC&nbsp; 
+          <input type="text" name="weapon_accuracy_mc" id="weapon_accuracy_mc" class="inputnumber" value="" size="2" maxlength="2" onchange="check_max_weapon_enhance(this.value, this.id);" disabled="disabled">
+         &nbsp;/&nbsp;
+          <input type="text" name="weapon_reloading_mc" id="weapon_reloading_mc" class="inputnumber"value="" size="2" maxlength="2" onchange="check_max_weapon_enhance(this.value, this.id);"  disabled="disabled">
+         &nbsp;/&nbsp;
+          <input type="text" name="weapon_criticalhit_mc" id="weapon_criticalhit_mc" class="inputnumber" value="" size="2" maxlength="2" onchange="check_max_weapon_enhance(this.value, this.id);"  disabled="disabled">        </td>
+    </tr>
+    <tr id="tr_armor_enhance_target">
+      <td>Target Armor Enhance</td>
+      <td><input type="text" name="armor_item_target" id="armor_item_target" readonly="readonly"  disabled="disabled"/> 
+        MC&nbsp; 
+         <input type="text" name="armor_agility_mc" id="armor_agility_mc" class="inputnumber" value="" size="2" maxlength="2" onchange="check_max_armor_enhance(this.value, this.id);"  disabled="disabled">
+          &nbsp;/&nbsp;
+          <input type="text" name="armor_endurance_mc" id="armor_endurance_mc" class="inputnumber" value="" size="2" maxlength="2" onchange="check_max_armor_enhance(this.value, this.id);"  disabled="disabled">        </td>
+    </tr>
+    
+    </table></td>
+      </tr>
+    <tr>
+      <td colspan="4"><table width="100%" border="0" id="table_dye">
+    <tr>
+      <td width="39%">Item Choices</td>
+      <td width="61%"><select name="item_choices_dye" id="item_choices_dye" onchange="get_dye_cost(this.value)">
+          	<option value="" selected="selected">--Select--</option>
+          	<option value="shirt">(Clothing) Shirt</option>
+            <option value="t-shirt">(Clothing) T-Shirt</option>
+            <option value="vest">(Clothing) Vest</option>
+            <option value="trousers">(Clothing) Trousers</option>
+            <option value="jeans">(Clothing) Jeans</option>
+            <option value="cargopants">(Clothing) Cargo Pants</option>
+            <option value="leatherpants">(Clothing) Leather Pants</option>
+            <option value="combats">(Clothing) Combats</option>
+            <option value="jacket">(Clothing) Jacket</option>
+            <option value="bomberjacket">(Clothing) Bomber Jacket</option>
+            <option value="furrcoat">(Clothing) Furr Coat</option>
+            <option value="leatherjacket">(Clothing) Leather Jacket</option>
+            <option value="wintercoat">(Clothing) Winter Coat</option>
+            <option value="motorcyclejacket">(Clothing) Motorcycle Jacket</option>
+            <option value="trenchcoat">(Clothing) Trench Coat</option>
+            <option value="cloak">(Clothing) Cloak</option>
+            <option value="bobblehat">(Headwear) Bobble Hat</option>
+            <option value="winterhat">(Headwear) Winter Hat</option>
+            <option value="militaryhelmet">(Headwear) Military Helmet</option>
+            <option value="beret">(Headwear) Beret</option>
+            <option value="tinhelmet">(Headwear) Tin Helmet</option>
+            <option value="crashhelmet">(Headwear) Crash Helmet</option>
+            <option value="bandana">(Headwear) Bandana</option>
+            <option value="cowboyhat">(Headwear) Cowboy Hat</option>
+            <option value="christmashat">(Headwear) Christmas Hat</option>
+            <option value="constructionhelmet">(Headwear) Construction Helmet</option>
+            <option value="firemanhelmet">(Headwear) Fireman Helmet</option>
+            <option value="flyingcap">(Headwear) Flying Cap</option>
+            <option value="hazmathelmet">(Headwear) Hazmat Helmet</option>
+            <option value="potatosack">(Headwear) Potato Sack</option>
+            <option value="riothelmet">(Headwear) Riot Helmet</option>
+            <option value="officercap">(Headwear) Officer Cap</option>
+            <option value="surgicalhat">(Headwear) Surgical Hat</option>
+            <option value="tophat">(Headwear) Top Hat</option>
+            <option value="turban">(Headwear) Turban</option>
+            <option value="biohelmet">(Mask) Bio Helmet</option>
+            <option value="steelcasehelmet">(Mask) Steelcase Helmet</option>
+            <option value="baseballhelmet">(Mask) Baseball Helmet</option>
+            <option value="clownmask">(Mask) Clown Mask</option>
+            <option value="eyepatch">(Mask) Eye Patch</option>
+            <option value="facebandana">(Mask) Face Bandana</option>
+            <option value="tacticalgoogles">(Mask) Tactical Googles</option>
+            <option value="gimpmask">(Mask) Gimp Mask</option>
+            <option value="rebreather">(Mask) Rebreather</option>
+            <option value="samuraimask">(Mask) Samurai Mask</option>
+            <option value="skimask">(Mask) Ski Mask</option>
+            <option value="sunglasses">(Mask) Sunglasses</option>
+            <option value="surgicalmask">(Mask) Surgical Mask</option>
+            <option value="scavengermask">(Mask) Scavenger Mask</option>
+            <option value="nomadhelmet">(Mask) Nomad Helmet</option>
+            <option value="vengeancemask">(Mask) Vengeance Mask</option>
+            <option value="shemagh">(Mask) Shemagh</option>
+            <option value="weldingmask">(Mask) Welding MASK</option>
+            <option value="anonymousmask">(Mask) Anonymous MASK</option>
+            <option value="exterminatorhelmet">(Mask) Exterminator Helmet</option>
+            <option value="hockeymask">(Mask) Hockey Mask</option>
+            <option value="insanitymask">(Mask) Insanity Mask</option>
+            <option value="gasmask">(Mask) Gas Mask</option>
+            <option value="duskhelmet">(Mask) Dusk Helmet</option>
+            <option value="x-duskhelmet">(Mask) X-dusk Helmet</option>
+            <option value="pumpkinhead">(Mask) Pumpkin Head</option>
+            <option value="corpsemask">(Mask) Corpse Mask</option>
+          <option value="sportsarmour">(Armor)  Non Strength - Sports Armour</option>
+          <option value="zylonvest">(Armor)  Non Strength - Zylon Vest</option>
+          <option value="kevlarvest">(Armor)  Non Strength - Kevlar Vest</option>
+          <option value="meshslx">(Armor)  Non Strength - Mesh SLX</option>
+          <option value="meshrx2">(Armor)  Non Strength - Mesh RX2</option>
+          <option value="exterminatormesh">(Armor)  Non Strength - Exterminator Mesh</option>
+          <option value="exterminatormeshgt">(Armor)  Non Strength - Exterminator Mesh GT</option>
+          <option value="nomadmesh">(Armor)  Non Strength - Nomad Mesh</option>
+          <option value="duskmesh">(Armor)  Non Strength - Dusk Mesh</option>
+          <option value="scavengermesh">(Armor)  Non Strength - Scavenger Mesh</option>
+          <option value="shinobumesh">(Armor)  Non Strength - Shinobu Mesh</option>
+          <option value="xduskmesh">(Armor)  Non Strength - X-Dusk Mesh</option>
+          <option value="hazardmesh">(Armor)  Non Strength - Hazard Mesh</option>
+          <option value="flakjacket">(Armor)  Strength - Flak Jacket</option>
+          <option value="sn42">(Armor)  Strength - SN-42</option>
+          <option value="corpsecarapace">(Armor)  Strength - Corpse Carapace</option>
+          <option value="reactiveslx">(Armor)  Strength - Reactive SLX</option>
+          <option value="reactivext800">(Armor)  Strength - Reactive XT800</option>
+          <option value="exterminatorreactive">(Armor)  Strength - Exterminator Reactive</option>
+          <option value="exterminatorreactivext">(Armor)  Strength - Exterminator Reactive XT</option>
+          <option value="bioreactive">(Armor)  Strength - Bio Reactive</option>
+          <option value="duskreactive">(Armor)  Strength - Dusk Reactive</option>
+          <option value="steelcasereactive">(Armor)  Strength - Steelcase Reactive</option>
+          <option value="tatakaureactive">(Armor)  Strength - Tatakau Reactive</option>
+          <option value="xduskreactive">(Armor)  Strength - X-Dusk Reactive</option>
+          <option value="scarabreactive">(Armor)  Strength - Scarab Reactive</option>
+          <option value="vengeanceguard">(Armor)  Strength - Vengeance Guard</option>
+        </select>      </td>
+    </tr>
+    <tr>
+      <td>Dye Cost</td>
+      <td><input type="text" name="dye_cost" id="dye_cost" class="inputnumber" readonly="readonly" />Dollars</td>
+    </tr>
+    <tr>
+      <td>Target Color</td>
+      <td>
+      <input type="text" name="item_target_dye" id="item_target_dye" readonly="readonly" />
+      <select name="item_color_available" id="item_color_available">
+          	<option value="" selected="selected">--Colors Available--</option>
+      </select>      </td>
+    </tr>
+      </table></td>
+      </tr>
+     
+    <tr>
+      <td colspan="2"><hr /></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><input name="btnprocess" id="btnprocess" value="Process" onclick="process_all()" type="button" />
+        <input name="btnreset" id="btnreset" value="Reset" type="reset" />
+        <input name="btndownload" id="btndownload" value="Download Excel Formula" onclick="download_excel_formula()" type="button" /></td>
+    </tr>
+    <tr>
+      <td colspan="2"><hr /></td>
+    </tr>
+    <tr>
+      <td colspan="2"><table width="100%" border="0">
+        <tr>
+          <td colspan="2" align="" bgcolor="#333333"><font color="#FFFFFF"><strong>Result Items That Enhanced or Dyed</strong></font></td>
+        </tr>
+        <tr>
+          <td width="24%">Enhance or Dye Formula</td>
+          <td width="76%">Random Chance per Item * Dye or Enhance Cost</td>
+        </tr>
+        <tr>
+          <td>Total Cost Used</td>
+          <td><input type="text" name="total_cost_used" id="total_cost_used" size="30" class="inputnumber"/> 
+            Dollars</td>
+        </tr>
+        <tr>
+          <td>Result</td>
+          <td>
+            <input type="text" name="result_item" id="result_item" readonly="readonly" size="30" />
+            <input type="text" name="result_item_accuracy" id="result_item_accuracy" readonly="readonly" size="3" value="0" />
+            <input type="text" name="result_item_criticalhit" id="result_item_criticalhit" readonly="readonly" size="3" value="0" />
+            <input type="text" name="result_item_reloading" id="result_item_reloading" readonly="readonly" size="3" value="0" />
+            <input type="text" name="result_item_agility" id="result_item_agility" readonly="readonly" size="3" value="0" />
+            <input type="text" name="result_item_endurance" id="result_item_endurance" readonly="readonly" size="3" value="0" />            </td>
+        </tr>
+      </table>      </td>
+    </tr>
+  </table>
+</td>
+</tr>
+</table>
+</form>
+
+
+</body></html>
