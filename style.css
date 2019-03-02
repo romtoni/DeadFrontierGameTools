@@ -1,39 +1,37 @@
 @charset "utf-8";
+
 /* CSS Document */
-.settings
-{ 
-	font-family:Helvetica, Arial;
-	font-size:12px;
-	color:#000000;
-	background-image:url(background-debut-webdesign-web-sujet-website.jpg);
-	background-repeat:no-repeat;
-	background-color:#ffffff;
+.settings {
+	font-family: Helvetica, Arial;
+	font-size: 12px;
+	color: #000000;
+	background-image: url(background-debut-webdesign-web-sujet-website.jpg);
+	background-repeat: no-repeat;
+	background-color: #ffffff;
 
 }
-.inputnumber
-{
-	text-align:right;
-}
-.inputnumber_editable
-{
-	text-align:right;
-	background-color:#CCFF66;
-}
-.title
-{
-	background-color:#333333;
-}
-.changeable
-{
-	background-color:#CCFF66;
-}
-.epic_loot_item
-{
-	background-color:#FFFF00;
-}
-.no_loot_item
-{
-	background-color:#CCCCCC;
+
+.inputnumber {
+	text-align: right;
 }
 
+.inputnumber_editable {
+	text-align: right;
+	background-color: #CCFF66;
+}
 
+.title {
+	background-color: #333333;
+}
+
+.changeable {
+	background-color: #CCFF66;
+}
+
+.epic_loot_item {
+	background-color: #FFFF00;
+}
+
+.no_loot_item {
+	background-color: #CCCCCC;
+}

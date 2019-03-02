@@ -1,947 +1,1113 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
-<script type="text/javascript" src="menu_tools.js"></script>
-<script type="text/javascript" src="main_program_dying_calculator.js"></script>
-<script type="text/javascript" src="db_weapon_stat.js"></script>
-<script type="text/javascript" src="db_zombie_stat.js"></script>
-<script type="text/javascript" src="db_armor_stat.js"></script>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-<link rel="stylesheet" href="style.css">
-       
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>DF - Dying Tools</title>
+<head>
+  <script type="text/javascript" src="menu_tools.js"></script>
+  <script type="text/javascript" src="main_program_dying_calculator.js"></script>
+  <script type="text/javascript" src="db_weapon_stat.js"></script>
+  <script type="text/javascript" src="db_zombie_stat.js"></script>
+  <script type="text/javascript" src="db_armor_stat.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>DF - Dying Tools</title>
 </head>
 
 <body onload="display_none_dying();" class="settings">
-<fieldset>
+  <fieldset>
 
-<form name="myform" id="myform">
-<table width="100%" border="0">
-<tr>
-<td bgcolor="#333333">
-		<font color="#FFFFFF"><h1 align="center" >DEAD FRONTIER - ESTIMATE DYING CALCULATOR TOOL</h1></font>
-    </td>
-    </tr>
-    </table>    
-<table class="" border="0" width="100%">
-  <tbody>
-   
-    <tr>
-      <td colspan="6"><table width="100%" border="0">
-        <tr class="">
-          <td width="10%">Choose Your Enemy</td>
-          <td width="45%"> 
-            <select name="dying_calculation_method" id="dying_calculation_method" onchange="check_dying_calculation_method(this.value)">
-              <option value="enemy_zombie" selected="selected">VS Zombie</option>
-              <option value="enemy_player">VS Player</option>
-            </select>            </td>
-          <td width="45%" align="right">Other Tools <select name="list_tools" id="list_tools" onchange="check_tools(this.value)" class="changeable">
-          			<option value="estimate_grinding_tool" >Estimate Grinding Performance Tools</option>
-          			<option value="estimate_dying_tool" selected="selected">Estimate Dying Tools</option>
-          			<option value="estimate_travelling_time">Estimate Travelling Time</option>
-          			<option value="stat_calculator" >Stat Calculator</option>
-          			<option value="loot_simulator" >Loot Simulator</option>
-          </select></td>
-        </tr>
-      </table></td>
-      </tr>
-    <tr >
-          <td colspan="6"><hr id="tr_hr_enemy_player"/></td>
-          </tr>
-   
-    <tr>
-      <td colspan="6"><table width="100%" border="0" id="table_enemy_player">
+    <form name="myform" id="myform">
+      <table width="100%" border="0">
         <tr>
-          <td class="">Enemy Character Level</td>
-          <td class=""><input name="enemy_player_level" id="enemy_player_level" size="3" value="0" onchange="check_character_level(this.value, 'enemy_player')" type="text" class='inputnumber_editable'/></td>
-          <td class=""><input name="enemy_player_implant_maxslot" id="enemy_player_implant_maxslot" size="3" value="0" disabled="disabled" readonly="readonly" type="text"class='inputnumber' />
-            Max Implant Slot</td>
-          <td class=""><input name="enemy_player_implant_remainingslot" id="enemy_player_implant_remainingslot" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-            Remaining Implant Slot</td>
+          <td bgcolor="#333333">
+            <font color="#FFFFFF">
+              <h1 align="center">DEAD FRONTIER - ESTIMATE DYING CALCULATOR TOOL</h1>
+            </font>
+          </td>
         </tr>
-        <tr>
-          <td width="12%" class="">Enemy Weapon</td>
-          <td width="31%" class=""><select name="enemy_player_weapon" id="enemy_player_weapon" onchange="get_weapon_stat(this.value, 'dph');">
-              <option value="" selected="selected">--Select--</option>
-              <option value="fist">Melee - Fist</option>
-              <option value="firepoker">Melee - Fire Poker</option>
-              <option value="baseballbat">Melee - Baseball Bat</option>
-              <option value="penknife">Melee - Pen Knife</option>
-              <option value="huntingknife">Melee - Hunting Knife</option>
-              <option value="chefknife">Melee - Chef Knife</option>
-              <option value="cricketbat">Melee - Cricket Bat</option>
-              <option value="golfclub">Melee - Golf Club</option>
-              <option value="fireaxe">Melee - Fire Axe</option>
-              <option value="combatknife">Melee - Combat Knife</option>
-              <option value="bowieknife">Melee - Bowie Knife</option>
-              <option value="ironpipe">Melee - Iron Pipe</option>
-              <option value="nailbat">Melee - Nail Bat</option>
-              <option value="razor">Melee - Razor</option>
-              <option value="crowbar">Melee - Crowbar</option>
-              <option value="scalpel">Melee - Scalpel</option>
-              <option value="kris">Melee - Kris</option>
-              <option value="shovel">Melee - Shovel</option>
-              <option value="trenchknife">Melee - Trench Knife</option>
-              <option value="woodaxe">Melee - Wood Axe</option>
-              <option value="machete">Melee - Machete</option>
-              <option value="kukri">Melee - Kukri</option>
-              <option value="sabre">Melee - Sabre</option>
-              <option value="sledgehammer">Melee - Sledge Hammer</option>
-              <option value="battleaxe">Melee - Battle Axe</option>
-              <option value="katana">Melee - Katana</option>
-              <option value="wakizashi">Melee - Wakizashi</option>
-              <option value="nodachi">Melee - Nodachi</option>
-              <option value="spiker">Melee - Spiker</option>
-              <option value="dualblade">Melee - Dual Blade</option>
-              <option value="sharktail">Melee (Limited Edition) - Sharktail</option>
-              <option value="gutsplitter">Melee (Limited Edition) - Gut Splitter</option>
-              <option value="dilmarps">Chainsaw - Dilmar PS</option>
-              <option value="ronanpro">Chainsaw - Ronan Pro</option>
-              <option value="steelms800">Chainsaw - Steel MS800</option>
-              <option value="grinder">Chainsaw - Grinder</option>
-              <option value="steel090">Chainsaw - Steel 090</option>
-              <option value="ripsawg12">Chainsaw - Ripsaw G12</option>
-              <option value="goretooth44g">Chainsaw - Goretooth 44G</option>
-              <option value="buzzbladern8">Chainsaw (Limited Edition) - Buzzblade RN8</option>
-              <option value="grinderx3">Chainsaw (Limited Edition) - Grinder X3</option>
-              <option value="betatomcat">Pistol - Beta Tomcat</option>
-              <option value="williamsppk">Pistol - Williams PPK</option>
-              <option value="gerringhp">Pistol - Gering HP</option>
-              <option value="fiftyseven">Pistol - Fifty Seven</option>
-              <option value="lock19">Pistol - Lock 19</option>
-              <option value="koltpython">Pistol - Kolt Python</option>
-              <option value="beta8000">Pistol - Beta 8000</option>
-              <option value="ck75">Pistol - CK 75</option>
-              <option value="luger">Pistol - Luger</option>
-              <option value="lock17">Pistol - Lock 17</option>
-              <option value="lock25">Pistol - Lock 25</option>
-              <option value="webster1942">Pistol - Webster 1942</option>
-              <option value="ck99">Pistol - CK 99</option>
-              <option value="sicapollo">Pistol - SIC Apollo</option>
-              <option value="usp">Pistol - USP</option>
-              <option value="koltanaconda">Pistol - Kolt Anaconda</option>
-              <option value="ck97b">Pistol - CK97B</option>
-              <option value="desertfox">Pistol - Desert Fox</option>
-              <option value="sw500">Pistol - SW 500</option>
-              <option value="alphabull">Pistol - Alpha Bull</option>
-              <option value="475magnum">Pistol - 475 Magnum</option>
-              <option value="greyhawk55">Pistol - Greyhawk</option>
-              <option value="doubleshot">Pistol - Doubleshot AAX</option>
-              <option value="vlockxd11">Pistol (Limited Edition) - Vlock XD11</option>
-              <option value="desertrat">Pistol (Limited Edition) - Desert Rat</option>
-              <option value="betarx4">Rifle - Beta RX4</option>
-              <option value="mini41">Rifle - Mini-41</option>
-              <option value="sl8">Rifle - SL8</option>
-              <option value="m24">Rifle - M24</option>
-              <option value="m1garand">Rifle - M1 Garand</option>
-              <option value="chesterfield">Rifle - Chesterfield</option>
-              <option value="m21">Rifle - M21</option>
-              <option value="glacialwarfare">Rifle - Glacial Warfare</option>
-              <option value="msg9">Rifle - MSG-9</option>
-              <option value="sic550">Rifle - SIC 550</option>
-              <option value="hawkop96">Rifle - Hawk OP96</option>
-              <option value="m82a2">Rifle - M82A2</option>
-              <option value="dragonsvd">Rifle - Dragon SVD</option>
-              <option value="vssvintorez">Rifle - VSS Vintorez</option>
-              <option value="577rex">Rifle - 577 Rex</option>
-              <option value="ironsight33f">Rifle - Ironsight</option>
-              <option value="worgcarbine">Rifle - Worg Carbine</option>
-              <option value="marksmang8">Rifle (Limited Edition) - Marksman G8</option>
-              <option value="longshotpp10">Rifle (Limited Edition) - Longshot PP10</option>
-              <option value="mancinim1">Shotgun - Mancini M1</option>
-              <option value="highlander">Shotgun - Highlander</option>
-              <option value="washington870">Shotgun - Washington 870</option>
-              <option value="sega20">Shotgun - Sega-20</option>
-              <option value="chester1300">Shotgun - Chester 1300</option>
-              <option value="washington1100">Shotgun - Washington 1100</option>
-              <option value="wall500">Shotgun - WALL 500</option>
-              <option value="spsa12">Shotgun - SPSA 12</option>
-              <option value="mannberg500">Shotgun - Mannberg 500</option>
-              <option value="sweeper">Shotgun - Sweeper</option>
-              <option value="usan12">Shotgun - USAN-12</option>
-              <option value="aa12">Shotgun - AA-12</option>
-              <option value="painshot10">Shotgun - Painshot 10</option>
-              <option value="acebarrelgz3">Shotgun - Ace Barrel GZ3</option>
-              <option value="biforcec7">Shotgun (Limited Edition) - Biforce C7</option>
-              <option value="buckblast99a">Shotgun (Limited Edition) - Buckblast 99A</option>
-              <option value="skorpion">SMG - Skorpion</option>
-              <option value="uzi">SMG - UZI</option>
-              <option value="fmp90">SMG - FM P90</option>
-              <option value="mp5">SMG - MP5</option>
-              <option value="pp90">SMG - PP90</option>
-              <option value="grammm11">SMG - Gramm M11</option>
-              <option value="ump">SMG - UMP</option>
-              <option value="chicagotypewriter">SMG - Chicago Typewriter</option>
-              <option value="k50m">SMG - K-50M</option>
-              <option value="crissvictor">SMG - Criss Vector</option>
-              <option value="uziel14mm">SMG - Uziel 14MM</option>
-              <option value="streetdog99">SMG - Street Dog 99</option>
-              <option value="handshocka8">SMG (Limited Edition) - Handshock A8</option>
-              <option value="ninecutterx">SMG (Limited Edition) - Nine Cutter-X</option>
-              <option value="m16">Assault Rifle - M16</option>
-              <option value="fmfnc">Assault Rifle - FM FNC</option>
-              <option value="sa80">Assault Rifle - SA80</option>
-              <option value="mesaacr">Assault Rifle - Mesa ACR</option>
-              <option value="stellaug">Assault Rifle - Stell AUG</option>
-              <option value="xm8">Assault Rifle - XM8</option>
-              <option value="fmfal">Assault Rifle - FM FAL</option>
-              <option value="ak47">Assault Rifle - AK 47</option>
-              <option value="m4">Assault Rifle - M4</option>
-              <option value="hammerhead47">Assault Rifle - Hammerhead47</option>
-              <option value="fmmitrail">HMG - FM Mitrail</option>
-              <option value="fmmag">HMG - FM MAG</option>
-              <option value="m60">HMG - M60</option>
-              <option value="xlgunner8">HMG (Limited Edition) - XLGunner-8</option>
-              <option value="vulcan">Minigun - Vulcan</option>
-              <option value="scar9000">Minigun - SCAR 9000</option>
-              <option value="gau19">Minigun (Limited Edition) - GAU-19</option>
-              <option value="ugau19">Minigun (Limited Edition) - Unlimited Ammo GAU-19</option>
-              <option value="ugau19v2">Minigun (Limited Edition) - Unlimited Ammo GAU-19 (Type 2)</option>
-              <option value="wraithcannon">Minigun (Limited Edition) - Wraith Cannon</option>
-              <option value="unlimitedwraithcannon">Minigun (Limited Edition) - Unlimited Ammo Wraith Cannon</option>
-              <option value="m79">Explosive - M79</option>
-              <option value="hk69">Explosive - HK69</option>
-              <option value="gm94">Explosive - GM94</option>
-              <option value="rg6">Explosive - RG6</option>
-              <option value="falconmm1">Explosive - Falcon-MM1</option>
-              <option value="xm25">Explosive - XM25</option>
-              <option value="paw20">Explosive - PAW-20</option>
-              <option value="immolatorad">Explosive - Immolator AD</option>
-              <option value="junker6">Explosive - Junker 6</option>
-              <option value="bishopce9">Explosive - Bishop CE9</option>
-              <option value="boomerpx">Explosive - Boomer PX</option>
-              <option value="titaniumblades">Special Gear - Titanium Blades</option>
-              <option value="rebellion">Special Gear - Rebellion</option>
-              <option value="xduskkris">Special Gear - X-Dusk Kris</option>
-              <option value="xduskrazor">Special Gear - X-Dusk Razor</option>
-              <option value="xdusksaw">Special Gear - X-Dusk Saw</option>
-              <option value="xduskenforcer">Special Gear - X-Dusk Enforcer</option>
-              <option value="xduskcarbine">Special Gear - X-Dusk Carbine</option>
-              <option value="xduskstriker">Special Gear - X-Dusk Striker</option>
-              <option value="xdusksmg">Special Gear - X-Dusk SMG</option>
-              <option value="xduskmag">Special Gear - X-Dusk MAG</option>
-              <option value="xdusklauncher">Special Gear - X-Dusk Launcher</option>
-              <option value="duskkris">Special Gear - Dusk Kris</option>
-              <option value="duskrazor">Special Gear - Dusk Razor</option>
-              <option value="dusksaw">Special Gear - Dusk Saw</option>
-              <option value="duskenforcer">Special Gear - Dusk Enforcer</option>
-              <option value="duskcarbine">Special Gear - Dusk Carbine</option>
-              <option value="duskstriker">Special Gear - Dusk Striker</option>
-              <option value="dusksmg">Special Gear - Dusk SMG</option>
-              <option value="duskmag">Special Gear - Dusk MAG</option>
-              <option value="dusklauncher">Special Gear - Dusk Launcher</option>
-              <option value="corpsecrusher">Special Gear (Limited Edition) - Corpse Crusher</option>
-              <option value="corpsegrinder">Special Gear (Limited Edition) - Corpse Grinder</option>
-              <option value="corpseshooter">Special Gear (Limited Edition) - Corpse Shooter</option>
-              <option value="corpseblaster">Special Gear (Limited Edition) - Corpse Blaster</option>
-              <option value="corpsepiercer">Special Gear (Limited Edition) - Corpse Piercer</option>
-              <option value="corpsedestroyer">Special Gear (Limited Edition) - Corpse Destroyer</option>
-              <option value="corpseerruptor">Special Gear (Limited Edition) - Corpse Erruptor</option>
-              <option value="corpseripper">Special Gear (Limited Edition) - Corpse Ripper</option>
-              <option value="amputator">Special Gear (Limited Edition) - Amputator</option>
-              <option value="doomcane">Special Gear (Limited Edition) - Doom Cane</option>
-              <option value="dawnrazor">Custom Gear - Dawn Razor</option>
-              <option value="gau19betatomcat">Custom Gear - GAU-19 (Beta Tomcat)</option>
-              <option value="patriarchblade">Custom Gear - Partriarch Blade</option>
-              <option value="banhammer">Custom Gear - Ban Hammer</option>
-              <option value="bm59">Custom Gear - BM59</option>
-              <option value="tlimgun">Custom Gear - Tlim Gun</option>
-              <option value="gaussrifle">Custom Gear - Gauss Rifle</option>
-            </select>          </td>
-          <td width="13%" class=""><input name="enemy_player_weapon_base_dph" id="enemy_player_weapon_base_dph" size="5" value="0" readonly="readonly" type="text" class='inputnumber'/>
-            Base DPH</td>
-          <td width="44%" class=""><input name="enemy_player_weapon_critical_hit_dph" id="enemy_player_weapon_critical_hit_dph" size="5" value="0" readonly="readonly" type="text"class='inputnumber' />
-            Critical Hit DPH </td>
-          </tr>
-        <tr>
-          <td class="">Enemy Implant</td>
-          <td class=""><input name="enemy_player_rage_implant" id="enemy_player_rage_implant" onclick="check_character_implant('rage_implant', 'enemy_player')" type="checkbox" />
-            Rage Implant </td>
-          <td class=""><input name="enemy_player_rage_implant_slot" id="enemy_player_rage_implant_slot" size="5" value="0" disabled="disabled" onchange="count_character_implant_slot(enemy_player_implant_maxslot.value, 'rage_implant', this.value, 'enemy_player');" type="text" class='inputnumber_editable'/>
-            Slot(s)</td>
-          <td class=""><input name="enemy_player_bonus_damage_rage_implant" id="enemy_player_bonus_damage_rage_implant" size="5" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-            % Bonus Damage Implant</td>
-        </tr>
-        <tr>
-          <td class="">&nbsp;</td>
-          <td class=""><input name="enemy_player_violence_implant" id="enemy_player_violence_implant" onclick="check_character_implant('violence_implant', 'enemy_player')" type="checkbox" />
-            Violence Implant </td>
-          <td class=""><input name="enemy_player_violence_implant_slot" id="enemy_player_violence_implant_slot" size="5" value="0" disabled="disabled" onchange="count_character_implant_slot(enemy_player_implant_maxslot.value, 'violence_implant', this.value, 'enemy_player');" type="text" class='inputnumber_editable'/>
-            Slot(s)</td>
-          <td class=""><input name="enemy_player_bonus_damage_violence_implant" id="enemy_player_bonus_damage_violence_implant" size="5" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-            % Bonus Damage Implant</td>
-        </tr>
-        <tr>
-          <td class="">&nbsp;</td>
-          <td class=""><input name="enemy_player_motl_implant" id="enemy_player_motl_implant" onclick="check_character_implant('motl_implant', 'enemy_player')" type="checkbox"/>
-            MoTL Implant </td>
-          <td class=""><select name="enemy_player_motl_implant_slot" id="enemy_player_motl_implant_slot" onchange="count_character_implant_slot(enemy_player_implant_maxslot.value, 'motl_implant', this.value, 'enemy_player');" disabled="disabled"class='inputnumber_editable'>
-              <option value="0" selected="selected">0</option>
-              <option value="1">1</option>
-            </select>
-            Slot </td>
-          <td class=""><input name="enemy_player_bonus_damage_motl_implant" id="enemy_player_bonus_damage_motl_implant" size="5" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-            % Bonus Damage Implant</td>
-        </tr>
-        <tr class="">
-          <td>&nbsp;</td>
-          <td><input name="enemy_player_destruction_implant" id="enemy_player_destruction_implant" onclick="check_character_implant('destruction_implant', 'enemy_player')" type="checkbox" />
-Destruction Implant </td>
-          <td><select name="enemy_player_destruction_implant_slot" id="enemy_player_destruction_implant_slot" onchange="count_character_implant_slot(enemy_player_implant_maxslot.value, 'destruction_implant', this.value, 'enemy_player');" disabled="disabled"class='inputnumber_editable'>
-            <option value="0" selected="selected">0</option>
-            <option value="1">1</option>
-          </select>
-Slot</td>
-          <td><input name="enemy_player_bonus_damage_destruction_implant" id="enemy_player_bonus_damage_destruction_implant" size="5" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-            % Bonus Damage Implant</td>
-        </tr>
-        <tr class="">
-          <td>&nbsp;</td>
-          <td><input name="enemy_player_jackofall_implant" id="enemy_player_jackofall_implant" onclick="check_character_implant('jackofall_implant', 'enemy_player')" type="checkbox" />
-            Jack of All Implant </td>
-          <td><select name="enemy_player_jackofall_implant_slot" id="enemy_player_jackofall_implant_slot" onchange="count_character_implant_slot(enemy_player_implant_maxslot.value, 'jackofall_implant', this.value, 'enemy_player');" disabled="disabled"class='inputnumber_editable'>
-              <option value="0" selected="selected">0</option>
-              <option value="1">1</option>
-            </select>
-            Slot</td>
-          <td><input name="enemy_player_bonus_damage_jackofall_implant" id="enemy_player_bonus_damage_jackofall_implant" size="5" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-            % Bonus Damage Implant</td>
-        </tr>
-        <tr class="">
-          <td> Enemy Boost</td>
-          <td><input name="enemy_player_damage_boost" id="enemy_player_damage_boost" onclick="check_character_boost('damage_boost', 'enemy_player')" type="checkbox" />
-            General Damage Boost</td>
-          <td colspan="2"><input name="enemy_player_bonus_damage_boost" id="enemy_player_bonus_damage_boost" size="5" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-            % Bonus Damage Boost</td>
-        </tr>
-        <tr class="">
-          <td>&nbsp;</td>
-          <td><input name="enemy_player_clan_damage_boost" id="enemy_player_clan_damage_boost" onclick="check_character_boost('clan_damage_boost', 'enemy_player')" type="checkbox" />
-            Clan Damage Boost</td>
-          <td colspan="2"><input name="enemy_player_bonus_clan_damage_boost" id="enemy_player_bonus_clan_damage_boost" size="5" value="0"  disabled="disabled" type="text" class='inputnumber_editable' onchange="check_character_boost('clan_damage_boost', 'enemy_player')"/>
-            % Bonus Damage Boost</td>
-        </tr>
-        <tr class="">
-          <td>Weekend Event Damage</td>
-          <td> 
-            <select name="enemy_player_weekend_event_damage" id="enemy_player_weekend_event_damage" onchange="check_character_weekend_event_damage(this.value, 'enemy_player')">
-              <option value="" selected="selected">--Select--</option>
-              <option value="Y">Yes</option>
-              <option value="N">No</option>
-          </select></td>
-          <td colspan="2"><input name="enemy_player_bonus_weekend_event_damage" id="enemy_player_bonus_weekend_event_damage" size="5" value="0" disabled="disabled" type="text"class='inputnumber_editable' onchange="check_character_weekend_event_damage(this.value, 'enemy_player')"/>
-            % Bonus Damage Event</td>
-          </tr>
-      </table></td>
-      </tr>
-   <tr >
-      <td colspan="8"><hr id="tr_hr_enemy_zombie"/></td>
-      </tr>
-    
-    <tr>
-      <td colspan="6"><table width="100%" border="0" id="table_enemy_zombie">
-      
-        <tr class="">
-          <td width="9%"> Zombie Type</td>
-          <td width="24%"> 
-            <select name="enemy_zombie" id="enemy_zombie" onchange="get_zombie_stat(this.value, 'enemy_zombie', attack_type.value)">
-              <option value="" selected="selected">--Select--</option>
-              <option value="dog">Normal Zombie - Dog</option>
-              <option value="female">Normal Zombie - Female</option>
-              <option value="male">Normal Zombie - Male</option>
-              <option value="fatfemale">Normal Zombie - Fat Female</option>
-              <option value="fatmale">Normal Zombie - Fat Male</option>
-              <option value="burnedfemale">Normal Zombie - Burned Female</option>
-              <option value="irradiatedfemale">Normal Zombie - Irradiated Female</option>
-              <option value="burnedmale">Normal Zombie - Burned Male</option>
-              <option value="irradiatedmale">Normal Zombie - Irradiated Male</option>
-              <option value="blooddog">Normal Zombie - Blood Dog</option>
-              <option value="longarm">Normal Zombie - Long Arm</option>
-              <option value="rumbler">Normal Zombie - Rumbler</option>
-              <option value="blacklongarm">Normal Zombie - Black Long Arm</option>
-              <option value="irradiatedlongarm">Normal Zombie - Irradiated Long Arm</option>
-              <option value="fleshhound">Normal Zombie - Flesh Hound</option>
-              <option value="blackrumbler">Normal Zombie - Black Rumbler</option>
-              <option value="irradiatedrumbler">Normal Zombie - Irradiated Rumbler</option>
-              <option value="siren">Normal Zombie - Siren</option>
-              <option value="smallbloat">Normal Zombie - Small Bloat</option>
-              <option value="bloat">Normal Zombie - Bloat</option>
-              <option value="reaper">Normal Zombie - Reaper</option>
-              <option value="tendril">Normal Zombie - Tendril</option>
-              <option value="bone">Normal Zombie - Bone</option>
-              <option value="spider">Normal Zombie - Spider</option>
-              <option value="blacktendril">Normal Zombie - Black Tendril</option>
-              <option value="brute">Normal Zombie - Brute</option>
-              <option value="leaper">Normal Zombie - Leaper</option>
-              <option value="hellhound">Normal Zombie - Hell Hound</option>
-              <option value="blackbone">Normal Zombie - Black Bone</option>
-              <option value="flamingzombie">Mini Boss Zombie - Flaming Zombie</option>
-              <option value="flaminglongarm">Mini Boss Zombie - Flaming Long Arm</option>
-              <option value="flamingrumbler">Mini Boss Zombie - Flaming Rumbler</option>
-              <option value="flamingfleshhound">Mini Boss Zombie - Flaming Flesh Hound</option>
-              <option value="mother">Boss Zombie - Mother</option>
-              <option value="flamingmother">Boss Zombie - Flaming Mother</option>
-              <option value="titan">Boss Zombie - Titan</option>
-              <option value="flamingtitan">Boss Zombie - Flaming Titan</option>
-              <option value="wraith">Boss Zombie - Wraith</option>
-              <option value="flamingwraith">Boss Zombie - Flaming Wraith</option>
-              <option value="giantspider">Boss Zombie - Giant Spider</option>
-              <option value="flaminggiantspider">Boss Zombie - Flaming Giant Spider</option>
-              <option value="blacktitan">Boss Zombie - Black Titan</option>
-              <option value="flamingblacktitan">Boss Zombie - Flaming Black Titan</option>
-              <option value="devilhound">Boss Zombie - Devil Hound</option>
-              <option value="elf">Seasonal Zombie - Elf</option>
-              <option value="pumpkinhead">Seasonal Zombie - Pumpkin Head</option>
-              <option value="egghead">Seasonal Zombie - Egg Head</option>
-              <option value="santa">Seasonal Zombie - Santa</option>
-              <option value="reindeer">Seasonal Zombie - Reindeer</option>
-              <option value="slenderman">Seasonal Zombie - Slenderman</option>
-            </select>          </td>
-          <td width="7%">Attack Type</td>
-          <td width="15%"><select name="attack_type" id="attack_type" onchange="get_zombie_stat(enemy_zombie.value, 'enemy_zombie', this.value)">
-          <option value="">--Select--</option>
-          <option value="melee">Melee</option>
-          <option value="vomit">Vomit</option>
-          <option value="explosion">Explosion</option>
-          </select>          </td>
-          <td width="22%"><input name="enemy_zombie_base_dph" id="enemy_zombie_base_dph" size="3" value="0" readonly="readonly" type="text"class='inputnumber' />          
-            Base DPH</td>
-          <td width="23%"><input name="enemy_zombie_critical_hit_dph" id="enemy_zombie_critical_hit_dph" size="3" value="0" readonly="readonly" type="text"class='inputnumber' />
-            Critical Hit DPH</td>
-        </tr>
-      </table></td>
-      </tr>
-  
-    <tr>
-      <td colspan="6"><hr /></td>
-      </tr>
-    <tr>
-      <td colspan="6"><table width="100%" border="0">
-        <tr class="">
-          <td width="100%"><table width="100%" border="0">
-            <tr>
-              <td width="16%"  class="">Total All Enemy Damage Per Hit </td>
-              <td width="16%" class=""><input name="total_added_enemy_base_dph" id="total_added_enemy_base_dph" size="10" value="0" readonly="readonly" type="text" class='inputnumber'/>
-                Base DPH </td>
-              <td width="68%" class=""><input name="total_added_enemy_critical_hit_dph" id="total_added_enemy_critical_hit_dph" size="10" value="0" readonly="readonly" type="text" class='inputnumber'/>
-Critical Hit DPH </td>
-            </tr>
-          </table></td>
-          </tr>
-        <tr class="">
-          <td colspan="2"><hr /></td>
-        </tr>
-        <tr class="">
-          <td><table width="100%" border="0">
-            <tr class="">
-              <td width="9%">Choose Your Role</td>
-              <td width="91%"><select name="player_role_option" id="player_role_option" onchange="check_player_role(this.value)">
-                  <option value="normal_player" selected="selected">AS Player</option>
-                  <option value="zombie_player">AS Zombie</option>
-                </select>
-          			<input type='hidden' id='player_role' name='player_role' value='normal_player' readonly="readonly" >
-                </td>
-            </tr>
-          </table></td>
-        </tr>
-        <tr class="">
-          <td><hr id='hr_zombie_player' /></td>
-        </tr>
-        <tr class="">
-          <td><table width="100%" border="0" id="table_zombie_player">
-            <tr class="">
-              <td width="9%"> Zombie Type</td>
-              <td width="25%"><select name="zombie_player" id="zombie_player" onchange="get_zombie_stat(this.value, 'zombie_player','')">
-                  <option value="" selected="selected">--Select--</option>
-                  <option value="dog">Normal Zombie - Dog</option>
-                  <option value="female">Normal Zombie - Female</option>
-                  <option value="male">Normal Zombie - Male</option>
-                  <option value="fatfemale">Normal Zombie - Fat Female</option>
-                  <option value="fatmale">Normal Zombie - Fat Male</option>
-                  <option value="burnedfemale">Normal Zombie - Burned Female</option>
-                  <option value="irradiatedfemale">Normal Zombie - Irradiated Female</option>
-                  <option value="burnedmale">Normal Zombie - Burned Male</option>
-                  <option value="irradiatedmale">Normal Zombie - Irradiated Male</option>
-                  <option value="blooddog">Normal Zombie - Blood Dog</option>
-                  <option value="longarm">Normal Zombie - Long Arm</option>
-                  <option value="rumbler">Normal Zombie - Rumbler</option>
-                  <option value="blacklongarm">Normal Zombie - Black Long Arm</option>
-                  <option value="irradiatedlongarm">Normal Zombie - Irradiated Long Arm</option>
-                  <option value="fleshhound">Normal Zombie - Flesh Hound</option>
-                  <option value="blackrumbler">Normal Zombie - Black Rumbler</option>
-                  <option value="irradiatedrumbler">Normal Zombie - Irradiated Rumbler</option>
-                  <option value="siren">Normal Zombie - Siren</option>
-                  <option value="smallbloat">Normal Zombie - Small Bloat</option>
-                  <option value="bloat">Normal Zombie - Bloat</option>
-                  <option value="reaper">Normal Zombie - Reaper</option>
-                  <option value="tendril">Normal Zombie - Tendril</option>
-                  <option value="bone">Normal Zombie - Bone</option>
-                  <option value="spider">Normal Zombie - Spider</option>
-                  <option value="blacktendril">Normal Zombie - Black Tendril</option>
-                  <option value="brute">Normal Zombie - Brute</option>
-                  <option value="leaper">Normal Zombie - Leaper</option>
-                  <option value="hellhound">Normal Zombie - Hell Hound</option>
-                  <option value="blackbone">Normal Zombie - Black Bone</option>
-                  <option value="flamingzombie">Mini Boss Zombie - Flaming Zombie</option>
-                  <option value="flaminglongarm">Mini Boss Zombie - Flaming Long Arm</option>
-                  <option value="flamingrumbler">Mini Boss Zombie - Flaming Rumbler</option>
-                  <option value="flamingfleshhound">Mini Boss Zombie - Flaming Flesh Hound</option>
-                  <option value="mother">Boss Zombie - Mother</option>
-                  <option value="flamingmother">Boss Zombie - Flaming Mother</option>
-                  <option value="titan">Boss Zombie - Titan</option>
-                  <option value="flamingtitan">Boss Zombie - Flaming Titan</option>
-                  <option value="wraith">Boss Zombie - Wraith</option>
-                  <option value="flamingwraith">Boss Zombie - Flaming Wraith</option>
-                  <option value="giantspider">Boss Zombie - Giant Spider</option>
-                  <option value="flaminggiantspider">Boss Zombie - Flaming Giant Spider</option>
-                  <option value="blacktitan">Boss Zombie - Black Titan</option>
-                  <option value="flamingblacktitan">Boss Zombie - Flaming Black Titan</option>
-                  <option value="devilhound">Boss Zombie - Devil Hound</option>
-                  <option value="elf">Seasonal Zombie - Elf</option>
-                  <option value="pumpkinhead">Seasonal Zombie - Pumpkin Head</option>
-                  <option value="egghead">Seasonal Zombie - Egg Head</option>
-                  <option value="santa">Seasonal Zombie - Santa</option>
-                  <option value="reindeer">Seasonal Zombie - Reindeer</option>
-                  <option value="slenderman">Seasonal Zombie - Slenderman</option>
-                </select>
-              </td>
-              <td width="66%"><input name="zombie_player_endurance_point" id="zombie_player_endurance_point" size="3" value="0" readonly="readonly" type="text"class='inputnumber' />
-                HP</td>
-            </tr>
-          </table></td>
-        </tr>
-        <tr class="">
-          <td><hr id='hr_normal_player' /></td>
-        </tr>
-        <tr class="">
-          <td><table width="100%" border="0" id='table_normal_player'>
-            <tr class="">
-              <td width="15%">Character Level</td>
-              <td width="23%"><input name="player_level" id="player_level" size="3" value="0" onchange="check_character_level(this.value, 'player')" type="text" class='inputnumber_editable'/></td>
-              <td width="13%"><input name="player_implant_maxslot" id="player_implant_maxslot" size="3" value="0" disabled="disabled" readonly="readonly" type="text"class='inputnumber' />
-                Max Implant Slot</td>
-              <td width="49%"><input name="player_implant_remainingslot" id="player_implant_remainingslot" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-                Remaining Implant Slot</td>
-            </tr>
-            <tr class="">
-              <td>Endurance Point</td>
-              <td><input name="player_endurance_point" id="player_endurance_point" size="3" value="25" onchange="check_endurance_point(this.value, 'player')" type="text" class='inputnumber_editable'/></td>
-              <td><input name="player_max_endurance_point" id="player_max_endurance_point" size="3" value="0" disabled="disabled" readonly="readonly" type="text"class='inputnumber' />
-                Max Endurance Point</td>
-              <td><input name="player_remaining_endurance_point" id="player_remaining_endurance_point" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-                Remaining Endurance Point</td>
-            </tr>
-            <tr class="">
-              <td>Armor</td>
-              <td><select name="player_armor_type" id="player_armor_type" onchange="get_armor_stat(this.value, 'player')">
-                  <option value="" selected="selected">--Select--</option>
-                  <option value="sportsarmour">Non Strength - Sports Armour</option>
-                  <option value="zylonvest">Non Strength - Zylon Vest</option>
-                  <option value="kevlarvest">Non Strength - Kevlar Vest</option>
-                  <option value="meshslx">Non Strength - Mesh SLX</option>
-                  <option value="meshrx2">Non Strength - Mesh RX2</option>
-                  <option value="exterminatormesh">Non Strength - Exterminator Mesh</option>
-                  <option value="exterminatormeshgt">Non Strength - Exterminator Mesh GT</option>
-                  <option value="nomadmesh">Non Strength - Nomad Mesh</option>
-                  <option value="duskmesh">Non Strength - Dusk Mesh</option>
-                  <option value="scavengermesh">Non Strength - Scavenger Mesh</option>
-                  <option value="shinobumesh">Non Strength - Shinobu Mesh</option>
-                  <option value="xduskmesh">Non Strength - X-Dusk Mesh</option>
-                  <option value="hazardmesh">Non Strength - Hazard Mesh</option>
-                  <option value="flakjacket">Strength - Flak Jacket</option>
-                  <option value="sn42">Strength - SN-42</option>
-                  <option value="corpsecarapace">Strength - Corpse Carapace</option>
-                  <option value="reactiveslx">Strength - Reactive SLX</option>
-                  <option value="reactivext800">Strength - Reactive XT800</option>
-                  <option value="exterminatorreactive">Strength - Exterminator Reactive</option>
-                  <option value="exterminatorreactivext">Strength - Exterminator Reactive XT</option>
-                  <option value="bioreactive">Strength - Bio Reactive</option>
-                  <option value="duskreactive">Strength - Dusk Reactive</option>
-                  <option value="steelcasereactive">Strength - Steelcase Reactive</option>
-                  <option value="tatakaureactive">Strength - Tatakau Reactive</option>
-                  <option value="xduskreactive">Strength - X-Dusk Reactive</option>
-                  <option value="scarabreactive">Strength - Scarab Reactive</option>
-                  <option value="vengeanceguard">Strength - Vengeance Guard</option>
-                </select>              </td>
-              <td><input name="player_armor_durability" id="player_armor_durability" size="3" value="0" readonly="readonly" type="text" class='inputnumber'/>
-                Durability</td>
-              <td><input name="player_armor_damage_absorption" id="player_armor_damage_absorption" size="3" value="0" readonly="readonly" type="text"class='inputnumber' />
-                % Damage Absorption</td>
-            </tr>
-            <tr class="">
-              <td>Implant</td>
-              <td><input name="player_rage_implant" id="player_rage_implant" onclick="check_character_implant('rage_implant', 'player')" type="checkbox" />
-                Rage Implant </td>
-              <td><input name="player_rage_implant_slot" id="player_rage_implant_slot" size="3" value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'rage_implant', this.value, 'player');" type="text" class='inputnumber_editable'/>
-                Slot(s)</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_experience_implant" id="player_experience_implant" onclick="check_character_implant('experience_implant', 'player')" type="checkbox" class='inputnumber'/>
-                Experience Implant </td>
-              <td><input name="player_experience_implant_slot" id="player_experience_implant_slot" size="3" value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'experience_implant', this.value, 'player');" type="text" class='inputnumber_editable'/>
-                Slot(s)</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_agility_implant" id="player_agility_implant" onclick="check_character_implant('agility_implant', 'player')" type="checkbox" />
-                Agility Implant </td>
-              <td><input name="player_agility_implant_slot" id="player_agility_implant_slot" size="3" value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'agility_implant', this.value, 'player');" type="text"class='inputnumber_editable' />
-                Slot(s)</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_survival_implant" id="player_survival_implant" onclick="check_character_implant('survival_implant', 'player')" type="checkbox" />
-                Survival Implant </td>
-              <td><input name="player_survival_implant_slot" id="player_survival_implant_slot" size="3" value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'survival_implant', this.value, 'player');" type="text"class='inputnumber_editable' />
-                Slot(s)</td>
-              <td><input name="player_bonus_damage_reduction_survival_implant" id="player_bonus_damage_reduction_survival_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-                % Bonus Damage Reduction Implant</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_notoriety_implant" id="player_notoriety_implant" onclick="check_character_implant('notoriety_implant', 'player')" type="checkbox" />
-                Notoriety Implant </td>
-              <td><input name="player_notoriety_implant_slot" id="player_notoriety_implant_slot" size="3" value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value,  'notoriety_implant', this.value, 'player');" type="text" class='inputnumber_editable'/>
-                Slot(s)</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_hunter_implant" id="player_hunter_implant" onclick="check_character_implant('hunter_implant', 'player')" type="checkbox" />
-                Hunter Implant </td>
-              <td><input name="player_hunter_implant_slot" id="player_hunter_implant_slot" size="3" value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'hunter_implant', this.value, 'player');" type="text" class='inputnumber_editable'/>
-                Slot(s)</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_scavenger_implant" id="player_scavenger_implant" onclick="check_character_implant('scavenger_implant', 'player')" type="checkbox" />
-                Scavenger Implant </td>
-              <td><input name="player_scavenger_implant_slot" id="player_scavenger_implant_slot" size="3" value="0" disabled="disabled" onchange="count_character_implant_slot(implant_maxslot.value, 'scavenger_implant', this.value, 'player');" type="text" class='inputnumber_editable'/>
-                Slot(s)</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_ingenuity_implant" id="player_ingenuity_implant" onclick="check_character_implant('ingenuity_implant', 'player')" type="checkbox" />
-                Ingenuity Implant </td>
-              <td><input name="player_ingenuity_implant_slot" id="player_ingenuity_implant_slot" size="3" value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value,  'ingenuity_implant', this.value, 'player');" type="text" class='inputnumber_editable'/>
-                Slot(s)</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_wealth_implant" id="player_wealth_implant" onclick="check_character_implant('wealth_implant', 'player')" type="checkbox" />
-                Wealth Implant </td>
-              <td><input name="player_wealth_implant_slot" id="player_wealth_implant_slot" size="3" value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'wealth_implant', this.value, 'player');" type="text" class='inputnumber_editable'/>
-                Slot(s)</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>Elite Implant</td>
-              <td><input name="player_violence_implant" id="player_violence_implant" onclick="check_character_implant('violence_implant', 'player')" type="checkbox" />
-                Violence Implant </td>
-              <td><input name="player_violence_implant_slot" id="player_violence_implant_slot" size="3" value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'violence_implant', this.value, 'player');" type="text" class='inputnumber_editable'/>
-                Slot(s)</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_perception_implant" id="player_perception_implant" onclick="check_character_implant('perception_implant', 'player')" type="checkbox" />
-                Perception Implant </td>
-              <td><input name="player_perception_implant_slot" id="player_perception_implant_slot" size="3" value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'perception_implant', this.value, 'player');" type="text" class='inputnumber_editable'/>
-                Slot(s)</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_hyper_implant" id="player_hyper_implant" onclick="check_character_implant('hyper_implant', 'player')" type="checkbox" />
-                Hyper Implant </td>
-              <td><input name="player_hyper_implant_slot" id="player_hyper_implant_slot" size="3" value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'hyper_implant', this.value, 'player');" type="text" class='inputnumber_editable'/>
-                Slot(s)</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_ironskin_implant" id="player_ironskin_implant" onclick="check_character_implant('ironskin_implant', 'player')" type="checkbox" />
-                Ironskin Implant</td>
-              <td><input name="player_ironskin_implant_slot" id="player_ironskin_implant_slot" size="3" value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'ironskin_implant', this.value, 'player');" type="text" class='inputnumber_editable'/>
-                Slot(s)</td>
-              <td><input name="player_bonus_damage_reduction_ironskin_implant" id="player_bonus_damage_reduction_ironskin_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-                % Bonus Damage Reduction Implant</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_salvage_implant" id="player_salvage_implant" onclick="check_character_implant('salvage_implant', 'player')" type="checkbox" />
-                Salvage Implant</td>
-              <td><input name="player_salvage_implant_slot" id="player_salvage_implant_slot" size="3" value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'salvage_implant', this.value, 'player');" type="text" class='inputnumber_editable'/>
-                Slot(s)</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td height="29">Unique Implant</td>
-              <td><input name="player_motl_implant" id="player_motl_implant" onclick="check_character_implant('motl_implant', 'player')" type="checkbox"/>
-                MoTL Implant </td>
-              <td><select name="player_motl_implant_slot" id="player_motl_implant_slot" onchange="count_character_implant_slot(player_implant_maxslot.value, 'motl_implant', this.value, 'player');" disabled="disabled"class='inputnumber_editable'>
-                  <option value="0" selected="selected">0</option>
-                  <option value="1">1</option>
-                </select>
-                Slot </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_destruction_implant" id="player_destruction_implant" onclick="check_character_implant('destruction_implant', 'player')" type="checkbox" />
-                Destruction Implant </td>
-              <td><select name="player_destruction_implant_slot" id="player_destruction_implant_slot" onchange="count_character_implant_slot(player_implant_maxslot.value, 'destruction_implant', this.value, 'player');" disabled="disabled"class='inputnumber_editable'>
-                  <option value="0" selected="selected">0</option>
-                  <option value="1">1</option>
-                </select>
-                Slot</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_genius_implant" id="player_genius_implant" onclick="check_character_implant('genius_implant', 'player')" type="checkbox" />
-                Genius Implant </td>
-              <td><select name="player_genius_implant_slot" id="player_genius_implant_slot" onchange="count_character_implant_slot(player_implant_maxslot.value, 'genius_implant', this.value, 'player');" disabled="disabled"class='inputnumber_editable'>
-                  <option value="0" selected="selected">0</option>
-                  <option value="1">1</option>
-                </select>
-                Slot</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_haste_implant" id="player_haste_implant" onclick="check_character_implant('haste_implant', 'player')" type="checkbox" />
-                Haste Implant</td>
-              <td><select name="player_haste_implant_slot" id="player_haste_implant_slot" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'haste_implant', this.value, 'player');"class='inputnumber_editable'>
-                  <option value="0" selected="selected">0</option>
-                  <option value="1">1</option>
-                </select>
-                Slot</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_looter_implant" id="player_looter_implant" onclick="check_character_implant('looter_implant', 'player')" type="checkbox" />
-                Looter Implant</td>
-              <td><select name="player_looter_implant_slot" id="player_looter_implant_slot" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'looter_implant', this.value, 'player');"class='inputnumber_editable'>
-                  <option value="0" selected="selected">0</option>
-                  <option value="1">1</option>
-                </select>
-                Slot</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_jackofall_implant" id="player_jackofall_implant" onclick="check_character_implant('jackofall_implant', 'player')" type="checkbox"/>
-                Jack of All Implant </td>
-              <td><select name="player_jackofall_implant_slot" id="player_jackofall_implant_slot" onchange="count_character_implant_slot(player_implant_maxslot.value, 'jackofall_implant', this.value, 'player');" disabled="disabled"class='inputnumber_editable'>
-                  <option value="0" selected="selected">0</option>
-                  <option value="1">1</option>
-                </select>
-                Slot </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>General Boost</td>
-              <td><input name="player_damage_boost" id="player_damage_boost" type="checkbox" />
-                Damage Boost</td>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_exp_boost" id="player_exp_boost" type="checkbox" />
-                Exp Boost</td>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_speed_boost" id="player_speed_boost" type="checkbox" />
-                Speed Boost</td>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>Clan Boost</td>
-              <td><input name="player_clan_damage_boost" id="player_clan_damage_boost" type="checkbox" />
-                Clan Damage Boost</td>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>&nbsp;</td>
-              <td><input name="player_clan_exp_boost" id="player_clan_exp_boost" type="checkbox" />
-                Clan Exp Boost</td>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>Character Class</td>
-              <td><select name="player_char_class" id="player_char_class" >
-                  <option value="" selected="selected">--Select--</option>
-                  <option value="farmer">Farmer</option>
-                  <option value="scientist">Scientist</option>
-                  <option value="engineer">Engineer</option>
-                  <option value="doctor">Doctor</option>
-                  <option value="chef">Chef</option>
-                  <option value="boxer">Boxer</option>
-                  <option value="soldier">Soldier</option>
-                  <option value="policeofficer">Police Officer</option>
-                  <option value="fireman">Fireman</option>
-                  <option value="athlete">Athlete</option>
-                  <option value="teacher">Teacher</option>
-                  <option value="priest">Priest</option>
-                  <option value="lawyer">Lawyer</option>
-                  <option value="accountant">Accountant</option>
-                  <option value="journalist">Journalist</option>
-                  <option value="actor">Actor</option>
-                  <option value="stockbroker">Stock Broker</option>
-                  <option value="architect">Architect</option>
-                  <option value="entertainer">Entertainer</option>
-                  <option value="student">Student</option>
-              </select></td>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>Hunger State</td>
-              <td><select name="player_hunger_state" id="player_hunger_state" >
-                  <option value="" selected="selected">--Select--</option>
-                  <option value="nourished">Nourished</option>
-                  <option value="fine">Fine</option>
-                  <option value="hungry">Hungry</option>
-                  <option value="starving">Starving</option>
-                </select>              </td>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr class="">
-              <td>Weekend Event Damage Reduction</td>
-              <td><select name="player_weekend_event_damage_reduction" id="player_weekend_event_damage_reduction" onchange="check_character_weekend_event_damage(this.value, 'player')">
-                  <option value="" selected="selected">--Select--</option>
-                  <option value="Y">Yes</option>
-                  <option value="N">No</option>
-              </select></td>
-              <td colspan="2"><input name="player_bonus_weekend_event_damage_reduction" id="player_bonus_weekend_event_damage_reduction" size="3" value="0" disabled="disabled" type="text"class='inputnumber_editable' />
-                % Bonus Damage Reduction Event</td>
-            </tr>
-            <tr class="">
-              <td>GM State</td>
-              <td><select name="player_gm_state" id="player_gm_state" >
-                  <option value="" selected="selected">--Select--</option>
-                  <option value="Y">GM</option>
-                  <option value="N">Non GM</option>
-                </select>              </td>
-              <td colspan="2">&nbsp;</td>
-            </tr>
+      </table>
+      <table class="" border="0" width="100%">
+        <tbody>
 
-          </table></td>
-          </tr>
-
-      </table></td>
-      </tr>
-    <tr>
-      <td colspan="6"><hr></td>
-    </tr>
-    <tr>
-      <td colspan="6"><table width="100%" border="0">
-        <tr class="">
-          <td width="10%">&nbsp;</td>
-          <td width="78%"> 
-            <input name="btnprocess" id="btnprocess" value="Process" onclick="process_all_dying()" type="button" />
-              <input name="btnreset" id="btnreset" value="Reset" type="reset" />
-              <input name="btndownload" id="btndownload" value="Download Excel Formula" onclick="download_excel_dying_formula()" type="button" />          </td>
-          <td width="3%">&nbsp;</td>
-          <td width="3%">&nbsp;</td>
-          <td width="3%">&nbsp;</td>
-          <td width="3%">&nbsp;</td>
-        </tr>
-      </table></td>
-      </tr>
-  <tr>
-    <td colspan="6"><hr></td>
-  </tr>
-  <tr>
-  <td colspan="6"><table border="0" width="100%">
-    <tbody>
-      <tr>
-        <td width="100%" align=""><table width="100%" border="0">
           <tr>
-            <td colspan="2" align="" bgcolor="#333333"><font color="#FFFFFF"><strong>Estimated Modified Damage Output Enemy by Base DPH</strong></font></td>
-          </tr>
-          <tr>
-            <td>Damage  Output Formula</td>
-            <td> Modified Enemy  Base DPH - Total Damage Reduction Base DPH</td>
-          </tr>
-          <tr>
-            <td>Result</td>
-            <td><label id="lbl_estimated_modified_damage_output_by_base_dph"> 0 DPH</label>
+            <td colspan="6">
+              <table width="100%" border="0">
+                <tr class="">
+                  <td width="10%">Choose Your Enemy</td>
+                  <td width="45%">
+                    <select name="dying_calculation_method" id="dying_calculation_method" onchange="check_dying_calculation_method(this.value)">
+                      <option value="enemy_zombie" selected="selected">VS Zombie</option>
+                      <option value="enemy_player">VS Player</option>
+                    </select> </td>
+                  <td width="45%" align="right">Other Tools <select name="list_tools" id="list_tools" onchange="check_tools(this.value)"
+                      class="changeable">
+                      <option value="estimate_grinding_tool">Estimate Grinding Performance Tools</option>
+                      <option value="estimate_dying_tool" selected="selected">Estimate Dying Tools</option>
+                      <option value="estimate_travelling_time">Estimate Travelling Time</option>
+                      <option value="stat_calculator">Stat Calculator</option>
+                      <option value="loot_simulator">Loot Simulator</option>
+                    </select></td>
+                </tr>
+              </table>
             </td>
           </tr>
-          
           <tr>
-            <td colspan="2" align="" bgcolor="#333333"><font color="#FFFFFF"><strong>Estimated Modified Damage Output Enemy  by Critical Hit DPH</strong></font></td>
+            <td colspan="6">
+              <hr id="tr_hr_enemy_player" />
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="6">
+              <table width="100%" border="0" id="table_enemy_player">
+                <tr>
+                  <td class="">Enemy Character Level</td>
+                  <td class=""><input name="enemy_player_level" id="enemy_player_level" size="3" value="0" onchange="check_character_level(this.value, 'enemy_player')"
+                      type="text" class='inputnumber_editable' /></td>
+                  <td class=""><input name="enemy_player_implant_maxslot" id="enemy_player_implant_maxslot" size="3"
+                      value="0" disabled="disabled" readonly="readonly" type="text" class='inputnumber' />
+                    Max Implant Slot</td>
+                  <td class=""><input name="enemy_player_implant_remainingslot" id="enemy_player_implant_remainingslot"
+                      size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                    Remaining Implant Slot</td>
+                </tr>
+                <tr>
+                  <td width="12%" class="">Enemy Weapon</td>
+                  <td width="31%" class=""><select name="enemy_player_weapon" id="enemy_player_weapon" onchange="get_weapon_stat(this.value, 'dph');">
+                      <option value="" selected="selected">--Select--</option>
+                      <option value="fist">Melee - Fist</option>
+                      <option value="firepoker">Melee - Fire Poker</option>
+                      <option value="baseballbat">Melee - Baseball Bat</option>
+                      <option value="penknife">Melee - Pen Knife</option>
+                      <option value="huntingknife">Melee - Hunting Knife</option>
+                      <option value="chefknife">Melee - Chef Knife</option>
+                      <option value="cricketbat">Melee - Cricket Bat</option>
+                      <option value="golfclub">Melee - Golf Club</option>
+                      <option value="fireaxe">Melee - Fire Axe</option>
+                      <option value="combatknife">Melee - Combat Knife</option>
+                      <option value="bowieknife">Melee - Bowie Knife</option>
+                      <option value="ironpipe">Melee - Iron Pipe</option>
+                      <option value="nailbat">Melee - Nail Bat</option>
+                      <option value="razor">Melee - Razor</option>
+                      <option value="crowbar">Melee - Crowbar</option>
+                      <option value="scalpel">Melee - Scalpel</option>
+                      <option value="kris">Melee - Kris</option>
+                      <option value="shovel">Melee - Shovel</option>
+                      <option value="trenchknife">Melee - Trench Knife</option>
+                      <option value="woodaxe">Melee - Wood Axe</option>
+                      <option value="machete">Melee - Machete</option>
+                      <option value="kukri">Melee - Kukri</option>
+                      <option value="sabre">Melee - Sabre</option>
+                      <option value="sledgehammer">Melee - Sledge Hammer</option>
+                      <option value="battleaxe">Melee - Battle Axe</option>
+                      <option value="katana">Melee - Katana</option>
+                      <option value="wakizashi">Melee - Wakizashi</option>
+                      <option value="nodachi">Melee - Nodachi</option>
+                      <option value="spiker">Melee - Spiker</option>
+                      <option value="dualblade">Melee - Dual Blade</option>
+                      <option value="sharktail">Melee (Limited Edition) - Sharktail</option>
+                      <option value="gutsplitter">Melee (Limited Edition) - Gut Splitter</option>
+                      <option value="dilmarps">Chainsaw - Dilmar PS</option>
+                      <option value="ronanpro">Chainsaw - Ronan Pro</option>
+                      <option value="steelms800">Chainsaw - Steel MS800</option>
+                      <option value="grinder">Chainsaw - Grinder</option>
+                      <option value="steel090">Chainsaw - Steel 090</option>
+                      <option value="ripsawg12">Chainsaw - Ripsaw G12</option>
+                      <option value="goretooth44g">Chainsaw - Goretooth 44G</option>
+                      <option value="buzzbladern8">Chainsaw (Limited Edition) - Buzzblade RN8</option>
+                      <option value="grinderx3">Chainsaw (Limited Edition) - Grinder X3</option>
+                      <option value="betatomcat">Pistol - Beta Tomcat</option>
+                      <option value="williamsppk">Pistol - Williams PPK</option>
+                      <option value="gerringhp">Pistol - Gering HP</option>
+                      <option value="fiftyseven">Pistol - Fifty Seven</option>
+                      <option value="lock19">Pistol - Lock 19</option>
+                      <option value="koltpython">Pistol - Kolt Python</option>
+                      <option value="beta8000">Pistol - Beta 8000</option>
+                      <option value="ck75">Pistol - CK 75</option>
+                      <option value="luger">Pistol - Luger</option>
+                      <option value="lock17">Pistol - Lock 17</option>
+                      <option value="lock25">Pistol - Lock 25</option>
+                      <option value="webster1942">Pistol - Webster 1942</option>
+                      <option value="ck99">Pistol - CK 99</option>
+                      <option value="sicapollo">Pistol - SIC Apollo</option>
+                      <option value="usp">Pistol - USP</option>
+                      <option value="koltanaconda">Pistol - Kolt Anaconda</option>
+                      <option value="ck97b">Pistol - CK97B</option>
+                      <option value="desertfox">Pistol - Desert Fox</option>
+                      <option value="sw500">Pistol - SW 500</option>
+                      <option value="alphabull">Pistol - Alpha Bull</option>
+                      <option value="475magnum">Pistol - 475 Magnum</option>
+                      <option value="greyhawk55">Pistol - Greyhawk</option>
+                      <option value="doubleshot">Pistol - Doubleshot AAX</option>
+                      <option value="vlockxd11">Pistol (Limited Edition) - Vlock XD11</option>
+                      <option value="desertrat">Pistol (Limited Edition) - Desert Rat</option>
+                      <option value="betarx4">Rifle - Beta RX4</option>
+                      <option value="mini41">Rifle - Mini-41</option>
+                      <option value="sl8">Rifle - SL8</option>
+                      <option value="m24">Rifle - M24</option>
+                      <option value="m1garand">Rifle - M1 Garand</option>
+                      <option value="chesterfield">Rifle - Chesterfield</option>
+                      <option value="m21">Rifle - M21</option>
+                      <option value="glacialwarfare">Rifle - Glacial Warfare</option>
+                      <option value="msg9">Rifle - MSG-9</option>
+                      <option value="sic550">Rifle - SIC 550</option>
+                      <option value="hawkop96">Rifle - Hawk OP96</option>
+                      <option value="m82a2">Rifle - M82A2</option>
+                      <option value="dragonsvd">Rifle - Dragon SVD</option>
+                      <option value="vssvintorez">Rifle - VSS Vintorez</option>
+                      <option value="577rex">Rifle - 577 Rex</option>
+                      <option value="ironsight33f">Rifle - Ironsight</option>
+                      <option value="worgcarbine">Rifle - Worg Carbine</option>
+                      <option value="marksmang8">Rifle (Limited Edition) - Marksman G8</option>
+                      <option value="longshotpp10">Rifle (Limited Edition) - Longshot PP10</option>
+                      <option value="mancinim1">Shotgun - Mancini M1</option>
+                      <option value="highlander">Shotgun - Highlander</option>
+                      <option value="washington870">Shotgun - Washington 870</option>
+                      <option value="sega20">Shotgun - Sega-20</option>
+                      <option value="chester1300">Shotgun - Chester 1300</option>
+                      <option value="washington1100">Shotgun - Washington 1100</option>
+                      <option value="wall500">Shotgun - WALL 500</option>
+                      <option value="spsa12">Shotgun - SPSA 12</option>
+                      <option value="mannberg500">Shotgun - Mannberg 500</option>
+                      <option value="sweeper">Shotgun - Sweeper</option>
+                      <option value="usan12">Shotgun - USAN-12</option>
+                      <option value="aa12">Shotgun - AA-12</option>
+                      <option value="painshot10">Shotgun - Painshot 10</option>
+                      <option value="acebarrelgz3">Shotgun - Ace Barrel GZ3</option>
+                      <option value="biforcec7">Shotgun (Limited Edition) - Biforce C7</option>
+                      <option value="buckblast99a">Shotgun (Limited Edition) - Buckblast 99A</option>
+                      <option value="skorpion">SMG - Skorpion</option>
+                      <option value="uzi">SMG - UZI</option>
+                      <option value="fmp90">SMG - FM P90</option>
+                      <option value="mp5">SMG - MP5</option>
+                      <option value="pp90">SMG - PP90</option>
+                      <option value="grammm11">SMG - Gramm M11</option>
+                      <option value="ump">SMG - UMP</option>
+                      <option value="chicagotypewriter">SMG - Chicago Typewriter</option>
+                      <option value="k50m">SMG - K-50M</option>
+                      <option value="crissvictor">SMG - Criss Vector</option>
+                      <option value="uziel14mm">SMG - Uziel 14MM</option>
+                      <option value="streetdog99">SMG - Street Dog 99</option>
+                      <option value="handshocka8">SMG (Limited Edition) - Handshock A8</option>
+                      <option value="ninecutterx">SMG (Limited Edition) - Nine Cutter-X</option>
+                      <option value="m16">Assault Rifle - M16</option>
+                      <option value="fmfnc">Assault Rifle - FM FNC</option>
+                      <option value="sa80">Assault Rifle - SA80</option>
+                      <option value="mesaacr">Assault Rifle - Mesa ACR</option>
+                      <option value="stellaug">Assault Rifle - Stell AUG</option>
+                      <option value="xm8">Assault Rifle - XM8</option>
+                      <option value="fmfal">Assault Rifle - FM FAL</option>
+                      <option value="ak47">Assault Rifle - AK 47</option>
+                      <option value="m4">Assault Rifle - M4</option>
+                      <option value="hammerhead47">Assault Rifle - Hammerhead47</option>
+                      <option value="fmmitrail">HMG - FM Mitrail</option>
+                      <option value="fmmag">HMG - FM MAG</option>
+                      <option value="m60">HMG - M60</option>
+                      <option value="xlgunner8">HMG (Limited Edition) - XLGunner-8</option>
+                      <option value="vulcan">Minigun - Vulcan</option>
+                      <option value="scar9000">Minigun - SCAR 9000</option>
+                      <option value="gau19">Minigun (Limited Edition) - GAU-19</option>
+                      <option value="ugau19">Minigun (Limited Edition) - Unlimited Ammo GAU-19</option>
+                      <option value="ugau19v2">Minigun (Limited Edition) - Unlimited Ammo GAU-19 (Type 2)</option>
+                      <option value="wraithcannon">Minigun (Limited Edition) - Wraith Cannon</option>
+                      <option value="unlimitedwraithcannon">Minigun (Limited Edition) - Unlimited Ammo Wraith Cannon</option>
+                      <option value="m79">Explosive - M79</option>
+                      <option value="hk69">Explosive - HK69</option>
+                      <option value="gm94">Explosive - GM94</option>
+                      <option value="rg6">Explosive - RG6</option>
+                      <option value="falconmm1">Explosive - Falcon-MM1</option>
+                      <option value="xm25">Explosive - XM25</option>
+                      <option value="paw20">Explosive - PAW-20</option>
+                      <option value="immolatorad">Explosive - Immolator AD</option>
+                      <option value="junker6">Explosive - Junker 6</option>
+                      <option value="bishopce9">Explosive - Bishop CE9</option>
+                      <option value="boomerpx">Explosive - Boomer PX</option>
+                      <option value="titaniumblades">Special Gear - Titanium Blades</option>
+                      <option value="rebellion">Special Gear - Rebellion</option>
+                      <option value="xduskkris">Special Gear - X-Dusk Kris</option>
+                      <option value="xduskrazor">Special Gear - X-Dusk Razor</option>
+                      <option value="xdusksaw">Special Gear - X-Dusk Saw</option>
+                      <option value="xduskenforcer">Special Gear - X-Dusk Enforcer</option>
+                      <option value="xduskcarbine">Special Gear - X-Dusk Carbine</option>
+                      <option value="xduskstriker">Special Gear - X-Dusk Striker</option>
+                      <option value="xdusksmg">Special Gear - X-Dusk SMG</option>
+                      <option value="xduskmag">Special Gear - X-Dusk MAG</option>
+                      <option value="xdusklauncher">Special Gear - X-Dusk Launcher</option>
+                      <option value="duskkris">Special Gear - Dusk Kris</option>
+                      <option value="duskrazor">Special Gear - Dusk Razor</option>
+                      <option value="dusksaw">Special Gear - Dusk Saw</option>
+                      <option value="duskenforcer">Special Gear - Dusk Enforcer</option>
+                      <option value="duskcarbine">Special Gear - Dusk Carbine</option>
+                      <option value="duskstriker">Special Gear - Dusk Striker</option>
+                      <option value="dusksmg">Special Gear - Dusk SMG</option>
+                      <option value="duskmag">Special Gear - Dusk MAG</option>
+                      <option value="dusklauncher">Special Gear - Dusk Launcher</option>
+                      <option value="corpsecrusher">Special Gear (Limited Edition) - Corpse Crusher</option>
+                      <option value="corpsegrinder">Special Gear (Limited Edition) - Corpse Grinder</option>
+                      <option value="corpseshooter">Special Gear (Limited Edition) - Corpse Shooter</option>
+                      <option value="corpseblaster">Special Gear (Limited Edition) - Corpse Blaster</option>
+                      <option value="corpsepiercer">Special Gear (Limited Edition) - Corpse Piercer</option>
+                      <option value="corpsedestroyer">Special Gear (Limited Edition) - Corpse Destroyer</option>
+                      <option value="corpseerruptor">Special Gear (Limited Edition) - Corpse Erruptor</option>
+                      <option value="corpseripper">Special Gear (Limited Edition) - Corpse Ripper</option>
+                      <option value="amputator">Special Gear (Limited Edition) - Amputator</option>
+                      <option value="doomcane">Special Gear (Limited Edition) - Doom Cane</option>
+                      <option value="dawnrazor">Custom Gear - Dawn Razor</option>
+                      <option value="gau19betatomcat">Custom Gear - GAU-19 (Beta Tomcat)</option>
+                      <option value="patriarchblade">Custom Gear - Partriarch Blade</option>
+                      <option value="banhammer">Custom Gear - Ban Hammer</option>
+                      <option value="bm59">Custom Gear - BM59</option>
+                      <option value="tlimgun">Custom Gear - Tlim Gun</option>
+                      <option value="gaussrifle">Custom Gear - Gauss Rifle</option>
+                    </select> </td>
+                  <td width="13%" class=""><input name="enemy_player_weapon_base_dph" id="enemy_player_weapon_base_dph"
+                      size="5" value="0" readonly="readonly" type="text" class='inputnumber' />
+                    Base DPH</td>
+                  <td width="44%" class=""><input name="enemy_player_weapon_critical_hit_dph" id="enemy_player_weapon_critical_hit_dph"
+                      size="5" value="0" readonly="readonly" type="text" class='inputnumber' />
+                    Critical Hit DPH </td>
+                </tr>
+                <tr>
+                  <td class="">Enemy Implant</td>
+                  <td class=""><input name="enemy_player_rage_implant" id="enemy_player_rage_implant" onclick="check_character_implant('rage_implant', 'enemy_player')"
+                      type="checkbox" />
+                    Rage Implant </td>
+                  <td class=""><input name="enemy_player_rage_implant_slot" id="enemy_player_rage_implant_slot" size="5"
+                      value="0" disabled="disabled" onchange="count_character_implant_slot(enemy_player_implant_maxslot.value, 'rage_implant', this.value, 'enemy_player');"
+                      type="text" class='inputnumber_editable' />
+                    Slot(s)</td>
+                  <td class=""><input name="enemy_player_bonus_damage_rage_implant" id="enemy_player_bonus_damage_rage_implant"
+                      size="5" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                    % Bonus Damage Implant</td>
+                </tr>
+                <tr>
+                  <td class="">&nbsp;</td>
+                  <td class=""><input name="enemy_player_violence_implant" id="enemy_player_violence_implant" onclick="check_character_implant('violence_implant', 'enemy_player')"
+                      type="checkbox" />
+                    Violence Implant </td>
+                  <td class=""><input name="enemy_player_violence_implant_slot" id="enemy_player_violence_implant_slot"
+                      size="5" value="0" disabled="disabled" onchange="count_character_implant_slot(enemy_player_implant_maxslot.value, 'violence_implant', this.value, 'enemy_player');"
+                      type="text" class='inputnumber_editable' />
+                    Slot(s)</td>
+                  <td class=""><input name="enemy_player_bonus_damage_violence_implant" id="enemy_player_bonus_damage_violence_implant"
+                      size="5" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                    % Bonus Damage Implant</td>
+                </tr>
+                <tr>
+                  <td class="">&nbsp;</td>
+                  <td class=""><input name="enemy_player_motl_implant" id="enemy_player_motl_implant" onclick="check_character_implant('motl_implant', 'enemy_player')"
+                      type="checkbox" />
+                    MoTL Implant </td>
+                  <td class=""><select name="enemy_player_motl_implant_slot" id="enemy_player_motl_implant_slot"
+                      onchange="count_character_implant_slot(enemy_player_implant_maxslot.value, 'motl_implant', this.value, 'enemy_player');"
+                      disabled="disabled" class='inputnumber_editable'>
+                      <option value="0" selected="selected">0</option>
+                      <option value="1">1</option>
+                    </select>
+                    Slot </td>
+                  <td class=""><input name="enemy_player_bonus_damage_motl_implant" id="enemy_player_bonus_damage_motl_implant"
+                      size="5" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                    % Bonus Damage Implant</td>
+                </tr>
+                <tr class="">
+                  <td>&nbsp;</td>
+                  <td><input name="enemy_player_destruction_implant" id="enemy_player_destruction_implant" onclick="check_character_implant('destruction_implant', 'enemy_player')"
+                      type="checkbox" />
+                    Destruction Implant </td>
+                  <td><select name="enemy_player_destruction_implant_slot" id="enemy_player_destruction_implant_slot"
+                      onchange="count_character_implant_slot(enemy_player_implant_maxslot.value, 'destruction_implant', this.value, 'enemy_player');"
+                      disabled="disabled" class='inputnumber_editable'>
+                      <option value="0" selected="selected">0</option>
+                      <option value="1">1</option>
+                    </select>
+                    Slot</td>
+                  <td><input name="enemy_player_bonus_damage_destruction_implant" id="enemy_player_bonus_damage_destruction_implant"
+                      size="5" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                    % Bonus Damage Implant</td>
+                </tr>
+                <tr class="">
+                  <td>&nbsp;</td>
+                  <td><input name="enemy_player_jackofall_implant" id="enemy_player_jackofall_implant" onclick="check_character_implant('jackofall_implant', 'enemy_player')"
+                      type="checkbox" />
+                    Jack of All Implant </td>
+                  <td><select name="enemy_player_jackofall_implant_slot" id="enemy_player_jackofall_implant_slot"
+                      onchange="count_character_implant_slot(enemy_player_implant_maxslot.value, 'jackofall_implant', this.value, 'enemy_player');"
+                      disabled="disabled" class='inputnumber_editable'>
+                      <option value="0" selected="selected">0</option>
+                      <option value="1">1</option>
+                    </select>
+                    Slot</td>
+                  <td><input name="enemy_player_bonus_damage_jackofall_implant" id="enemy_player_bonus_damage_jackofall_implant"
+                      size="5" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                    % Bonus Damage Implant</td>
+                </tr>
+                <tr class="">
+                  <td> Enemy Boost</td>
+                  <td><input name="enemy_player_damage_boost" id="enemy_player_damage_boost" onclick="check_character_boost('damage_boost', 'enemy_player')"
+                      type="checkbox" />
+                    General Damage Boost</td>
+                  <td colspan="2"><input name="enemy_player_bonus_damage_boost" id="enemy_player_bonus_damage_boost"
+                      size="5" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                    % Bonus Damage Boost</td>
+                </tr>
+                <tr class="">
+                  <td>&nbsp;</td>
+                  <td><input name="enemy_player_clan_damage_boost" id="enemy_player_clan_damage_boost" onclick="check_character_boost('clan_damage_boost', 'enemy_player')"
+                      type="checkbox" />
+                    Clan Damage Boost</td>
+                  <td colspan="2"><input name="enemy_player_bonus_clan_damage_boost" id="enemy_player_bonus_clan_damage_boost"
+                      size="5" value="0" disabled="disabled" type="text" class='inputnumber_editable' onchange="check_character_boost('clan_damage_boost', 'enemy_player')" />
+                    % Bonus Damage Boost</td>
+                </tr>
+                <tr class="">
+                  <td>Weekend Event Damage</td>
+                  <td>
+                    <select name="enemy_player_weekend_event_damage" id="enemy_player_weekend_event_damage" onchange="check_character_weekend_event_damage(this.value, 'enemy_player')">
+                      <option value="" selected="selected">--Select--</option>
+                      <option value="Y">Yes</option>
+                      <option value="N">No</option>
+                    </select></td>
+                  <td colspan="2"><input name="enemy_player_bonus_weekend_event_damage" id="enemy_player_bonus_weekend_event_damage"
+                      size="5" value="0" disabled="disabled" type="text" class='inputnumber_editable' onchange="check_character_weekend_event_damage(this.value, 'enemy_player')" />
+                    % Bonus Damage Event</td>
+                </tr>
+              </table>
+            </td>
           </tr>
           <tr>
-            <td>Damage  Output Formula</td>
-            <td> Modified Enemy  Critical Hit DPH - Total Damage Reduction Critical Hit DPH</td>
+            <td colspan="8">
+              <hr id="tr_hr_enemy_zombie" />
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="6">
+              <table width="100%" border="0" id="table_enemy_zombie">
+
+                <tr class="">
+                  <td width="9%"> Zombie Type</td>
+                  <td width="24%">
+                    <select name="enemy_zombie" id="enemy_zombie" onchange="get_zombie_stat(this.value, 'enemy_zombie', attack_type.value)">
+                      <option value="" selected="selected">--Select--</option>
+                      <option value="dog">Normal Zombie - Dog</option>
+                      <option value="female">Normal Zombie - Female</option>
+                      <option value="male">Normal Zombie - Male</option>
+                      <option value="fatfemale">Normal Zombie - Fat Female</option>
+                      <option value="fatmale">Normal Zombie - Fat Male</option>
+                      <option value="burnedfemale">Normal Zombie - Burned Female</option>
+                      <option value="irradiatedfemale">Normal Zombie - Irradiated Female</option>
+                      <option value="burnedmale">Normal Zombie - Burned Male</option>
+                      <option value="irradiatedmale">Normal Zombie - Irradiated Male</option>
+                      <option value="blooddog">Normal Zombie - Blood Dog</option>
+                      <option value="longarm">Normal Zombie - Long Arm</option>
+                      <option value="rumbler">Normal Zombie - Rumbler</option>
+                      <option value="blacklongarm">Normal Zombie - Black Long Arm</option>
+                      <option value="irradiatedlongarm">Normal Zombie - Irradiated Long Arm</option>
+                      <option value="fleshhound">Normal Zombie - Flesh Hound</option>
+                      <option value="blackrumbler">Normal Zombie - Black Rumbler</option>
+                      <option value="irradiatedrumbler">Normal Zombie - Irradiated Rumbler</option>
+                      <option value="siren">Normal Zombie - Siren</option>
+                      <option value="smallbloat">Normal Zombie - Small Bloat</option>
+                      <option value="bloat">Normal Zombie - Bloat</option>
+                      <option value="reaper">Normal Zombie - Reaper</option>
+                      <option value="tendril">Normal Zombie - Tendril</option>
+                      <option value="bone">Normal Zombie - Bone</option>
+                      <option value="spider">Normal Zombie - Spider</option>
+                      <option value="blacktendril">Normal Zombie - Black Tendril</option>
+                      <option value="brute">Normal Zombie - Brute</option>
+                      <option value="leaper">Normal Zombie - Leaper</option>
+                      <option value="hellhound">Normal Zombie - Hell Hound</option>
+                      <option value="blackbone">Normal Zombie - Black Bone</option>
+                      <option value="flamingzombie">Mini Boss Zombie - Flaming Zombie</option>
+                      <option value="flaminglongarm">Mini Boss Zombie - Flaming Long Arm</option>
+                      <option value="flamingrumbler">Mini Boss Zombie - Flaming Rumbler</option>
+                      <option value="flamingfleshhound">Mini Boss Zombie - Flaming Flesh Hound</option>
+                      <option value="mother">Boss Zombie - Mother</option>
+                      <option value="flamingmother">Boss Zombie - Flaming Mother</option>
+                      <option value="titan">Boss Zombie - Titan</option>
+                      <option value="flamingtitan">Boss Zombie - Flaming Titan</option>
+                      <option value="wraith">Boss Zombie - Wraith</option>
+                      <option value="flamingwraith">Boss Zombie - Flaming Wraith</option>
+                      <option value="giantspider">Boss Zombie - Giant Spider</option>
+                      <option value="flaminggiantspider">Boss Zombie - Flaming Giant Spider</option>
+                      <option value="blacktitan">Boss Zombie - Black Titan</option>
+                      <option value="flamingblacktitan">Boss Zombie - Flaming Black Titan</option>
+                      <option value="devilhound">Boss Zombie - Devil Hound</option>
+                      <option value="elf">Seasonal Zombie - Elf</option>
+                      <option value="pumpkinhead">Seasonal Zombie - Pumpkin Head</option>
+                      <option value="egghead">Seasonal Zombie - Egg Head</option>
+                      <option value="santa">Seasonal Zombie - Santa</option>
+                      <option value="reindeer">Seasonal Zombie - Reindeer</option>
+                      <option value="slenderman">Seasonal Zombie - Slenderman</option>
+                    </select> </td>
+                  <td width="7%">Attack Type</td>
+                  <td width="15%"><select name="attack_type" id="attack_type" onchange="get_zombie_stat(enemy_zombie.value, 'enemy_zombie', this.value)">
+                      <option value="">--Select--</option>
+                      <option value="melee">Melee</option>
+                      <option value="vomit">Vomit</option>
+                      <option value="explosion">Explosion</option>
+                    </select> </td>
+                  <td width="22%"><input name="enemy_zombie_base_dph" id="enemy_zombie_base_dph" size="3" value="0"
+                      readonly="readonly" type="text" class='inputnumber' />
+                    Base DPH</td>
+                  <td width="23%"><input name="enemy_zombie_critical_hit_dph" id="enemy_zombie_critical_hit_dph" size="3"
+                      value="0" readonly="readonly" type="text" class='inputnumber' />
+                    Critical Hit DPH</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="6">
+              <hr />
+            </td>
           </tr>
           <tr>
-            <td>Result</td>
-            <td><label id="lbl_estimated_modified_damage_output_by_critical_hit_dph"> 0 DPH</label>            </td>
+            <td colspan="6">
+              <table width="100%" border="0">
+                <tr class="">
+                  <td width="100%">
+                    <table width="100%" border="0">
+                      <tr>
+                        <td width="16%" class="">Total All Enemy Damage Per Hit </td>
+                        <td width="16%" class=""><input name="total_added_enemy_base_dph" id="total_added_enemy_base_dph"
+                            size="10" value="0" readonly="readonly" type="text" class='inputnumber' />
+                          Base DPH </td>
+                        <td width="68%" class=""><input name="total_added_enemy_critical_hit_dph" id="total_added_enemy_critical_hit_dph"
+                            size="10" value="0" readonly="readonly" type="text" class='inputnumber' />
+                          Critical Hit DPH </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td colspan="2">
+                    <hr />
+                  </td>
+                </tr>
+                <tr class="">
+                  <td>
+                    <table width="100%" border="0">
+                      <tr class="">
+                        <td width="9%">Choose Your Role</td>
+                        <td width="91%"><select name="player_role_option" id="player_role_option" onchange="check_player_role(this.value)">
+                            <option value="normal_player" selected="selected">AS Player</option>
+                            <option value="zombie_player">AS Zombie</option>
+                          </select>
+                          <input type='hidden' id='player_role' name='player_role' value='normal_player' readonly="readonly">
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td>
+                    <hr id='hr_zombie_player' />
+                  </td>
+                </tr>
+                <tr class="">
+                  <td>
+                    <table width="100%" border="0" id="table_zombie_player">
+                      <tr class="">
+                        <td width="9%"> Zombie Type</td>
+                        <td width="25%"><select name="zombie_player" id="zombie_player" onchange="get_zombie_stat(this.value, 'zombie_player','')">
+                            <option value="" selected="selected">--Select--</option>
+                            <option value="dog">Normal Zombie - Dog</option>
+                            <option value="female">Normal Zombie - Female</option>
+                            <option value="male">Normal Zombie - Male</option>
+                            <option value="fatfemale">Normal Zombie - Fat Female</option>
+                            <option value="fatmale">Normal Zombie - Fat Male</option>
+                            <option value="burnedfemale">Normal Zombie - Burned Female</option>
+                            <option value="irradiatedfemale">Normal Zombie - Irradiated Female</option>
+                            <option value="burnedmale">Normal Zombie - Burned Male</option>
+                            <option value="irradiatedmale">Normal Zombie - Irradiated Male</option>
+                            <option value="blooddog">Normal Zombie - Blood Dog</option>
+                            <option value="longarm">Normal Zombie - Long Arm</option>
+                            <option value="rumbler">Normal Zombie - Rumbler</option>
+                            <option value="blacklongarm">Normal Zombie - Black Long Arm</option>
+                            <option value="irradiatedlongarm">Normal Zombie - Irradiated Long Arm</option>
+                            <option value="fleshhound">Normal Zombie - Flesh Hound</option>
+                            <option value="blackrumbler">Normal Zombie - Black Rumbler</option>
+                            <option value="irradiatedrumbler">Normal Zombie - Irradiated Rumbler</option>
+                            <option value="siren">Normal Zombie - Siren</option>
+                            <option value="smallbloat">Normal Zombie - Small Bloat</option>
+                            <option value="bloat">Normal Zombie - Bloat</option>
+                            <option value="reaper">Normal Zombie - Reaper</option>
+                            <option value="tendril">Normal Zombie - Tendril</option>
+                            <option value="bone">Normal Zombie - Bone</option>
+                            <option value="spider">Normal Zombie - Spider</option>
+                            <option value="blacktendril">Normal Zombie - Black Tendril</option>
+                            <option value="brute">Normal Zombie - Brute</option>
+                            <option value="leaper">Normal Zombie - Leaper</option>
+                            <option value="hellhound">Normal Zombie - Hell Hound</option>
+                            <option value="blackbone">Normal Zombie - Black Bone</option>
+                            <option value="flamingzombie">Mini Boss Zombie - Flaming Zombie</option>
+                            <option value="flaminglongarm">Mini Boss Zombie - Flaming Long Arm</option>
+                            <option value="flamingrumbler">Mini Boss Zombie - Flaming Rumbler</option>
+                            <option value="flamingfleshhound">Mini Boss Zombie - Flaming Flesh Hound</option>
+                            <option value="mother">Boss Zombie - Mother</option>
+                            <option value="flamingmother">Boss Zombie - Flaming Mother</option>
+                            <option value="titan">Boss Zombie - Titan</option>
+                            <option value="flamingtitan">Boss Zombie - Flaming Titan</option>
+                            <option value="wraith">Boss Zombie - Wraith</option>
+                            <option value="flamingwraith">Boss Zombie - Flaming Wraith</option>
+                            <option value="giantspider">Boss Zombie - Giant Spider</option>
+                            <option value="flaminggiantspider">Boss Zombie - Flaming Giant Spider</option>
+                            <option value="blacktitan">Boss Zombie - Black Titan</option>
+                            <option value="flamingblacktitan">Boss Zombie - Flaming Black Titan</option>
+                            <option value="devilhound">Boss Zombie - Devil Hound</option>
+                            <option value="elf">Seasonal Zombie - Elf</option>
+                            <option value="pumpkinhead">Seasonal Zombie - Pumpkin Head</option>
+                            <option value="egghead">Seasonal Zombie - Egg Head</option>
+                            <option value="santa">Seasonal Zombie - Santa</option>
+                            <option value="reindeer">Seasonal Zombie - Reindeer</option>
+                            <option value="slenderman">Seasonal Zombie - Slenderman</option>
+                          </select>
+                        </td>
+                        <td width="66%"><input name="zombie_player_endurance_point" id="zombie_player_endurance_point"
+                            size="3" value="0" readonly="readonly" type="text" class='inputnumber' />
+                          HP</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td>
+                    <hr id='hr_normal_player' />
+                  </td>
+                </tr>
+                <tr class="">
+                  <td>
+                    <table width="100%" border="0" id='table_normal_player'>
+                      <tr class="">
+                        <td width="15%">Character Level</td>
+                        <td width="23%"><input name="player_level" id="player_level" size="3" value="0" onchange="check_character_level(this.value, 'player')"
+                            type="text" class='inputnumber_editable' /></td>
+                        <td width="13%"><input name="player_implant_maxslot" id="player_implant_maxslot" size="3" value="0"
+                            disabled="disabled" readonly="readonly" type="text" class='inputnumber' />
+                          Max Implant Slot</td>
+                        <td width="49%"><input name="player_implant_remainingslot" id="player_implant_remainingslot"
+                            size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                          Remaining Implant Slot</td>
+                      </tr>
+                      <tr class="">
+                        <td>Endurance Point</td>
+                        <td><input name="player_endurance_point" id="player_endurance_point" size="3" value="25"
+                            onchange="check_endurance_point(this.value, 'player')" type="text" class='inputnumber_editable' /></td>
+                        <td><input name="player_max_endurance_point" id="player_max_endurance_point" size="3" value="0"
+                            disabled="disabled" readonly="readonly" type="text" class='inputnumber' />
+                          Max Endurance Point</td>
+                        <td><input name="player_remaining_endurance_point" id="player_remaining_endurance_point" size="3"
+                            value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                          Remaining Endurance Point</td>
+                      </tr>
+                      <tr class="">
+                        <td>Armor</td>
+                        <td><select name="player_armor_type" id="player_armor_type" onchange="get_armor_stat(this.value, 'player')">
+                            <option value="" selected="selected">--Select--</option>
+                            <option value="sportsarmour">Non Strength - Sports Armour</option>
+                            <option value="zylonvest">Non Strength - Zylon Vest</option>
+                            <option value="kevlarvest">Non Strength - Kevlar Vest</option>
+                            <option value="meshslx">Non Strength - Mesh SLX</option>
+                            <option value="meshrx2">Non Strength - Mesh RX2</option>
+                            <option value="exterminatormesh">Non Strength - Exterminator Mesh</option>
+                            <option value="exterminatormeshgt">Non Strength - Exterminator Mesh GT</option>
+                            <option value="nomadmesh">Non Strength - Nomad Mesh</option>
+                            <option value="duskmesh">Non Strength - Dusk Mesh</option>
+                            <option value="scavengermesh">Non Strength - Scavenger Mesh</option>
+                            <option value="shinobumesh">Non Strength - Shinobu Mesh</option>
+                            <option value="xduskmesh">Non Strength - X-Dusk Mesh</option>
+                            <option value="hazardmesh">Non Strength - Hazard Mesh</option>
+                            <option value="flakjacket">Strength - Flak Jacket</option>
+                            <option value="sn42">Strength - SN-42</option>
+                            <option value="corpsecarapace">Strength - Corpse Carapace</option>
+                            <option value="reactiveslx">Strength - Reactive SLX</option>
+                            <option value="reactivext800">Strength - Reactive XT800</option>
+                            <option value="exterminatorreactive">Strength - Exterminator Reactive</option>
+                            <option value="exterminatorreactivext">Strength - Exterminator Reactive XT</option>
+                            <option value="bioreactive">Strength - Bio Reactive</option>
+                            <option value="duskreactive">Strength - Dusk Reactive</option>
+                            <option value="steelcasereactive">Strength - Steelcase Reactive</option>
+                            <option value="tatakaureactive">Strength - Tatakau Reactive</option>
+                            <option value="xduskreactive">Strength - X-Dusk Reactive</option>
+                            <option value="scarabreactive">Strength - Scarab Reactive</option>
+                            <option value="vengeanceguard">Strength - Vengeance Guard</option>
+                          </select> </td>
+                        <td><input name="player_armor_durability" id="player_armor_durability" size="3" value="0"
+                            readonly="readonly" type="text" class='inputnumber' />
+                          Durability</td>
+                        <td><input name="player_armor_damage_absorption" id="player_armor_damage_absorption" size="3"
+                            value="0" readonly="readonly" type="text" class='inputnumber' />
+                          % Damage Absorption</td>
+                      </tr>
+                      <tr class="">
+                        <td>Implant</td>
+                        <td><input name="player_rage_implant" id="player_rage_implant" onclick="check_character_implant('rage_implant', 'player')"
+                            type="checkbox" />
+                          Rage Implant </td>
+                        <td><input name="player_rage_implant_slot" id="player_rage_implant_slot" size="3" value="0"
+                            disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'rage_implant', this.value, 'player');"
+                            type="text" class='inputnumber_editable' />
+                          Slot(s)</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_experience_implant" id="player_experience_implant" onclick="check_character_implant('experience_implant', 'player')"
+                            type="checkbox" class='inputnumber' />
+                          Experience Implant </td>
+                        <td><input name="player_experience_implant_slot" id="player_experience_implant_slot" size="3"
+                            value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'experience_implant', this.value, 'player');"
+                            type="text" class='inputnumber_editable' />
+                          Slot(s)</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_agility_implant" id="player_agility_implant" onclick="check_character_implant('agility_implant', 'player')"
+                            type="checkbox" />
+                          Agility Implant </td>
+                        <td><input name="player_agility_implant_slot" id="player_agility_implant_slot" size="3" value="0"
+                            disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'agility_implant', this.value, 'player');"
+                            type="text" class='inputnumber_editable' />
+                          Slot(s)</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_survival_implant" id="player_survival_implant" onclick="check_character_implant('survival_implant', 'player')"
+                            type="checkbox" />
+                          Survival Implant </td>
+                        <td><input name="player_survival_implant_slot" id="player_survival_implant_slot" size="3" value="0"
+                            disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'survival_implant', this.value, 'player');"
+                            type="text" class='inputnumber_editable' />
+                          Slot(s)</td>
+                        <td><input name="player_bonus_damage_reduction_survival_implant" id="player_bonus_damage_reduction_survival_implant"
+                            size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                          % Bonus Damage Reduction Implant</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_notoriety_implant" id="player_notoriety_implant" onclick="check_character_implant('notoriety_implant', 'player')"
+                            type="checkbox" />
+                          Notoriety Implant </td>
+                        <td><input name="player_notoriety_implant_slot" id="player_notoriety_implant_slot" size="3"
+                            value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value,  'notoriety_implant', this.value, 'player');"
+                            type="text" class='inputnumber_editable' />
+                          Slot(s)</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_hunter_implant" id="player_hunter_implant" onclick="check_character_implant('hunter_implant', 'player')"
+                            type="checkbox" />
+                          Hunter Implant </td>
+                        <td><input name="player_hunter_implant_slot" id="player_hunter_implant_slot" size="3" value="0"
+                            disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'hunter_implant', this.value, 'player');"
+                            type="text" class='inputnumber_editable' />
+                          Slot(s)</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_scavenger_implant" id="player_scavenger_implant" onclick="check_character_implant('scavenger_implant', 'player')"
+                            type="checkbox" />
+                          Scavenger Implant </td>
+                        <td><input name="player_scavenger_implant_slot" id="player_scavenger_implant_slot" size="3"
+                            value="0" disabled="disabled" onchange="count_character_implant_slot(implant_maxslot.value, 'scavenger_implant', this.value, 'player');"
+                            type="text" class='inputnumber_editable' />
+                          Slot(s)</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_ingenuity_implant" id="player_ingenuity_implant" onclick="check_character_implant('ingenuity_implant', 'player')"
+                            type="checkbox" />
+                          Ingenuity Implant </td>
+                        <td><input name="player_ingenuity_implant_slot" id="player_ingenuity_implant_slot" size="3"
+                            value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value,  'ingenuity_implant', this.value, 'player');"
+                            type="text" class='inputnumber_editable' />
+                          Slot(s)</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_wealth_implant" id="player_wealth_implant" onclick="check_character_implant('wealth_implant', 'player')"
+                            type="checkbox" />
+                          Wealth Implant </td>
+                        <td><input name="player_wealth_implant_slot" id="player_wealth_implant_slot" size="3" value="0"
+                            disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'wealth_implant', this.value, 'player');"
+                            type="text" class='inputnumber_editable' />
+                          Slot(s)</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>Elite Implant</td>
+                        <td><input name="player_violence_implant" id="player_violence_implant" onclick="check_character_implant('violence_implant', 'player')"
+                            type="checkbox" />
+                          Violence Implant </td>
+                        <td><input name="player_violence_implant_slot" id="player_violence_implant_slot" size="3" value="0"
+                            disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'violence_implant', this.value, 'player');"
+                            type="text" class='inputnumber_editable' />
+                          Slot(s)</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_perception_implant" id="player_perception_implant" onclick="check_character_implant('perception_implant', 'player')"
+                            type="checkbox" />
+                          Perception Implant </td>
+                        <td><input name="player_perception_implant_slot" id="player_perception_implant_slot" size="3"
+                            value="0" disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'perception_implant', this.value, 'player');"
+                            type="text" class='inputnumber_editable' />
+                          Slot(s)</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_hyper_implant" id="player_hyper_implant" onclick="check_character_implant('hyper_implant', 'player')"
+                            type="checkbox" />
+                          Hyper Implant </td>
+                        <td><input name="player_hyper_implant_slot" id="player_hyper_implant_slot" size="3" value="0"
+                            disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'hyper_implant', this.value, 'player');"
+                            type="text" class='inputnumber_editable' />
+                          Slot(s)</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_ironskin_implant" id="player_ironskin_implant" onclick="check_character_implant('ironskin_implant', 'player')"
+                            type="checkbox" />
+                          Ironskin Implant</td>
+                        <td><input name="player_ironskin_implant_slot" id="player_ironskin_implant_slot" size="3" value="0"
+                            disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'ironskin_implant', this.value, 'player');"
+                            type="text" class='inputnumber_editable' />
+                          Slot(s)</td>
+                        <td><input name="player_bonus_damage_reduction_ironskin_implant" id="player_bonus_damage_reduction_ironskin_implant"
+                            size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                          % Bonus Damage Reduction Implant</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_salvage_implant" id="player_salvage_implant" onclick="check_character_implant('salvage_implant', 'player')"
+                            type="checkbox" />
+                          Salvage Implant</td>
+                        <td><input name="player_salvage_implant_slot" id="player_salvage_implant_slot" size="3" value="0"
+                            disabled="disabled" onchange="count_character_implant_slot(player_implant_maxslot.value, 'salvage_implant', this.value, 'player');"
+                            type="text" class='inputnumber_editable' />
+                          Slot(s)</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td height="29">Unique Implant</td>
+                        <td><input name="player_motl_implant" id="player_motl_implant" onclick="check_character_implant('motl_implant', 'player')"
+                            type="checkbox" />
+                          MoTL Implant </td>
+                        <td><select name="player_motl_implant_slot" id="player_motl_implant_slot" onchange="count_character_implant_slot(player_implant_maxslot.value, 'motl_implant', this.value, 'player');"
+                            disabled="disabled" class='inputnumber_editable'>
+                            <option value="0" selected="selected">0</option>
+                            <option value="1">1</option>
+                          </select>
+                          Slot </td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_destruction_implant" id="player_destruction_implant" onclick="check_character_implant('destruction_implant', 'player')"
+                            type="checkbox" />
+                          Destruction Implant </td>
+                        <td><select name="player_destruction_implant_slot" id="player_destruction_implant_slot"
+                            onchange="count_character_implant_slot(player_implant_maxslot.value, 'destruction_implant', this.value, 'player');"
+                            disabled="disabled" class='inputnumber_editable'>
+                            <option value="0" selected="selected">0</option>
+                            <option value="1">1</option>
+                          </select>
+                          Slot</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_genius_implant" id="player_genius_implant" onclick="check_character_implant('genius_implant', 'player')"
+                            type="checkbox" />
+                          Genius Implant </td>
+                        <td><select name="player_genius_implant_slot" id="player_genius_implant_slot" onchange="count_character_implant_slot(player_implant_maxslot.value, 'genius_implant', this.value, 'player');"
+                            disabled="disabled" class='inputnumber_editable'>
+                            <option value="0" selected="selected">0</option>
+                            <option value="1">1</option>
+                          </select>
+                          Slot</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_haste_implant" id="player_haste_implant" onclick="check_character_implant('haste_implant', 'player')"
+                            type="checkbox" />
+                          Haste Implant</td>
+                        <td><select name="player_haste_implant_slot" id="player_haste_implant_slot" disabled="disabled"
+                            onchange="count_character_implant_slot(player_implant_maxslot.value, 'haste_implant', this.value, 'player');"
+                            class='inputnumber_editable'>
+                            <option value="0" selected="selected">0</option>
+                            <option value="1">1</option>
+                          </select>
+                          Slot</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_looter_implant" id="player_looter_implant" onclick="check_character_implant('looter_implant', 'player')"
+                            type="checkbox" />
+                          Looter Implant</td>
+                        <td><select name="player_looter_implant_slot" id="player_looter_implant_slot" disabled="disabled"
+                            onchange="count_character_implant_slot(player_implant_maxslot.value, 'looter_implant', this.value, 'player');"
+                            class='inputnumber_editable'>
+                            <option value="0" selected="selected">0</option>
+                            <option value="1">1</option>
+                          </select>
+                          Slot</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_jackofall_implant" id="player_jackofall_implant" onclick="check_character_implant('jackofall_implant', 'player')"
+                            type="checkbox" />
+                          Jack of All Implant </td>
+                        <td><select name="player_jackofall_implant_slot" id="player_jackofall_implant_slot" onchange="count_character_implant_slot(player_implant_maxslot.value, 'jackofall_implant', this.value, 'player');"
+                            disabled="disabled" class='inputnumber_editable'>
+                            <option value="0" selected="selected">0</option>
+                            <option value="1">1</option>
+                          </select>
+                          Slot </td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>General Boost</td>
+                        <td><input name="player_damage_boost" id="player_damage_boost" type="checkbox" />
+                          Damage Boost</td>
+                        <td colspan="2">&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_exp_boost" id="player_exp_boost" type="checkbox" />
+                          Exp Boost</td>
+                        <td colspan="2">&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_speed_boost" id="player_speed_boost" type="checkbox" />
+                          Speed Boost</td>
+                        <td colspan="2">&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>Clan Boost</td>
+                        <td><input name="player_clan_damage_boost" id="player_clan_damage_boost" type="checkbox" />
+                          Clan Damage Boost</td>
+                        <td colspan="2">&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>&nbsp;</td>
+                        <td><input name="player_clan_exp_boost" id="player_clan_exp_boost" type="checkbox" />
+                          Clan Exp Boost</td>
+                        <td colspan="2">&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>Character Class</td>
+                        <td><select name="player_char_class" id="player_char_class">
+                            <option value="" selected="selected">--Select--</option>
+                            <option value="farmer">Farmer</option>
+                            <option value="scientist">Scientist</option>
+                            <option value="engineer">Engineer</option>
+                            <option value="doctor">Doctor</option>
+                            <option value="chef">Chef</option>
+                            <option value="boxer">Boxer</option>
+                            <option value="soldier">Soldier</option>
+                            <option value="policeofficer">Police Officer</option>
+                            <option value="fireman">Fireman</option>
+                            <option value="athlete">Athlete</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="priest">Priest</option>
+                            <option value="lawyer">Lawyer</option>
+                            <option value="accountant">Accountant</option>
+                            <option value="journalist">Journalist</option>
+                            <option value="actor">Actor</option>
+                            <option value="stockbroker">Stock Broker</option>
+                            <option value="architect">Architect</option>
+                            <option value="entertainer">Entertainer</option>
+                            <option value="student">Student</option>
+                          </select></td>
+                        <td colspan="2">&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>Hunger State</td>
+                        <td><select name="player_hunger_state" id="player_hunger_state">
+                            <option value="" selected="selected">--Select--</option>
+                            <option value="nourished">Nourished</option>
+                            <option value="fine">Fine</option>
+                            <option value="hungry">Hungry</option>
+                            <option value="starving">Starving</option>
+                          </select> </td>
+                        <td colspan="2">&nbsp;</td>
+                      </tr>
+                      <tr class="">
+                        <td>Weekend Event Damage Reduction</td>
+                        <td><select name="player_weekend_event_damage_reduction" id="player_weekend_event_damage_reduction"
+                            onchange="check_character_weekend_event_damage(this.value, 'player')">
+                            <option value="" selected="selected">--Select--</option>
+                            <option value="Y">Yes</option>
+                            <option value="N">No</option>
+                          </select></td>
+                        <td colspan="2"><input name="player_bonus_weekend_event_damage_reduction" id="player_bonus_weekend_event_damage_reduction"
+                            size="3" value="0" disabled="disabled" type="text" class='inputnumber_editable' />
+                          % Bonus Damage Reduction Event</td>
+                      </tr>
+                      <tr class="">
+                        <td>GM State</td>
+                        <td><select name="player_gm_state" id="player_gm_state">
+                            <option value="" selected="selected">--Select--</option>
+                            <option value="Y">GM</option>
+                            <option value="N">Non GM</option>
+                          </select> </td>
+                        <td colspan="2">&nbsp;</td>
+                      </tr>
+
+                    </table>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
           </tr>
-          
           <tr>
-            <td colspan="2" align="" bgcolor="#333333"><font color="#FFFFFF"><strong>Estimated Max Hits Taken Before Dead by Base DPH</strong></font></td>
-            </tr>
-          <tr>
-            <td width="13%">Dying Formula</td>
-            <td width="87%">Player Equivalent Health / Modified Damage Output Enemy  Base DPH</td>
+            <td colspan="6">
+              <hr>
+            </td>
           </tr>
           <tr>
-            <td>Result</td>
-            <td><label id="lbl_estimated_max_hit_before_die_by_base_dph"> 0 Hits</label>            </td>
+            <td colspan="6">
+              <table width="100%" border="0">
+                <tr class="">
+                  <td width="10%">&nbsp;</td>
+                  <td width="78%">
+                    <input name="btnprocess" id="btnprocess" value="Process" onclick="process_all_dying()" type="button" />
+                    <input name="btnreset" id="btnreset" value="Reset" type="reset" />
+                    <input name="btndownload" id="btndownload" value="Download Excel Formula" onclick="download_excel_dying_formula()"
+                      type="button" /> </td>
+                  <td width="3%">&nbsp;</td>
+                  <td width="3%">&nbsp;</td>
+                  <td width="3%">&nbsp;</td>
+                  <td width="3%">&nbsp;</td>
+                </tr>
+              </table>
+            </td>
           </tr>
           <tr>
-            <td colspan="2" align="" bgcolor="#333333"><font color="#FFFFFF"><strong>Estimated Max Hits Taken Before Dead by Critical Hit DPH</strong></font></td>
-            </tr>
-          <tr>
-            <td>Dying Formula</td>
-            <td>Player Equivalent Health / Modified Damage Output Enemy Critical Hit DPH </td>
+            <td colspan="6">
+              <hr>
+            </td>
           </tr>
           <tr>
-            <td>Result</td>
-            <td><label id="lbl_estimated_max_hit_before_die_by_critical_hit_dph"> 0 Hits</label>            </td>
+            <td colspan="6">
+              <table border="0" width="100%">
+                <tbody>
+                  <tr>
+                    <td width="100%" align="">
+                      <table width="100%" border="0">
+                        <tr>
+                          <td colspan="2" align="" bgcolor="#333333">
+                            <font color="#FFFFFF"><strong>Estimated Modified Damage Output Enemy by Base DPH</strong></font>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Damage Output Formula</td>
+                          <td> Modified Enemy Base DPH - Total Damage Reduction Base DPH</td>
+                        </tr>
+                        <tr>
+                          <td>Result</td>
+                          <td><label id="lbl_estimated_modified_damage_output_by_base_dph"> 0 DPH</label>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td colspan="2" align="" bgcolor="#333333">
+                            <font color="#FFFFFF"><strong>Estimated Modified Damage Output Enemy by Critical Hit DPH</strong></font>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Damage Output Formula</td>
+                          <td> Modified Enemy Critical Hit DPH - Total Damage Reduction Critical Hit DPH</td>
+                        </tr>
+                        <tr>
+                          <td>Result</td>
+                          <td><label id="lbl_estimated_modified_damage_output_by_critical_hit_dph"> 0 DPH</label> </td>
+                        </tr>
+
+                        <tr>
+                          <td colspan="2" align="" bgcolor="#333333">
+                            <font color="#FFFFFF"><strong>Estimated Max Hits Taken Before Dead by Base DPH</strong></font>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td width="13%">Dying Formula</td>
+                          <td width="87%">Player Equivalent Health / Modified Damage Output Enemy Base DPH</td>
+                        </tr>
+                        <tr>
+                          <td>Result</td>
+                          <td><label id="lbl_estimated_max_hit_before_die_by_base_dph"> 0 Hits</label> </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" align="" bgcolor="#333333">
+                            <font color="#FFFFFF"><strong>Estimated Max Hits Taken Before Dead by Critical Hit DPH</strong></font>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Dying Formula</td>
+                          <td>Player Equivalent Health / Modified Damage Output Enemy Critical Hit DPH </td>
+                        </tr>
+                        <tr>
+                          <td>Result</td>
+                          <td><label id="lbl_estimated_max_hit_before_die_by_critical_hit_dph"> 0 Hits</label> </td>
+                        </tr>
+
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
           </tr>
-          
-        </table></td>
-      </tr>
-  </tbody></table></td>
-  </tr>
-  <tr>
-    <td colspan="6">  <hr>  </td>
-  </tr>
-  <tr>
-    <td colspan="6" bgcolor="#333333"><font color="#FFFFFF">
-    <h2 align="center">Best View With Mozilla Firefox and Google Chrome at 1366 x 768 pixels</h2>
-    </font></td>
-  </tr>
-  <tr>
-<td colspan="6" align="right">    <font align="right" color="white">Made by Hurricanos @ 2017</font></td>
-</tr>
-<tr>
-                  <td colspan="8" align="center">
-                  <!--
+          <tr>
+            <td colspan="6">
+              <hr>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6" bgcolor="#333333">
+              <font color="#FFFFFF">
+                <h2 align="center">Best View With Mozilla Firefox and Google Chrome at 1366 x 768 pixels</h2>
+              </font>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6" align="right">
+              <font align="right" color="white">Made by Hurricanos @ 2017</font>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="8" align="center">
+              <!--
                   <audio autoplay loop>
                       <source src="df_night_one.ogg" type="audio/ogg">
                     </audio>
                     -->
-                  </td>
-              </tr>
-</tbody></table>
-</form>
-</fieldset>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </fieldset>
 
 
-</body></html>
+</body>
+
+</html>

@@ -1,792 +1,1063 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-<script type="text/javascript" src="menu_tools.js"></script>
-<script type="text/javascript" src="main_program_looting_simulator.js"></script>
-<script type="text/javascript" src="db_looting_items.js"></script>
-<script type="text/javascript" src="db_looting_items_boss.js"></script>
-<script type="text/javascript" src="db_item_scraps.js"></script>
+  <script type="text/javascript" src="menu_tools.js"></script>
+  <script type="text/javascript" src="main_program_looting_simulator.js"></script>
+  <script type="text/javascript" src="db_looting_items.js"></script>
+  <script type="text/javascript" src="db_looting_items_boss.js"></script>
+  <script type="text/javascript" src="db_item_scraps.js"></script>
 
-<link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>DF - Looting Simulator</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>DF - Looting Simulator</title>
 </head>
 
-<body  class="settings">
-<fieldset>
+<body class="settings">
+  <fieldset>
 
-<form name="myform" id="myform">
-<table width="100%" border="0">
-<tr>
-<td bgcolor="#333333">
-		<font color="#FFFFFF">
-		<h1 align="center" >DEAD FRONTIER - LOOTING SIMULATOR</h1>
-		</font>
-    </td>
-    </tr>
-  </table> 
-
-    <table width="100%" border="0">
-  <tr>
-      <td width="16%">Looting Zone</td>
-      <td width="15%"><select name="looting_zone" id="looting_zone" onchange="check_looting_type(looting_type.value, looting_zone.value)" >
-            <option value="blue_zone" selected="selected">Blue Zone</option>
-            <option value="green_zone">Green Zone</option>
-            <option value="yellow_zone">Yellow Zone</option>
-            <option value="orange_zone">Orange Zone</option>
-            <option value="red_zone">Red Zone</option>
-            <option value="black_zone">Black Zone</option>
-            <option value="white_zone" >White Zone</option>
-            <option value="wasteland">Wasteland</option>
-          </select>      </td>
-      <td width="25%">&nbsp;</td>
-      <td width="44%" align="right">Other Tools
-          <select name="list_tools" id="list_tools" onchange="check_tools(this.value)" class="changeable">
-          			<option value="estimate_grinding_tool">Estimate Grinding Performance Tools</option>
-          			<option value="estimate_dying_tool">Estimate Dying Tools</option>
-          			<option value="estimate_travelling_time" >Estimate Travelling Time</option>
-          			<option value="stat_calculator" >Stat Calculator</option>
-          			<option value="loot_simulator" selected="selected" >Loot Simulator</option>
-          </select></td>
-      </tr>
-  <tr>
-    <td>Looting Type</td>
-    <td><select name="looting_type" id="looting_type" onchange="check_looting_type(looting_type.value, looting_zone.value)">
-    	<option value='inner_city' selected="selected">Inner City</option>
-    	<option value='boss_hunt'>Boss Hunt</option>
-    </select>    </td>
-    <td><select name="zombie_boss_name" id="zombie_boss_name" onchange='get_max_loot_spot(zombie_boss_name.value,looting_zone.value,looting_type.value)'>
-    <option value="">--No Boss--</option>
-    </select>    </td>
-    <td align="right">&nbsp;</td>
-  </tr>
-  <tr>
-    <td>Max Loot Spots</td>
-    <td><input name="max_loot_spot" type="text" class="inputnumber" id="max_loot_spot" value="100" size="3" readonly="readonly"/></td>
-    <td>&nbsp;</td>
-    <td align="right">&nbsp;</td>
-  </tr>
-  
-      <tr>
-    <td colspan="4"><hr /></td>
-    </tr>
-      <tr>
-        <td colspan="4"><table width="100%" border="0">
-          <tr>
-            <td width="20%" height="25" valign="top">Character Level</td>
-            <td width="20%" valign="top"><input name="level" id="level" size="3" value="0" onchange="check_level(this.value)" type="text" class='inputnumber_editable'/></td>
-            <td width="22%" valign="top"><input name="implant_maxslot" id="implant_maxslot" size="3" value="0" disabled="disabled" readonly="readonly" type="text"class='inputnumber' />
-              Max Implant Slot</td>
-            <td width="38%" valign="top"><input name="implant_remainingslot" id="implant_remainingslot" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              Remaining Implant Slot</td>
-          </tr>
-          <tr class="">
-            <td valign="top">Implant</td>
-            <td valign="top"><input name="rage_implant" id="rage_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Rage Implant </td>
-            <td valign="top"><input name="rage_implant_slot" id="rage_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'rage_implant', this.value);" type="text" class='inputnumber_editable'/>
-              Slot(s)</td>
-            <td valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="experience_implant" id="experience_implant" onclick="check_implant(this.id)" type="checkbox" class='inputnumber'/>
-              Experience Implant </td>
-            <td valign="top"><input name="experience_implant_slot" id="experience_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'experience_implant', this.value);" type="text" class='inputnumber_editable'/>
-              Slot(s)</td>
-            <td valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="agility_implant" id="agility_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Agility Implant </td>
-            <td valign="top"><input name="agility_implant_slot" id="agility_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'agility_implant', this.value);" type="text"class='inputnumber_editable' />
-              Slot(s)</td>
-            <td valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="survival_implant" id="survival_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Survival Implant </td>
-            <td valign="top"><input name="survival_implant_slot" id="survival_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'survival_implant', this.value);" type="text"class='inputnumber_editable' />
-              Slot(s)</td>
-            <td valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="notoriety_implant" id="notoriety_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Notoriety Implant </td>
-            <td valign="top"><input name="notoriety_implant_slot" id="notoriety_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'notoriety_implant', this.value);" type="text" class='inputnumber_editable'/>
-              Slot(s)</td>
-            <td valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="hunter_implant" id="hunter_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Hunter Implant </td>
-            <td valign="top"><input name="hunter_implant_slot" id="hunter_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'hunter_implant', this.value);" type="text" class='inputnumber_editable'/>
-              Slot(s)</td>
-            <td valign="top"><input name="bonus_weaponchance_hunter_implant" id="bonus_weaponchance_hunter_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus Chance to Find Weapon Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="scavenger_implant" id="scavenger_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Scavenger Implant </td>
-            <td valign="top"><input name="scavenger_implant_slot" id="scavenger_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'scavenger_implant', this.value);" type="text" class='inputnumber_editable'/>
-              Slot(s)</td>
-            <td valign="top"><input name="bonus_armorchance_scavenger_implant" id="bonus_armorchance_scavenger_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus  Chance to Find Armor Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="ingenuity_implant" id="ingenuity_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Ingenuity Implant </td>
-            <td valign="top"><input name="ingenuity_implant_slot" id="ingenuity_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'ingenuity_implant', this.value);" type="text" class='inputnumber_editable'/>
-              Slot(s)</td>
-            <td valign="top"><input name="bonus_ammoloot_ingenuity_implant" id="bonus_ammoloot_ingenuity_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus Ammo Loot Bonus Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="wealth_implant" id="wealth_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Wealth Implant </td>
-            <td valign="top"><input name="wealth_implant_slot" id="wealth_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'wealth_implant', this.value);" type="text" class='inputnumber_editable'/>
-              Slot(s)</td>
-            <td valign="top"><input name="bonus_cashloot_wealth_implant" id="bonus_cashloot_wealth_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus Cash Loot Bonus Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">Elite Implant</td>
-            <td valign="top"><input name="violence_implant" id="violence_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Violence Implant </td>
-            <td valign="top"><input name="violence_implant_slot" id="violence_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'violence_implant', this.value);" type="text" class='inputnumber_editable'/>
-              Slot(s)</td>
-            <td valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="perception_implant" id="perception_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Perception Implant </td>
-            <td valign="top"><input name="perception_implant_slot" id="perception_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'perception_implant', this.value);" type="text" class='inputnumber_editable'/>
-              Slot(s)</td>
-            <td valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="hyper_implant" id="hyper_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Hyper Implant </td>
-            <td valign="top"><input name="hyper_implant_slot" id="hyper_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'hyper_implant', this.value);" type="text" class='inputnumber_editable'/>
-              Slot(s)</td>
-            <td valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="ironskin_implant" id="ironskin_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Ironskin Implant</td>
-            <td valign="top"><input name="ironskin_implant_slot" id="ironskin_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'ironskin_implant', this.value);" type="text" class='inputnumber_editable'/>
-              Slot(s)</td>
-            <td valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="salvage_implant" id="salvage_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Salvage Implant</td>
-            <td valign="top"><input name="salvage_implant_slot" id="salvage_implant_slot" size="3" value="0" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'salvage_implant', this.value);" type="text" class='inputnumber_editable'/>
-              Slot(s)</td>
-            <td valign="top"><input name="bonus_weaponchance_salvage_implant" id="bonus_weaponchance_salvage_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus Chance to Find Weapon Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="bonus_armorchance_salvage_implant" id="bonus_armorchance_salvage_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus  Chance to Find Armor Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="bonus_ammoloot_salvage_implant" id="bonus_ammoloot_salvage_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus Ammo Loot Bonus Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="bonus_cashloot_salvage_implant" id="bonus_cashloot_salvage_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus Cash Loot Bonus Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">Unique Implant</td>
-            <td valign="top"><input name="motl_implant" id="motl_implant" onclick="check_implant(this.id)" type="checkbox"/>
-              MoTL Implant </td>
-            <td valign="top"><select name="motl_implant_slot" id="motl_implant_slot" onchange="count_slot(implant_maxslot.value, 'motl_implant', this.value);" disabled="disabled"class='inputnumber_editable'>
-                <option value="0" selected="selected">0</option>
-                <option value="1">1</option>
-              </select>
-              Slot </td>
-            <td valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="destruction_implant" id="destruction_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Destruction Implant </td>
-            <td valign="top"><select name="destruction_implant_slot" id="destruction_implant_slot" onchange="count_slot(implant_maxslot.value, 'destruction_implant', this.value);" disabled="disabled"class='inputnumber_editable'>
-                <option value="0" selected="selected">0</option>
-                <option value="1">1</option>
-              </select>
-              Slot</td>
-            <td valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="genius_implant" id="genius_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Genius Implant </td>
-            <td valign="top"><select name="genius_implant_slot" id="genius_implant_slot" onchange="count_slot(implant_maxslot.value, 'genius_implant', this.value);" disabled="disabled"class='inputnumber_editable'>
-                <option value="0" selected="selected">0</option>
-                <option value="1">1</option>
-              </select>
-              Slot</td>
-            <td valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="haste_implant" id="haste_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Haste Implant</td>
-            <td valign="top"><select name="haste_implant_slot" id="haste_implant_slot" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'haste_implant', this.value);"class='inputnumber_editable'>
-                <option value="0" selected="selected">0</option>
-                <option value="1">1</option>
-              </select>
-              Slot</td>
-            <td valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="looter_implant" id="looter_implant" onclick="check_implant(this.id)" type="checkbox" />
-              Looter Implant</td>
-            <td valign="top"><select name="looter_implant_slot" id="looter_implant_slot" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'looter_implant', this.value);"class='inputnumber_editable'>
-                <option value="0" selected="selected">0</option>
-                <option value="1">1</option>
-              </select>
-              Slot</td>
-            <td valign="top"><input name="bonus_weaponchance_looter_implant" id="bonus_weaponchance_looter_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus Chance to Find Weapon Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="bonus_armorchance_looter_implant" id="bonus_armorchance_looter_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus  Chance to Find Armor Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="bonus_ammoloot_looter_implant" id="bonus_ammoloot_looter_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus Ammo Loot Bonus Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="bonus_cashloot_looter_implant" id="bonus_cashloot_looter_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus Cash Loot Bonus Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="jackofall_implant" id="jackofall_implant" onclick="check_implant(this.id)" type="checkbox"/>
-              Jack of All Implant </td>
-            <td valign="top"><select name="jackofall_implant_slot" id="jackofall_implant_slot" onchange="count_slot(implant_maxslot.value, 'jackofall_implant', this.value);" disabled="disabled"class='inputnumber_editable'>
-                <option value="0" selected="selected">0</option>
-                <option value="1">1</option>
-              </select>
-              Slot </td>
-            <td valign="top"><input name="bonus_weaponchance_jackofall_implant" id="bonus_weaponchance_jackofall_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus Chance to Find Weapon Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="bonus_armorchance_jackofall_implant" id="bonus_armorchance_jackofall_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus  Chance to Find Armor Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="bonus_ammoloot_jackofall_implant" id="bonus_ammoloot_jackofall_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus Ammo Loot Bonus Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="bonus_cashloot_jackofall_implant" id="bonus_cashloot_jackofall_implant" size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber'/>
-              % Bonus Cash Loot Bonus Implant</td>
-          </tr>
-          <tr class="">
-            <td valign="top">General Boost</td>
-            <td valign="top"><input name="damage_boost" id="damage_boost" type="checkbox" />
-              Damage Boost</td>
-            <td colspan="2" valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="exp_boost" id="exp_boost"type="checkbox" />
-              Exp Boost</td>
-            <td colspan="2" valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top"><input name="speed_boost" id="speed_boost" type="checkbox" />
-              Speed Boost</td>
-            <td colspan="2" valign="top">&nbsp;</td>
-          </tr>
-          <tr class="">
-            <td valign="top">Clan Boost</td>
-            <td valign="top"><input name="clan_loot_boost" id="clan_loot_boost" onclick="check_boost(this.id)" type="checkbox" />
-              Clan Loot Boost</td>
-            <td colspan="2" valign="top"><input name="bonus_weaponchance_clan_loot_boost" id="bonus_weaponchance_clan_loot_boost" size="3" value="0"  disabled="disabled" type="text" class='inputnumber_editable'/>
-              % Bonus  Chance to Find Weapon  Boost</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td colspan="2" valign="top"><input name="bonus_armorchance_clan_loot_boost" id="bonus_armorchance_clan_loot_boost" size="3" value="0"  disabled="disabled" type="text" class='inputnumber_editable'/>
-              % Bonus Chance to Find Armor Boost</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td colspan="2" valign="top"><input name="bonus_ammoloot_clan_loot_boost" id="bonus_ammoloot_clan_loot_boost" size="3" value="0"  disabled="disabled" type="text" class='inputnumber_editable'/>
-              % Bonus Ammo Loot Bonus Boost</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td colspan="2" valign="top"><input name="bonus_cashloot_clan_loot_boost" id="bonus_cashloot_clan_loot_boost" size="3" value="0"  disabled="disabled" type="text" class='inputnumber_editable'/>
-              % Bonus Cash Loot Bonus Boost</td>
-          </tr>
-          <tr class="">
-            <td valign="top">Weekend Event Weapon/Armor Loot Chance</td>
-            <td valign="top"><select name="weekend_event_weaponarmor_loot_chance" id="weekend_event_weaponarmor_loot_chance" onchange="check_weekend_event_weaponarmorloot(this.value)">
-                <option value="N" selected="selected">No</option>
-                <option value="Y">Yes</option>
-            </select></td>
-            <td colspan="2" valign="top"><input name="bonus_weaponchance_weekend_event_loot" id="bonus_weaponchance_weekend_event_loot" size="3" value="0" disabled="disabled" type="text"class='inputnumber_editable' />
-              % Bonus Chance to Find Weapon   Event</td>
-          </tr>
-          <tr class="">
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-            <td colspan="2" valign="top"><input name="bonus_armorchance_weekend_event_loot" id="bonus_armorchance_weekend_event_loot" size="3" value="0" disabled="disabled" type="text"class='inputnumber_editable' />
-              % Bonus Chance to Find Armor  Event</td>
-          </tr>
-          <tr class="">
-            <td valign="top">Weekend Event Ammo Loot Bonus</td>
-            <td valign="top"><select name="weekend_event_ammo_loot_bonus" id="weekend_event_ammo_loot_bonus" onchange="check_weekend_event_ammoloot(this.value)">
-               <option value="N" selected="selected">No</option>
-                <option value="Y">Yes</option>
-            </select></td>
-            <td colspan="2" valign="top"><input name="bonus_ammoloot_weekend_event_loot" id="bonus_ammoloot_weekend_event_loot" size="3" value="0" disabled="disabled" type="text"class='inputnumber_editable' />
-              % Bonus  Ammo Loot Bonus Event</td>
-          </tr>
-          <tr class="">
-            <td valign="top">Weekend Event Cash Loot Bonus</td>
-            <td valign="top"><select name="weekend_event_cash_loot_bonus" id="weekend_event_cash_loot_bonus" onchange="check_weekend_event_cashloot(this.value)">
-                <option value="N" selected="selected">No</option>
-                <option value="Y">Yes</option>
-            </select></td>
-            <td colspan="2" valign="top"><input name="bonus_cashloot_weekend_event_loot" id="bonus_cashloot_weekend_event_loot" size="3" value="0" disabled="disabled" type="text"class='inputnumber_editable' />
-              % Bonus Cash Loot Bonus Event</td>
-          </tr>
-          <tr class="">
-            <td valign="top">GM State</td>
-            <td valign="top"><select name="gm_state" id="gm_state" >
-                <option value="N" selected="selected">Non GM</option>
-                <option value="Y">GM</option>
-              </select>            </td>
-            <td colspan="2" valign="top">&nbsp;</td>
-          </tr>
-
-        </table></td>
-      </tr>
-        
-      <tr>
-    <td colspan="4"><hr /></td>
-    </tr>
-    <tr>
-          <td>&nbsp;</td>
-          <td colspan="3"><input type="button" name="btnprocess" id="btnprocess" value="Loot Process" onclick="process_looting()"/>
-          <input type="reset" name="btnreset" id="btnreset" value="Reset" />
-          <input type="button" name="btndownload" id="btndownload" value="Download Excel Formula"  onclick="download_excel_looting_formula()"/></td>
-        </tr>
-    <tr>
-      <td colspan="4"><hr /></td>
-      </tr>
-    <tr>
-      <td colspan="4"><table width="100%" border="0">
-        <tr>
-          <td colspan="2" align="" bgcolor="#333333"><font color="#FFFFFF"><strong>Estimated Things That Looted</strong></font></td>
-        </tr>
-        <tr>
-          <td width="16%">Looting Formula</td>
-          <td width="84%" > Random Chance per Item * Player State</td>
-        </tr>
-        <tr>
-       <td colspan="4"><hr /></td>
-      </tr>
-     <tr>
-       <td>Loot Spot Used</td>
-       <td colspan="3"><input type="text" name="loot_spot_used" id="loot_spot_used" readonly="readonly" size="3" class="inputnumber" value="0"/> spots</td>
-     </tr>
-     <tr>
-          <td>Loot Spot Left</td>
-          <td colspan="3"><input type="text" name="loot_spot_left" id="loot_spot_left" readonly="readonly" size="3" class="inputnumber" value="0"/> 
-            spots</td>
-        </tr>
-     <tr>
-       <td colspan="4"><hr /></td>
-       </tr>
-        <tr>
-          <td valign="top">Current Inventory</td>
-          <td valign="top">
-          <fieldset>
-          <table width="100%" border="0">
-            <tr>
-              <td width="5%" align="center" bgcolor="#333333"><font color="#FFFFFF"><strong>ReLoot</strong></font></td>
-              <td width="13%" align="center" bgcolor="#333333"><font color="#FFFFFF"><strong>Inventory</strong></font></td>
-              <td width="16%" align="center" bgcolor="#333333"><font color="#FFFFFF"><strong>Item Name</strong></font></td>
-              <td width="7%" align="center" bgcolor="#333333"><font color="#FFFFFF"><strong>Quantity</strong></font></td>
-              <td width="9%" align="center" bgcolor="#333333"><font color="#FFFFFF"><strong>Scraps ($)</strong></font></td>
-              <td width="5%" align="center" bgcolor="#333333"><font color="#FFFFFF"><strong>ReLoot</strong></font></td>
-              <td width="13%" align="center" bgcolor="#333333"><font color="#FFFFFF"><strong>Inventory</strong></font></td>
-              <td width="16%" align="center" bgcolor="#333333"><font color="#FFFFFF"><strong>Item Name</strong></font></td>
-              <td width="7%" align="center" bgcolor="#333333"><font color="#FFFFFF"><strong>Quantity</strong></font></td>
-              <td width="9%" align="center" bgcolor="#333333"><font color="#FFFFFF"><strong>Scraps ($)</strong></font></td>
-            </tr>
-            <tr>
-              <td align="center"><input type="checkbox" name="checklist_slot_01" id="checklist_slot_01" disabled="disabled" /></td>
-              <td align="center">Slot 01</td>
-              <td align="center"><input type="text" name="item_name_slot_01" id="item_name_slot_01" readonly="readonly" size="30"/></td>
-              <td align="center"><input type="text" name="quantity_slot_01" id="quantity_slot_01" size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_01" id="scraps_slot_01" readonly="readonly" class="inputnumber" size="10"/></td>
-              <td align="center"><input type="checkbox" name="checklist_slot_16" id="checklist_slot_16" disabled="disabled" /></td>
-              <td align="center">Slot 16</td>
-              <td align="center"><input name="item_name_slot_16" type="text" id="item_name_slot_16" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_16" id="quantity_slot_16"  size="3"class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_16" id="scraps_slot_16" readonly="readonly" class="inputnumber" size="10"/></td>
-            </tr>
-            <tr>
-              <td align="center"><input type="checkbox" name="checklist_slot_02" id="checklist_slot_02" disabled="disabled" /></td>
-              <td align="center">Slot 02</td>
-              <td align="center"><input name="item_name_slot_02" type="text" id="item_name_slot_02" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_02" id="quantity_slot_02"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_02" id="scraps_slot_02" readonly="readonly" class="inputnumber" size="10"/></td>
-              <td align="center"><input type="checkbox" name="checklist_slot_17" id="checklist_slot_17" disabled="disabled" /></td>
-              <td align="center">Slot 17</td>
-              <td align="center"><input name="item_name_slot_17" type="text" id="item_name_slot_17" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_17" id="quantity_slot_17"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_17" id="scraps_slot_17" readonly="readonly" class="inputnumber" size="10"/></td>
-            </tr>
-            <tr>
-              <td align="center"><input type="checkbox" name="checklist_slot_03" id="checklist_slot_03" disabled="disabled" /></td>
-              <td align="center">Slot 03</td>
-              <td align="center"><input name="item_name_slot_03" type="text" id="item_name_slot_03" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_03" id="quantity_slot_03"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_03" id="scraps_slot_03" readonly="readonly" class="inputnumber" size="10"/></td>
-              <td align="center"><input type="checkbox" name="checklist_slot_18" id="checklist_slot_18" disabled="disabled" /></td>
-              <td align="center">Slot 18</td>
-              <td align="center"><input name="item_name_slot_18" type="text" id="item_name_slot_18" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_18" id="quantity_slot_18"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_18" id="scraps_slot_18" readonly="readonly" class="inputnumber" size="10"/></td>
-            </tr>
-            <tr>
-              <td align="center"><input type="checkbox" name="checklist_slot_04" id="checklist_slot_04" disabled="disabled" /></td>
-              <td align="center">Slot 04</td>
-              <td align="center"><input name="item_name_slot_04" type="text" id="item_name_slot_04" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_04" id="quantity_slot_04"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_04" id="scraps_slot_04" readonly="readonly" class="inputnumber" size="10"/></td>
-              <td align="center"><input type="checkbox" name="checklist_slot_19" id="checklist_slot_19" disabled="disabled" /></td>
-              <td align="center">Slot 19</td>
-              <td align="center"><input name="item_name_slot_19" type="text" id="item_name_slot_19" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_19" id="quantity_slot_19"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_19" id="scraps_slot_19" readonly="readonly" class="inputnumber" size="10"/></td>
-            </tr>
-            <tr>
-              <td align="center"><input type="checkbox" name="checklist_slot_05" id="checklist_slot_05" disabled="disabled" /></td>
-              <td align="center">Slot 05</td>
-              <td align="center"><input name="item_name_slot_05" type="text" id="item_name_slot_05" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_05" id="quantity_slot_05"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_05" id="scraps_slot_05" readonly="readonly" class="inputnumber" size="10"/></td>
-              <td align="center"><input type="checkbox" name="checklist_slot_20" id="checklist_slot_20" disabled="disabled" /></td>
-              <td align="center">Slot 20</td>
-              <td align="center"><input name="item_name_slot_20" type="text" id="item_name_slot_20" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_20" id="quantity_slot_20"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_20" id="scraps_slot_20" readonly="readonly" class="inputnumber" size="10"/></td>
-            </tr>
-            <tr>
-              <td align="center"><input type="checkbox" name="checklist_slot_06" id="checklist_slot_06" disabled="disabled" /></td>
-              <td align="center">Slot 06</td>
-              <td align="center"><input name="item_name_slot_06" type="text" id="item_name_slot_06" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_06" id="quantity_slot_06"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_06" id="scraps_slot_06" readonly="readonly" class="inputnumber" size="10"/></td>
-              <td align="center"><input type="checkbox" name="checklist_slot_21" id="checklist_slot_21" disabled="disabled" /></td>
-              <td align="center">Slot 21</td>
-              <td align="center"><input name="item_name_slot_21" type="text" id="item_name_slot_21" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_21" id="quantity_slot_21"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_21" id="scraps_slot_21" readonly="readonly" class="inputnumber" size="10"/></td>
-            </tr>
-            <tr>
-              <td align="center"><input type="checkbox" name="checklist_slot_07" id="checklist_slot_07" disabled="disabled" /></td>
-              <td align="center">Slot 07</td>
-              <td align="center"><input name="item_name_slot_07" type="text" id="item_name_slot_07" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_07" id="quantity_slot_07"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_07" id="scraps_slot_07" readonly="readonly" class="inputnumber" size="10"/></td>
-              <td align="center"><input type="checkbox" name="checklist_slot_22" id="checklist_slot_22" disabled="disabled" /></td>
-              <td align="center">Slot 22</td>
-              <td align="center"><input name="item_name_slot_22" type="text" id="item_name_slot_22" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_22" id="quantity_slot_22"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_22" id="scraps_slot_22" readonly="readonly" class="inputnumber" size="10"/></td>
-            </tr>
-            <tr>
-              <td align="center"><input type="checkbox" name="checklist_slot_08" id="checklist_slot_08" disabled="disabled" /></td>
-              <td align="center">Slot 08</td>
-              <td align="center"><input name="item_name_slot_08" type="text" id="item_name_slot_08" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_08" id="quantity_slot_08"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_08" id="scraps_slot_08" readonly="readonly" class="inputnumber" size="10"/></td>
-              <td align="center"><input type="checkbox" name="checklist_slot_23" id="checklist_slot_23" disabled="disabled" /></td>
-              <td align="center">Slot 23</td>
-              <td align="center"><input name="item_name_slot_23" type="text" id="item_name_slot_23" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_23" id="quantity_slot_23"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_23" id="scraps_slot_23" readonly="readonly" class="inputnumber" size="10"/></td>
-            </tr>
-            <tr>
-              <td align="center"><input type="checkbox" name="checklist_slot_09" id="checklist_slot_09" disabled="disabled" /></td>
-              <td align="center">Slot 09</td>
-              <td align="center"><input name="item_name_slot_09" type="text" id="item_name_slot_09" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_09" id="quantity_slot_09"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_09" id="scraps_slot_09" readonly="readonly" class="inputnumber" size="10"/></td>
-              <td align="center"><input type="checkbox" name="checklist_slot_24" id="checklist_slot_24" disabled="disabled" /></td>
-              <td align="center">Slot 24</td>
-              <td align="center"><input name="item_name_slot_24" type="text" id="item_name_slot_24" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_24" id="quantity_slot_24"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_24" id="scraps_slot_24" readonly="readonly" class="inputnumber" size="10"/></td>
-            </tr>
-            <tr>
-              <td align="center"><input type="checkbox" name="checklist_slot_10" id="checklist_slot_10" disabled="disabled" /></td>
-              <td align="center">Slot 10</td>
-              <td align="center"><input name="item_name_slot_10" type="text" id="item_name_slot_10" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_10" id="quantity_slot_10"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_10" id="scraps_slot_10" readonly="readonly" class="inputnumber" size="10"/></td>
-              <td align="center"><input type="checkbox" name="checklist_slot_25" id="checklist_slot_25" disabled="disabled" /></td>
-              <td align="center">Slot 25</td>
-               <td align="center"><input name="item_name_slot_25" type="text" id="item_name_slot_25" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_25" id="quantity_slot_25"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_25" id="scraps_slot_25" readonly="readonly" class="inputnumber" size="10"/></td>
-            </tr>
-            <tr>
-              <td align="center"><input type="checkbox" name="checklist_slot_11" id="checklist_slot_11" disabled="disabled" /></td>
-              <td align="center">Slot 11</td>
-              <td align="center"><input name="item_name_slot_11" type="text" id="item_name_slot_11" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_11" id="quantity_slot_11"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_11" id="scraps_slot_11" readonly="readonly" class="inputnumber" size="10"/></td>
-              <td align="center"><input type="checkbox" name="checklist_slot_26" id="checklist_slot_26" disabled="disabled" /></td>
-              <td align="center">Slot 26</td>
-              <td align="center"><input name="item_name_slot_26" type="text" id="item_name_slot_26" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_26" id="quantity_slot_26"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_26" id="scraps_slot_26" readonly="readonly" class="inputnumber" size="10"/></td>
-            </tr>
-            <tr>
-              <td align="center"><input type="checkbox" name="checklist_slot_12" id="checklist_slot_12" disabled="disabled" /></td>
-              <td align="center">Slot 12</td>
-              <td align="center"><input name="item_name_slot_12" type="text" id="item_name_slot_12" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_12" id="quantity_slot_12"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_12" id="scraps_slot_12" readonly="readonly" class="inputnumber" size="10"/></td>
-              <td align="center"><input type="checkbox" name="checklist_slot_27" id="checklist_slot_27" disabled="disabled" /></td>
-              <td align="center">Slot 27</td>
-              <td align="center"><input name="item_name_slot_27" type="text" id="item_name_slot_27" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_27" id="quantity_slot_27"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_27" id="scraps_slot_27" readonly="readonly" class="inputnumber" size="10"/></td>
-            </tr>
-            <tr>
-              <td align="center"><input type="checkbox" name="checklist_slot_13" id="checklist_slot_13" disabled="disabled" /></td>
-              <td align="center">Slot 13</td>
-              <td align="center"><input name="item_name_slot_13" type="text" id="item_name_slot_13" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_13" id="quantity_slot_13"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_13" id="scraps_slot_13" readonly="readonly" class="inputnumber" size="10"/></td>
-              <td align="center"><input type="checkbox" name="checklist_slot_28" id="checklist_slot_28" disabled="disabled" /></td>
-              <td align="center">Slot 28</td>
-              <td align="center"><input name="item_name_slot_28" type="text" id="item_name_slot_28" size="30"readonly="readonly" /></td>
-              <td align="center"><input type="text" name="quantity_slot_28" id="quantity_slot_28"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_28" id="scraps_slot_28" readonly="readonly" class="inputnumber" size="10"/></td>
-            </tr>
-            <tr>
-              <td align="center"><input type="checkbox" name="checklist_slot_14" id="checklist_slot_14" disabled="disabled" /></td>
-              <td align="center">Slot 14</td>
-              <td align="center"><input name="item_name_slot_14" type="text" id="item_name_slot_14" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_14" id="quantity_slot_14"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_14" id="scraps_slot_14" readonly="readonly" class="inputnumber" size="10"/></td>
-              <td align="center"><input type="checkbox" name="checklist_slot_29" id="checklist_slot_29" disabled="disabled"/></td>
-              <td align="center">Slot 29</td>
-              <td align="center"><input name="item_name_slot_29" type="text" id="item_name_slot_29" size="30"readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_29" id="quantity_slot_29"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_29" id="scraps_slot_29" readonly="readonly" class="inputnumber" size="10"/></td>
-            </tr>
-            <tr>
-              <td align="center"><input type="checkbox" name="checklist_slot_15" id="checklist_slot_15" disabled="disabled" /></td>
-              <td align="center">Slot 15</td>
-              <td align="center"><input name="item_name_slot_15" type="text" id="item_name_slot_15" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_15" id="quantity_slot_15"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_15" id="scraps_slot_15" readonly="readonly" class="inputnumber" size="10"/></td>
-              <td align="center"><input type="checkbox" name="checklist_slot_30" id="checklist_slot_30" disabled="disabled" /></td>
-              <td align="center">Slot 30</td>
-              <td align="center"><input name="item_name_slot_30" type="text" id="item_name_slot_30" size="30" readonly="readonly"/></td>
-              <td align="center"><input type="text" name="quantity_slot_30" id="quantity_slot_30"  size="3" class="inputnumber"/></td>
-              <td align="center"><input type="text" name="scraps_slot_30" id="scraps_slot_30" readonly="readonly" class="inputnumber" size="10"/></td>
-            </tr>
-            <tr>
-              <td colspan="10" align="center"><hr /></td>
-              </tr>
-            <tr>
-              <td colspan="10"><input type="button" id="btnreloot" name="btnreloot" value="ReLoot Process" onclick="process_relooting()" disabled="disabled"/></td>
-              </tr>
-          </table>
-          </fieldset>          </td>
-        </tr>
-        
-      </table></td>
-    </tr>
-    <tr>
-      <td colspan="4"><hr /></td>
-    </tr>    
-
-    <tr>
-      <td valign="top">Current Ammo Looted</td>
-      <td colspan="3" >
-      <fieldset>
+    <form name="myform" id="myform">
       <table width="100%" border="0">
         <tr>
-          <td width="15%">.32 Handgun Ammo</td>
-          <td width="8%"><input name="total_handgun_32" type="text" class="inputnumber" id="total_handgun_32" size="3" readonly="readonly" value="0" /></td>
-          <td width="13%">.45 Handgun Ammo</td>
-          <td width="8%"><input name="total_handgun_45" type="text" class="inputnumber" id="total_handgun_45" size="3"readonly="readonly"  value="0" /></td>
-          <td width="17%">9 mm Rifle Ammo</td>
-          <td width="11%"><input name="total_rifle_9mm" type="text" class="inputnumber" id="total_rifle_9mm" size="3" readonly="readonly" value="0" /></td>
-          <td width="12%">12 Gauge Shell</td>
-          <td width="16%"><input name="total_shotgun_12g" type="text" class="inputnumber" id="total_shotgun_12g" size="3"readonly="readonly" value="0"  /></td>
-        </tr>
-        <tr>
-          <td>9mm Handgun Ammo</td>
-          <td><input name="total_handgun_9mm" type="text" class="inputnumber" id="total_handgun_9mm" size="3"readonly="readonly" value="0"  /></td>
-          <td>.50 Handgun Ammo</td>
-          <td><input name="total_handgun_50" type="text" class="inputnumber" id="total_handgun_50" size="3" readonly="readonly" value="0" /></td>
-          <td>12.7 mm Rifle Ammo</td>
-          <td><input name="total_rifle_127mm" type="text" class="inputnumber" id="total_rifle_127mm" size="3" readonly="readonly" value="0" /></td>
-          <td>10 Gauge Shell</td>
-          <td><input name="total_shotgun_10g" type="text" class="inputnumber" id="total_shotgun_10g" size="3" readonly="readonly" value="0" /></td>
-        </tr>
-        <tr>
-          <td>.357 Handgun Ammo</td>
-          <td><input name="total_handgun_357" type="text" class="inputnumber" id="total_handgun_357" size="3" readonly="readonly" value="0" /></td>
-          <td>.55 Handgun Ammo</td>
-          <td><input name="total_handgun_55" type="text" class="inputnumber" id="total_handgun_55" size="3" readonly="readonly" value="0" /></td>
-          <td>14 mm Rifle Ammo</td>
-          <td><input name="total_rifle_14mm" type="text" class="inputnumber" id="total_rifle_14mm" size="3"readonly="readonly"  value="0" /></td>
-          <td>Grenade</td>
-          <td><input name="total_explosive_grenade" type="text" class="inputnumber" id="total_explosive_grenade" size="3"readonly="readonly" value="0"  /></td>
-        </tr>
-        <tr>
-          <td>.38 Handgun Ammo</td>
-          <td><input name="total_handgun_38" type="text" class="inputnumber" id="total_handgun_38" size="3" readonly="readonly" value="0" /></td>
-          <td>5.5 mm Rifle Ammo</td>
-          <td><input name="total_rifle_55mm" type="text" class="inputnumber" id="total_rifle_55mm" size="3" readonly="readonly" value="0" /></td>
-          <td>20 Gauge Shell</td>
-          <td><input name="total_shotgun_20g" type="text" class="inputnumber" id="total_shotgun_20g" size="3" readonly="readonly" value="0" /></td>
-          <td>Heavy Grenade</td>
-          <td><input name="total_explosive_heavygrenade" type="text" class="inputnumber" id="total_explosive_heavygrenade" size="3" readonly="readonly" value="0" /></td>
-        </tr>
-        <tr>
-          <td>.40 Handgun Ammo</td>
-          <td><input name="total_handgun_40" type="text" class="inputnumber" id="total_handgun_40" size="3" readonly="readonly" value="0" /></td>
-          <td>7.5 mm Rifle Ammo</td>
-          <td><input name="total_rifle_75mm" type="text" class="inputnumber" id="total_rifle_75mm" size="3" readonly="readonly" value="0" /></td>
-          <td>16 Gauge Shell</td>
-          <td><input name="total_shotgun_16g" type="text" class="inputnumber" id="total_shotgun_16g" size="3" readonly="readonly" value="0" /></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
+          <td bgcolor="#333333">
+            <font color="#FFFFFF">
+              <h1 align="center">DEAD FRONTIER - LOOTING SIMULATOR</h1>
+            </font>
+          </td>
         </tr>
       </table>
-      </fieldset>      </td>
-      </tr>
-      <tr>
-      <td>Current Cash Looted</td>
-      <td align="right">
-      <input name="cash_looted" type="hidden" class="inputnumber" id="cash_looted" value="0" size="3" />
-        <label id='lbl_cash_looted'>0 Dollars</label>        </td>
-      <td valign="top">&nbsp;</td>
-      <td valign="top">&nbsp;</td>
-    </tr>
-      <tr>
-        <td colspan="4"><hr /></td>
-      </tr>
-      <tr>
-      <td>Total Cash Looted</td>
-      <td align="right">
-      <input name="total_cash_looted" type="hidden" class="inputnumber" id="total_cash_looted" value="0" size="10" />
-        <label id='lbl_total_cash_looted'>0 Dollars</label>        </td>
-      <td valign="top">&nbsp;</td>
-      <td valign="top">&nbsp;</td>
-    </tr>
-    <tr>
 
-    <td>
-    	Total Collected Scraps</td>
-        <td align="right">
-       	<input type="hidden" id="total_dollar_scrap" name="total_dollar_scrap" readonly class="inputnumber" value="0"/>
-        <label id='lbl_total_dollar_scrap'>0 Dollars</label>       	</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td colspan="4"><hr /></td>
-      </tr>
-    <tr>
-      <td>Total Dollars per Loot Run</td>
-      <td align="right">
-      <input type="hidden" id="total_dollar_per_loot_run" name="total_dollar_per_loot_run" readonly="readonly" class="inputnumber" value="0"/>
-        <label id='lbl_total_dollar_per_loot_run'>0 Dollars</label>      </td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-    </tr>
-     
-    
-    <tr>
-    <td colspan="4">  <hr>  </td>
-  </tr>
-  <tr>
-    <td colspan="4" bgcolor="#333333"><font color="#FFFFFF">
-    <h2 align="center">Best View With Mozilla Firefox and Google Chrome at 1366 x 768 pixels</h2>
-    </font></td>
-  </tr>
-  <tr>
-<td colspan="4" align="right">    <font align="right" color="white">Made by Hurricanos @ 2017</font></td>
-</tr>
-<tr>
-                  <td colspan="4" align="center">
-                  <audio autoplay loop>
-                      <source src="df2d-maintheme.m4ax" type="audio/ogg">
-                    </audio>                  </td>
+      <table width="100%" border="0">
+        <tr>
+          <td width="16%">Looting Zone</td>
+          <td width="15%"><select name="looting_zone" id="looting_zone" onchange="check_looting_type(looting_type.value, looting_zone.value)">
+              <option value="blue_zone" selected="selected">Blue Zone</option>
+              <option value="green_zone">Green Zone</option>
+              <option value="yellow_zone">Yellow Zone</option>
+              <option value="orange_zone">Orange Zone</option>
+              <option value="red_zone">Red Zone</option>
+              <option value="black_zone">Black Zone</option>
+              <option value="white_zone">White Zone</option>
+              <option value="wasteland">Wasteland</option>
+            </select> </td>
+          <td width="25%">&nbsp;</td>
+          <td width="44%" align="right">Other Tools
+            <select name="list_tools" id="list_tools" onchange="check_tools(this.value)" class="changeable">
+              <option value="estimate_grinding_tool">Estimate Grinding Performance Tools</option>
+              <option value="estimate_dying_tool">Estimate Dying Tools</option>
+              <option value="estimate_travelling_time">Estimate Travelling Time</option>
+              <option value="stat_calculator">Stat Calculator</option>
+              <option value="loot_simulator" selected="selected">Loot Simulator</option>
+            </select></td>
+        </tr>
+        <tr>
+          <td>Looting Type</td>
+          <td><select name="looting_type" id="looting_type" onchange="check_looting_type(looting_type.value, looting_zone.value)">
+              <option value='inner_city' selected="selected">Inner City</option>
+              <option value='boss_hunt'>Boss Hunt</option>
+            </select> </td>
+          <td><select name="zombie_boss_name" id="zombie_boss_name" onchange='get_max_loot_spot(zombie_boss_name.value,looting_zone.value,looting_type.value)'>
+              <option value="">--No Boss--</option>
+            </select> </td>
+          <td align="right">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>Max Loot Spots</td>
+          <td><input name="max_loot_spot" type="text" class="inputnumber" id="max_loot_spot" value="100" size="3"
+              readonly="readonly" /></td>
+          <td>&nbsp;</td>
+          <td align="right">&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td colspan="4">
+            <hr />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <table width="100%" border="0">
+              <tr>
+                <td width="20%" height="25" valign="top">Character Level</td>
+                <td width="20%" valign="top"><input name="level" id="level" size="3" value="0" onchange="check_level(this.value)"
+                    type="text" class='inputnumber_editable' /></td>
+                <td width="22%" valign="top"><input name="implant_maxslot" id="implant_maxslot" size="3" value="0"
+                    disabled="disabled" readonly="readonly" type="text" class='inputnumber' />
+                  Max Implant Slot</td>
+                <td width="38%" valign="top"><input name="implant_remainingslot" id="implant_remainingslot" size="3"
+                    value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  Remaining Implant Slot</td>
               </tr>
-</table>
-</form>
-</fieldset>
+              <tr class="">
+                <td valign="top">Implant</td>
+                <td valign="top"><input name="rage_implant" id="rage_implant" onclick="check_implant(this.id)" type="checkbox" />
+                  Rage Implant </td>
+                <td valign="top"><input name="rage_implant_slot" id="rage_implant_slot" size="3" value="0" disabled="disabled"
+                    onchange="count_slot(implant_maxslot.value, 'rage_implant', this.value);" type="text" class='inputnumber_editable' />
+                  Slot(s)</td>
+                <td valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="experience_implant" id="experience_implant" onclick="check_implant(this.id)"
+                    type="checkbox" class='inputnumber' />
+                  Experience Implant </td>
+                <td valign="top"><input name="experience_implant_slot" id="experience_implant_slot" size="3" value="0"
+                    disabled="disabled" onchange="count_slot(implant_maxslot.value, 'experience_implant', this.value);"
+                    type="text" class='inputnumber_editable' />
+                  Slot(s)</td>
+                <td valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="agility_implant" id="agility_implant" onclick="check_implant(this.id)"
+                    type="checkbox" />
+                  Agility Implant </td>
+                <td valign="top"><input name="agility_implant_slot" id="agility_implant_slot" size="3" value="0"
+                    disabled="disabled" onchange="count_slot(implant_maxslot.value, 'agility_implant', this.value);"
+                    type="text" class='inputnumber_editable' />
+                  Slot(s)</td>
+                <td valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="survival_implant" id="survival_implant" onclick="check_implant(this.id)"
+                    type="checkbox" />
+                  Survival Implant </td>
+                <td valign="top"><input name="survival_implant_slot" id="survival_implant_slot" size="3" value="0"
+                    disabled="disabled" onchange="count_slot(implant_maxslot.value, 'survival_implant', this.value);"
+                    type="text" class='inputnumber_editable' />
+                  Slot(s)</td>
+                <td valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="notoriety_implant" id="notoriety_implant" onclick="check_implant(this.id)"
+                    type="checkbox" />
+                  Notoriety Implant </td>
+                <td valign="top"><input name="notoriety_implant_slot" id="notoriety_implant_slot" size="3" value="0"
+                    disabled="disabled" onchange="count_slot(implant_maxslot.value, 'notoriety_implant', this.value);"
+                    type="text" class='inputnumber_editable' />
+                  Slot(s)</td>
+                <td valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="hunter_implant" id="hunter_implant" onclick="check_implant(this.id)" type="checkbox" />
+                  Hunter Implant </td>
+                <td valign="top"><input name="hunter_implant_slot" id="hunter_implant_slot" size="3" value="0" disabled="disabled"
+                    onchange="count_slot(implant_maxslot.value, 'hunter_implant', this.value);" type="text" class='inputnumber_editable' />
+                  Slot(s)</td>
+                <td valign="top"><input name="bonus_weaponchance_hunter_implant" id="bonus_weaponchance_hunter_implant"
+                    size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Chance to Find Weapon Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="scavenger_implant" id="scavenger_implant" onclick="check_implant(this.id)"
+                    type="checkbox" />
+                  Scavenger Implant </td>
+                <td valign="top"><input name="scavenger_implant_slot" id="scavenger_implant_slot" size="3" value="0"
+                    disabled="disabled" onchange="count_slot(implant_maxslot.value, 'scavenger_implant', this.value);"
+                    type="text" class='inputnumber_editable' />
+                  Slot(s)</td>
+                <td valign="top"><input name="bonus_armorchance_scavenger_implant" id="bonus_armorchance_scavenger_implant"
+                    size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Chance to Find Armor Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="ingenuity_implant" id="ingenuity_implant" onclick="check_implant(this.id)"
+                    type="checkbox" />
+                  Ingenuity Implant </td>
+                <td valign="top"><input name="ingenuity_implant_slot" id="ingenuity_implant_slot" size="3" value="0"
+                    disabled="disabled" onchange="count_slot(implant_maxslot.value, 'ingenuity_implant', this.value);"
+                    type="text" class='inputnumber_editable' />
+                  Slot(s)</td>
+                <td valign="top"><input name="bonus_ammoloot_ingenuity_implant" id="bonus_ammoloot_ingenuity_implant"
+                    size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Ammo Loot Bonus Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="wealth_implant" id="wealth_implant" onclick="check_implant(this.id)" type="checkbox" />
+                  Wealth Implant </td>
+                <td valign="top"><input name="wealth_implant_slot" id="wealth_implant_slot" size="3" value="0" disabled="disabled"
+                    onchange="count_slot(implant_maxslot.value, 'wealth_implant', this.value);" type="text" class='inputnumber_editable' />
+                  Slot(s)</td>
+                <td valign="top"><input name="bonus_cashloot_wealth_implant" id="bonus_cashloot_wealth_implant" size="3"
+                    value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Cash Loot Bonus Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">Elite Implant</td>
+                <td valign="top"><input name="violence_implant" id="violence_implant" onclick="check_implant(this.id)"
+                    type="checkbox" />
+                  Violence Implant </td>
+                <td valign="top"><input name="violence_implant_slot" id="violence_implant_slot" size="3" value="0"
+                    disabled="disabled" onchange="count_slot(implant_maxslot.value, 'violence_implant', this.value);"
+                    type="text" class='inputnumber_editable' />
+                  Slot(s)</td>
+                <td valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="perception_implant" id="perception_implant" onclick="check_implant(this.id)"
+                    type="checkbox" />
+                  Perception Implant </td>
+                <td valign="top"><input name="perception_implant_slot" id="perception_implant_slot" size="3" value="0"
+                    disabled="disabled" onchange="count_slot(implant_maxslot.value, 'perception_implant', this.value);"
+                    type="text" class='inputnumber_editable' />
+                  Slot(s)</td>
+                <td valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="hyper_implant" id="hyper_implant" onclick="check_implant(this.id)" type="checkbox" />
+                  Hyper Implant </td>
+                <td valign="top"><input name="hyper_implant_slot" id="hyper_implant_slot" size="3" value="0" disabled="disabled"
+                    onchange="count_slot(implant_maxslot.value, 'hyper_implant', this.value);" type="text" class='inputnumber_editable' />
+                  Slot(s)</td>
+                <td valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="ironskin_implant" id="ironskin_implant" onclick="check_implant(this.id)"
+                    type="checkbox" />
+                  Ironskin Implant</td>
+                <td valign="top"><input name="ironskin_implant_slot" id="ironskin_implant_slot" size="3" value="0"
+                    disabled="disabled" onchange="count_slot(implant_maxslot.value, 'ironskin_implant', this.value);"
+                    type="text" class='inputnumber_editable' />
+                  Slot(s)</td>
+                <td valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="salvage_implant" id="salvage_implant" onclick="check_implant(this.id)"
+                    type="checkbox" />
+                  Salvage Implant</td>
+                <td valign="top"><input name="salvage_implant_slot" id="salvage_implant_slot" size="3" value="0"
+                    disabled="disabled" onchange="count_slot(implant_maxslot.value, 'salvage_implant', this.value);"
+                    type="text" class='inputnumber_editable' />
+                  Slot(s)</td>
+                <td valign="top"><input name="bonus_weaponchance_salvage_implant" id="bonus_weaponchance_salvage_implant"
+                    size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Chance to Find Weapon Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="bonus_armorchance_salvage_implant" id="bonus_armorchance_salvage_implant"
+                    size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Chance to Find Armor Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="bonus_ammoloot_salvage_implant" id="bonus_ammoloot_salvage_implant" size="3"
+                    value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Ammo Loot Bonus Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="bonus_cashloot_salvage_implant" id="bonus_cashloot_salvage_implant" size="3"
+                    value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Cash Loot Bonus Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">Unique Implant</td>
+                <td valign="top"><input name="motl_implant" id="motl_implant" onclick="check_implant(this.id)" type="checkbox" />
+                  MoTL Implant </td>
+                <td valign="top"><select name="motl_implant_slot" id="motl_implant_slot" onchange="count_slot(implant_maxslot.value, 'motl_implant', this.value);"
+                    disabled="disabled" class='inputnumber_editable'>
+                    <option value="0" selected="selected">0</option>
+                    <option value="1">1</option>
+                  </select>
+                  Slot </td>
+                <td valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="destruction_implant" id="destruction_implant" onclick="check_implant(this.id)"
+                    type="checkbox" />
+                  Destruction Implant </td>
+                <td valign="top"><select name="destruction_implant_slot" id="destruction_implant_slot" onchange="count_slot(implant_maxslot.value, 'destruction_implant', this.value);"
+                    disabled="disabled" class='inputnumber_editable'>
+                    <option value="0" selected="selected">0</option>
+                    <option value="1">1</option>
+                  </select>
+                  Slot</td>
+                <td valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="genius_implant" id="genius_implant" onclick="check_implant(this.id)" type="checkbox" />
+                  Genius Implant </td>
+                <td valign="top"><select name="genius_implant_slot" id="genius_implant_slot" onchange="count_slot(implant_maxslot.value, 'genius_implant', this.value);"
+                    disabled="disabled" class='inputnumber_editable'>
+                    <option value="0" selected="selected">0</option>
+                    <option value="1">1</option>
+                  </select>
+                  Slot</td>
+                <td valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="haste_implant" id="haste_implant" onclick="check_implant(this.id)" type="checkbox" />
+                  Haste Implant</td>
+                <td valign="top"><select name="haste_implant_slot" id="haste_implant_slot" disabled="disabled" onchange="count_slot(implant_maxslot.value, 'haste_implant', this.value);"
+                    class='inputnumber_editable'>
+                    <option value="0" selected="selected">0</option>
+                    <option value="1">1</option>
+                  </select>
+                  Slot</td>
+                <td valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="looter_implant" id="looter_implant" onclick="check_implant(this.id)" type="checkbox" />
+                  Looter Implant</td>
+                <td valign="top"><select name="looter_implant_slot" id="looter_implant_slot" disabled="disabled"
+                    onchange="count_slot(implant_maxslot.value, 'looter_implant', this.value);" class='inputnumber_editable'>
+                    <option value="0" selected="selected">0</option>
+                    <option value="1">1</option>
+                  </select>
+                  Slot</td>
+                <td valign="top"><input name="bonus_weaponchance_looter_implant" id="bonus_weaponchance_looter_implant"
+                    size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Chance to Find Weapon Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="bonus_armorchance_looter_implant" id="bonus_armorchance_looter_implant"
+                    size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Chance to Find Armor Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="bonus_ammoloot_looter_implant" id="bonus_ammoloot_looter_implant" size="3"
+                    value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Ammo Loot Bonus Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="bonus_cashloot_looter_implant" id="bonus_cashloot_looter_implant" size="3"
+                    value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Cash Loot Bonus Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="jackofall_implant" id="jackofall_implant" onclick="check_implant(this.id)"
+                    type="checkbox" />
+                  Jack of All Implant </td>
+                <td valign="top"><select name="jackofall_implant_slot" id="jackofall_implant_slot" onchange="count_slot(implant_maxslot.value, 'jackofall_implant', this.value);"
+                    disabled="disabled" class='inputnumber_editable'>
+                    <option value="0" selected="selected">0</option>
+                    <option value="1">1</option>
+                  </select>
+                  Slot </td>
+                <td valign="top"><input name="bonus_weaponchance_jackofall_implant" id="bonus_weaponchance_jackofall_implant"
+                    size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Chance to Find Weapon Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="bonus_armorchance_jackofall_implant" id="bonus_armorchance_jackofall_implant"
+                    size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Chance to Find Armor Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="bonus_ammoloot_jackofall_implant" id="bonus_ammoloot_jackofall_implant"
+                    size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Ammo Loot Bonus Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="bonus_cashloot_jackofall_implant" id="bonus_cashloot_jackofall_implant"
+                    size="3" value="0" readonly="readonly" disabled="disabled" type="text" class='inputnumber' />
+                  % Bonus Cash Loot Bonus Implant</td>
+              </tr>
+              <tr class="">
+                <td valign="top">General Boost</td>
+                <td valign="top"><input name="damage_boost" id="damage_boost" type="checkbox" />
+                  Damage Boost</td>
+                <td colspan="2" valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="exp_boost" id="exp_boost" type="checkbox" />
+                  Exp Boost</td>
+                <td colspan="2" valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top"><input name="speed_boost" id="speed_boost" type="checkbox" />
+                  Speed Boost</td>
+                <td colspan="2" valign="top">&nbsp;</td>
+              </tr>
+              <tr class="">
+                <td valign="top">Clan Boost</td>
+                <td valign="top"><input name="clan_loot_boost" id="clan_loot_boost" onclick="check_boost(this.id)" type="checkbox" />
+                  Clan Loot Boost</td>
+                <td colspan="2" valign="top"><input name="bonus_weaponchance_clan_loot_boost" id="bonus_weaponchance_clan_loot_boost"
+                    size="3" value="0" disabled="disabled" type="text" class='inputnumber_editable' />
+                  % Bonus Chance to Find Weapon Boost</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td colspan="2" valign="top"><input name="bonus_armorchance_clan_loot_boost" id="bonus_armorchance_clan_loot_boost"
+                    size="3" value="0" disabled="disabled" type="text" class='inputnumber_editable' />
+                  % Bonus Chance to Find Armor Boost</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td colspan="2" valign="top"><input name="bonus_ammoloot_clan_loot_boost" id="bonus_ammoloot_clan_loot_boost"
+                    size="3" value="0" disabled="disabled" type="text" class='inputnumber_editable' />
+                  % Bonus Ammo Loot Bonus Boost</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td colspan="2" valign="top"><input name="bonus_cashloot_clan_loot_boost" id="bonus_cashloot_clan_loot_boost"
+                    size="3" value="0" disabled="disabled" type="text" class='inputnumber_editable' />
+                  % Bonus Cash Loot Bonus Boost</td>
+              </tr>
+              <tr class="">
+                <td valign="top">Weekend Event Weapon/Armor Loot Chance</td>
+                <td valign="top"><select name="weekend_event_weaponarmor_loot_chance" id="weekend_event_weaponarmor_loot_chance"
+                    onchange="check_weekend_event_weaponarmorloot(this.value)">
+                    <option value="N" selected="selected">No</option>
+                    <option value="Y">Yes</option>
+                  </select></td>
+                <td colspan="2" valign="top"><input name="bonus_weaponchance_weekend_event_loot" id="bonus_weaponchance_weekend_event_loot"
+                    size="3" value="0" disabled="disabled" type="text" class='inputnumber_editable' />
+                  % Bonus Chance to Find Weapon Event</td>
+              </tr>
+              <tr class="">
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td colspan="2" valign="top"><input name="bonus_armorchance_weekend_event_loot" id="bonus_armorchance_weekend_event_loot"
+                    size="3" value="0" disabled="disabled" type="text" class='inputnumber_editable' />
+                  % Bonus Chance to Find Armor Event</td>
+              </tr>
+              <tr class="">
+                <td valign="top">Weekend Event Ammo Loot Bonus</td>
+                <td valign="top"><select name="weekend_event_ammo_loot_bonus" id="weekend_event_ammo_loot_bonus"
+                    onchange="check_weekend_event_ammoloot(this.value)">
+                    <option value="N" selected="selected">No</option>
+                    <option value="Y">Yes</option>
+                  </select></td>
+                <td colspan="2" valign="top"><input name="bonus_ammoloot_weekend_event_loot" id="bonus_ammoloot_weekend_event_loot"
+                    size="3" value="0" disabled="disabled" type="text" class='inputnumber_editable' />
+                  % Bonus Ammo Loot Bonus Event</td>
+              </tr>
+              <tr class="">
+                <td valign="top">Weekend Event Cash Loot Bonus</td>
+                <td valign="top"><select name="weekend_event_cash_loot_bonus" id="weekend_event_cash_loot_bonus"
+                    onchange="check_weekend_event_cashloot(this.value)">
+                    <option value="N" selected="selected">No</option>
+                    <option value="Y">Yes</option>
+                  </select></td>
+                <td colspan="2" valign="top"><input name="bonus_cashloot_weekend_event_loot" id="bonus_cashloot_weekend_event_loot"
+                    size="3" value="0" disabled="disabled" type="text" class='inputnumber_editable' />
+                  % Bonus Cash Loot Bonus Event</td>
+              </tr>
+              <tr class="">
+                <td valign="top">GM State</td>
+                <td valign="top"><select name="gm_state" id="gm_state">
+                    <option value="N" selected="selected">Non GM</option>
+                    <option value="Y">GM</option>
+                  </select> </td>
+                <td colspan="2" valign="top">&nbsp;</td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="4">
+            <hr />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="3"><input type="button" name="btnprocess" id="btnprocess" value="Loot Process" onclick="process_looting()" />
+            <input type="reset" name="btnreset" id="btnreset" value="Reset" />
+            <input type="button" name="btndownload" id="btndownload" value="Download Excel Formula" onclick="download_excel_looting_formula()" /></td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <hr />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <table width="100%" border="0">
+              <tr>
+                <td colspan="2" align="" bgcolor="#333333">
+                  <font color="#FFFFFF"><strong>Estimated Things That Looted</strong></font>
+                </td>
+              </tr>
+              <tr>
+                <td width="16%">Looting Formula</td>
+                <td width="84%"> Random Chance per Item * Player State</td>
+              </tr>
+              <tr>
+                <td colspan="4">
+                  <hr />
+                </td>
+              </tr>
+              <tr>
+                <td>Loot Spot Used</td>
+                <td colspan="3"><input type="text" name="loot_spot_used" id="loot_spot_used" readonly="readonly" size="3"
+                    class="inputnumber" value="0" /> spots</td>
+              </tr>
+              <tr>
+                <td>Loot Spot Left</td>
+                <td colspan="3"><input type="text" name="loot_spot_left" id="loot_spot_left" readonly="readonly" size="3"
+                    class="inputnumber" value="0" />
+                  spots</td>
+              </tr>
+              <tr>
+                <td colspan="4">
+                  <hr />
+                </td>
+              </tr>
+              <tr>
+                <td valign="top">Current Inventory</td>
+                <td valign="top">
+                  <fieldset>
+                    <table width="100%" border="0">
+                      <tr>
+                        <td width="5%" align="center" bgcolor="#333333">
+                          <font color="#FFFFFF"><strong>ReLoot</strong></font>
+                        </td>
+                        <td width="13%" align="center" bgcolor="#333333">
+                          <font color="#FFFFFF"><strong>Inventory</strong></font>
+                        </td>
+                        <td width="16%" align="center" bgcolor="#333333">
+                          <font color="#FFFFFF"><strong>Item Name</strong></font>
+                        </td>
+                        <td width="7%" align="center" bgcolor="#333333">
+                          <font color="#FFFFFF"><strong>Quantity</strong></font>
+                        </td>
+                        <td width="9%" align="center" bgcolor="#333333">
+                          <font color="#FFFFFF"><strong>Scraps ($)</strong></font>
+                        </td>
+                        <td width="5%" align="center" bgcolor="#333333">
+                          <font color="#FFFFFF"><strong>ReLoot</strong></font>
+                        </td>
+                        <td width="13%" align="center" bgcolor="#333333">
+                          <font color="#FFFFFF"><strong>Inventory</strong></font>
+                        </td>
+                        <td width="16%" align="center" bgcolor="#333333">
+                          <font color="#FFFFFF"><strong>Item Name</strong></font>
+                        </td>
+                        <td width="7%" align="center" bgcolor="#333333">
+                          <font color="#FFFFFF"><strong>Quantity</strong></font>
+                        </td>
+                        <td width="9%" align="center" bgcolor="#333333">
+                          <font color="#FFFFFF"><strong>Scraps ($)</strong></font>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="center"><input type="checkbox" name="checklist_slot_01" id="checklist_slot_01"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 01</td>
+                        <td align="center"><input type="text" name="item_name_slot_01" id="item_name_slot_01" readonly="readonly"
+                            size="30" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_01" id="quantity_slot_01" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_01" id="scraps_slot_01" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                        <td align="center"><input type="checkbox" name="checklist_slot_16" id="checklist_slot_16"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 16</td>
+                        <td align="center"><input name="item_name_slot_16" type="text" id="item_name_slot_16" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_16" id="quantity_slot_16" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_16" id="scraps_slot_16" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><input type="checkbox" name="checklist_slot_02" id="checklist_slot_02"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 02</td>
+                        <td align="center"><input name="item_name_slot_02" type="text" id="item_name_slot_02" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_02" id="quantity_slot_02" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_02" id="scraps_slot_02" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                        <td align="center"><input type="checkbox" name="checklist_slot_17" id="checklist_slot_17"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 17</td>
+                        <td align="center"><input name="item_name_slot_17" type="text" id="item_name_slot_17" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_17" id="quantity_slot_17" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_17" id="scraps_slot_17" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><input type="checkbox" name="checklist_slot_03" id="checklist_slot_03"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 03</td>
+                        <td align="center"><input name="item_name_slot_03" type="text" id="item_name_slot_03" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_03" id="quantity_slot_03" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_03" id="scraps_slot_03" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                        <td align="center"><input type="checkbox" name="checklist_slot_18" id="checklist_slot_18"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 18</td>
+                        <td align="center"><input name="item_name_slot_18" type="text" id="item_name_slot_18" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_18" id="quantity_slot_18" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_18" id="scraps_slot_18" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><input type="checkbox" name="checklist_slot_04" id="checklist_slot_04"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 04</td>
+                        <td align="center"><input name="item_name_slot_04" type="text" id="item_name_slot_04" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_04" id="quantity_slot_04" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_04" id="scraps_slot_04" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                        <td align="center"><input type="checkbox" name="checklist_slot_19" id="checklist_slot_19"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 19</td>
+                        <td align="center"><input name="item_name_slot_19" type="text" id="item_name_slot_19" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_19" id="quantity_slot_19" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_19" id="scraps_slot_19" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><input type="checkbox" name="checklist_slot_05" id="checklist_slot_05"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 05</td>
+                        <td align="center"><input name="item_name_slot_05" type="text" id="item_name_slot_05" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_05" id="quantity_slot_05" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_05" id="scraps_slot_05" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                        <td align="center"><input type="checkbox" name="checklist_slot_20" id="checklist_slot_20"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 20</td>
+                        <td align="center"><input name="item_name_slot_20" type="text" id="item_name_slot_20" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_20" id="quantity_slot_20" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_20" id="scraps_slot_20" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><input type="checkbox" name="checklist_slot_06" id="checklist_slot_06"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 06</td>
+                        <td align="center"><input name="item_name_slot_06" type="text" id="item_name_slot_06" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_06" id="quantity_slot_06" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_06" id="scraps_slot_06" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                        <td align="center"><input type="checkbox" name="checklist_slot_21" id="checklist_slot_21"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 21</td>
+                        <td align="center"><input name="item_name_slot_21" type="text" id="item_name_slot_21" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_21" id="quantity_slot_21" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_21" id="scraps_slot_21" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><input type="checkbox" name="checklist_slot_07" id="checklist_slot_07"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 07</td>
+                        <td align="center"><input name="item_name_slot_07" type="text" id="item_name_slot_07" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_07" id="quantity_slot_07" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_07" id="scraps_slot_07" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                        <td align="center"><input type="checkbox" name="checklist_slot_22" id="checklist_slot_22"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 22</td>
+                        <td align="center"><input name="item_name_slot_22" type="text" id="item_name_slot_22" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_22" id="quantity_slot_22" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_22" id="scraps_slot_22" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><input type="checkbox" name="checklist_slot_08" id="checklist_slot_08"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 08</td>
+                        <td align="center"><input name="item_name_slot_08" type="text" id="item_name_slot_08" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_08" id="quantity_slot_08" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_08" id="scraps_slot_08" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                        <td align="center"><input type="checkbox" name="checklist_slot_23" id="checklist_slot_23"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 23</td>
+                        <td align="center"><input name="item_name_slot_23" type="text" id="item_name_slot_23" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_23" id="quantity_slot_23" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_23" id="scraps_slot_23" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><input type="checkbox" name="checklist_slot_09" id="checklist_slot_09"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 09</td>
+                        <td align="center"><input name="item_name_slot_09" type="text" id="item_name_slot_09" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_09" id="quantity_slot_09" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_09" id="scraps_slot_09" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                        <td align="center"><input type="checkbox" name="checklist_slot_24" id="checklist_slot_24"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 24</td>
+                        <td align="center"><input name="item_name_slot_24" type="text" id="item_name_slot_24" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_24" id="quantity_slot_24" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_24" id="scraps_slot_24" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><input type="checkbox" name="checklist_slot_10" id="checklist_slot_10"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 10</td>
+                        <td align="center"><input name="item_name_slot_10" type="text" id="item_name_slot_10" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_10" id="quantity_slot_10" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_10" id="scraps_slot_10" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                        <td align="center"><input type="checkbox" name="checklist_slot_25" id="checklist_slot_25"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 25</td>
+                        <td align="center"><input name="item_name_slot_25" type="text" id="item_name_slot_25" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_25" id="quantity_slot_25" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_25" id="scraps_slot_25" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><input type="checkbox" name="checklist_slot_11" id="checklist_slot_11"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 11</td>
+                        <td align="center"><input name="item_name_slot_11" type="text" id="item_name_slot_11" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_11" id="quantity_slot_11" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_11" id="scraps_slot_11" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                        <td align="center"><input type="checkbox" name="checklist_slot_26" id="checklist_slot_26"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 26</td>
+                        <td align="center"><input name="item_name_slot_26" type="text" id="item_name_slot_26" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_26" id="quantity_slot_26" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_26" id="scraps_slot_26" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><input type="checkbox" name="checklist_slot_12" id="checklist_slot_12"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 12</td>
+                        <td align="center"><input name="item_name_slot_12" type="text" id="item_name_slot_12" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_12" id="quantity_slot_12" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_12" id="scraps_slot_12" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                        <td align="center"><input type="checkbox" name="checklist_slot_27" id="checklist_slot_27"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 27</td>
+                        <td align="center"><input name="item_name_slot_27" type="text" id="item_name_slot_27" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_27" id="quantity_slot_27" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_27" id="scraps_slot_27" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><input type="checkbox" name="checklist_slot_13" id="checklist_slot_13"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 13</td>
+                        <td align="center"><input name="item_name_slot_13" type="text" id="item_name_slot_13" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_13" id="quantity_slot_13" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_13" id="scraps_slot_13" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                        <td align="center"><input type="checkbox" name="checklist_slot_28" id="checklist_slot_28"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 28</td>
+                        <td align="center"><input name="item_name_slot_28" type="text" id="item_name_slot_28" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_28" id="quantity_slot_28" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_28" id="scraps_slot_28" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><input type="checkbox" name="checklist_slot_14" id="checklist_slot_14"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 14</td>
+                        <td align="center"><input name="item_name_slot_14" type="text" id="item_name_slot_14" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_14" id="quantity_slot_14" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_14" id="scraps_slot_14" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                        <td align="center"><input type="checkbox" name="checklist_slot_29" id="checklist_slot_29"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 29</td>
+                        <td align="center"><input name="item_name_slot_29" type="text" id="item_name_slot_29" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_29" id="quantity_slot_29" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_29" id="scraps_slot_29" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><input type="checkbox" name="checklist_slot_15" id="checklist_slot_15"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 15</td>
+                        <td align="center"><input name="item_name_slot_15" type="text" id="item_name_slot_15" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_15" id="quantity_slot_15" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_15" id="scraps_slot_15" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                        <td align="center"><input type="checkbox" name="checklist_slot_30" id="checklist_slot_30"
+                            disabled="disabled" /></td>
+                        <td align="center">Slot 30</td>
+                        <td align="center"><input name="item_name_slot_30" type="text" id="item_name_slot_30" size="30"
+                            readonly="readonly" /></td>
+                        <td align="center"><input type="text" name="quantity_slot_30" id="quantity_slot_30" size="3"
+                            class="inputnumber" /></td>
+                        <td align="center"><input type="text" name="scraps_slot_30" id="scraps_slot_30" readonly="readonly"
+                            class="inputnumber" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td colspan="10" align="center">
+                          <hr />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="10"><input type="button" id="btnreloot" name="btnreloot" value="ReLoot Process"
+                            onclick="process_relooting()" disabled="disabled" /></td>
+                      </tr>
+                    </table>
+                  </fieldset>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <hr />
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">Current Ammo Looted</td>
+          <td colspan="3">
+            <fieldset>
+              <table width="100%" border="0">
+                <tr>
+                  <td width="15%">.32 Handgun Ammo</td>
+                  <td width="8%"><input name="total_handgun_32" type="text" class="inputnumber" id="total_handgun_32"
+                      size="3" readonly="readonly" value="0" /></td>
+                  <td width="13%">.45 Handgun Ammo</td>
+                  <td width="8%"><input name="total_handgun_45" type="text" class="inputnumber" id="total_handgun_45"
+                      size="3" readonly="readonly" value="0" /></td>
+                  <td width="17%">9 mm Rifle Ammo</td>
+                  <td width="11%"><input name="total_rifle_9mm" type="text" class="inputnumber" id="total_rifle_9mm"
+                      size="3" readonly="readonly" value="0" /></td>
+                  <td width="12%">12 Gauge Shell</td>
+                  <td width="16%"><input name="total_shotgun_12g" type="text" class="inputnumber" id="total_shotgun_12g"
+                      size="3" readonly="readonly" value="0" /></td>
+                </tr>
+                <tr>
+                  <td>9mm Handgun Ammo</td>
+                  <td><input name="total_handgun_9mm" type="text" class="inputnumber" id="total_handgun_9mm" size="3"
+                      readonly="readonly" value="0" /></td>
+                  <td>.50 Handgun Ammo</td>
+                  <td><input name="total_handgun_50" type="text" class="inputnumber" id="total_handgun_50" size="3"
+                      readonly="readonly" value="0" /></td>
+                  <td>12.7 mm Rifle Ammo</td>
+                  <td><input name="total_rifle_127mm" type="text" class="inputnumber" id="total_rifle_127mm" size="3"
+                      readonly="readonly" value="0" /></td>
+                  <td>10 Gauge Shell</td>
+                  <td><input name="total_shotgun_10g" type="text" class="inputnumber" id="total_shotgun_10g" size="3"
+                      readonly="readonly" value="0" /></td>
+                </tr>
+                <tr>
+                  <td>.357 Handgun Ammo</td>
+                  <td><input name="total_handgun_357" type="text" class="inputnumber" id="total_handgun_357" size="3"
+                      readonly="readonly" value="0" /></td>
+                  <td>.55 Handgun Ammo</td>
+                  <td><input name="total_handgun_55" type="text" class="inputnumber" id="total_handgun_55" size="3"
+                      readonly="readonly" value="0" /></td>
+                  <td>14 mm Rifle Ammo</td>
+                  <td><input name="total_rifle_14mm" type="text" class="inputnumber" id="total_rifle_14mm" size="3"
+                      readonly="readonly" value="0" /></td>
+                  <td>Grenade</td>
+                  <td><input name="total_explosive_grenade" type="text" class="inputnumber" id="total_explosive_grenade"
+                      size="3" readonly="readonly" value="0" /></td>
+                </tr>
+                <tr>
+                  <td>.38 Handgun Ammo</td>
+                  <td><input name="total_handgun_38" type="text" class="inputnumber" id="total_handgun_38" size="3"
+                      readonly="readonly" value="0" /></td>
+                  <td>5.5 mm Rifle Ammo</td>
+                  <td><input name="total_rifle_55mm" type="text" class="inputnumber" id="total_rifle_55mm" size="3"
+                      readonly="readonly" value="0" /></td>
+                  <td>20 Gauge Shell</td>
+                  <td><input name="total_shotgun_20g" type="text" class="inputnumber" id="total_shotgun_20g" size="3"
+                      readonly="readonly" value="0" /></td>
+                  <td>Heavy Grenade</td>
+                  <td><input name="total_explosive_heavygrenade" type="text" class="inputnumber" id="total_explosive_heavygrenade"
+                      size="3" readonly="readonly" value="0" /></td>
+                </tr>
+                <tr>
+                  <td>.40 Handgun Ammo</td>
+                  <td><input name="total_handgun_40" type="text" class="inputnumber" id="total_handgun_40" size="3"
+                      readonly="readonly" value="0" /></td>
+                  <td>7.5 mm Rifle Ammo</td>
+                  <td><input name="total_rifle_75mm" type="text" class="inputnumber" id="total_rifle_75mm" size="3"
+                      readonly="readonly" value="0" /></td>
+                  <td>16 Gauge Shell</td>
+                  <td><input name="total_shotgun_16g" type="text" class="inputnumber" id="total_shotgun_16g" size="3"
+                      readonly="readonly" value="0" /></td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>
+            </fieldset>
+          </td>
+        </tr>
+        <tr>
+          <td>Current Cash Looted</td>
+          <td align="right">
+            <input name="cash_looted" type="hidden" class="inputnumber" id="cash_looted" value="0" size="3" />
+            <label id='lbl_cash_looted'>0 Dollars</label> </td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <hr />
+          </td>
+        </tr>
+        <tr>
+          <td>Total Cash Looted</td>
+          <td align="right">
+            <input name="total_cash_looted" type="hidden" class="inputnumber" id="total_cash_looted" value="0" size="10" />
+            <label id='lbl_total_cash_looted'>0 Dollars</label> </td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+        </tr>
+        <tr>
+
+          <td>
+            Total Collected Scraps</td>
+          <td align="right">
+            <input type="hidden" id="total_dollar_scrap" name="total_dollar_scrap" readonly class="inputnumber" value="0" />
+            <label id='lbl_total_dollar_scrap'>0 Dollars</label> </td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <hr />
+          </td>
+        </tr>
+        <tr>
+          <td>Total Dollars per Loot Run</td>
+          <td align="right">
+            <input type="hidden" id="total_dollar_per_loot_run" name="total_dollar_per_loot_run" readonly="readonly"
+              class="inputnumber" value="0" />
+            <label id='lbl_total_dollar_per_loot_run'>0 Dollars</label> </td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
 
 
-</body></html>
+        <tr>
+          <td colspan="4">
+            <hr>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4" bgcolor="#333333">
+            <font color="#FFFFFF">
+              <h2 align="center">Best View With Mozilla Firefox and Google Chrome at 1366 x 768 pixels</h2>
+            </font>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4" align="right">
+            <font align="right" color="white">Made by Hurricanos @ 2017</font>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4" align="center">
+            <audio autoplay loop>
+              <source src="df2d-maintheme.m4ax" type="audio/ogg">
+            </audio> </td>
+        </tr>
+      </table>
+    </form>
+  </fieldset>
+
+
+</body>
+
+</html>

@@ -1,290 +1,375 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-<script type="text/javascript" src="menu_tools.js"></script>
-<script type="text/javascript" src="main_program_stat_calculator.js"></script>
+  <script type="text/javascript" src="menu_tools.js"></script>
+  <script type="text/javascript" src="main_program_stat_calculator.js"></script>
 
-<link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>DF - Stat Calculator</title></head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>DF - Stat Calculator</title>
+</head>
 
 <body class="settings">
-<form id="form1" name="form1" method="post" action="">
-  <table width="800" border="1" align="center">
-  <tr>
-  <td colspan="2" bgcolor="#333333"><font color="#FFFFFF"><h1 align="center" >DEAD FRONTIER - STAT CALCULATOR</h1></font></td>
-  </tr>
-  <tr>
-     <td align="right" colspan="2">Other Tools&nbsp;&nbsp;<select name="list_tools" id="list_tools" onchange="check_tools(this.value)" class="changeable">
-          			<option value="estimate_grinding_tool">Estimate Grinding Performance Tools</option>
-          			<option value="estimate_dying_tool">Estimate Dying Tools</option>
-          			<option value="estimate_travelling_time" >Estimate Travelling Time</option>
-          			<option value="stat_calculator"  selected="selected">Stat Calculator</option>
-          			<option value="loot_simulator" >Loot Simulator</option>
+  <form id="form1" name="form1" method="post" action="">
+    <table width="800" border="1" align="center">
+      <tr>
+        <td colspan="2" bgcolor="#333333">
+          <font color="#FFFFFF">
+            <h1 align="center">DEAD FRONTIER - STAT CALCULATOR</h1>
+          </font>
+        </td>
+      </tr>
+      <tr>
+        <td align="right" colspan="2">Other Tools&nbsp;&nbsp;<select name="list_tools" id="list_tools" onchange="check_tools(this.value)"
+            class="changeable">
+            <option value="estimate_grinding_tool">Estimate Grinding Performance Tools</option>
+            <option value="estimate_dying_tool">Estimate Dying Tools</option>
+            <option value="estimate_travelling_time">Estimate Travelling Time</option>
+            <option value="stat_calculator" selected="selected">Stat Calculator</option>
+            <option value="loot_simulator">Loot Simulator</option>
           </select></td>
-  </tr>
-    <tr>
-      <td width="44%" valign="top"><table width="100%" border="0">
-        <tr>
-          <td><table width="100%" border="0">
+      </tr>
+      <tr>
+        <td width="44%" valign="top">
+          <table width="100%" border="0">
             <tr>
-              <td colspan="2" align="left" bgcolor="#333333"><strong><font color="#FFFFFF">Options</font></strong></td>
-              </tr>
-            <tr>
-              <td width="54%">Profession</td>
-              <td width="46%">
-              <select name="list_profession" id="list_profession" onchange="check_profession(this.value, profession_old.value)">
-              		<option value="" selected="selected">--Select--</option>
-                      <option value="farmer">Farmer</option>
-                      <option value="scientist">Scientist</option>
-                      <option value="engineer">Engineer</option>
-                      <option value="doctor">Doctor</option>
-                      <option value="chef">Chef</option>
-                      <option value="boxer">Boxer</option>
-                      <option value="soldier">Soldier</option>
-                      <option value="policeofficer">Police Officer</option>
-                      <option value="fireman">Fireman</option>
-                      <option value="athlete">Athlete</option>
-                      <option value="teacher">Teacher</option>
-                      <option value="priest">Priest</option>
-                      <option value="lawyer">Lawyer</option>
-                      <option value="accountant">Accountant</option>
-                      <option value="journalist">Journalist</option>
-                      <option value="actor">Actor</option>
-                      <option value="stockbroker">Stock Broker</option>
-                      <option value="architect">Architect</option>
-                      <option value="entertainer">Entertainer</option>
-                      <option value="student">Student</option>
-              </select>
-              <input type="hidden" name="profession_old" id="profession_old"/>              </td>
+              <td>
+                <table width="100%" border="0">
+                  <tr>
+                    <td colspan="2" align="left" bgcolor="#333333"><strong>
+                        <font color="#FFFFFF">Options</font>
+                      </strong></td>
+                  </tr>
+                  <tr>
+                    <td width="54%">Profession</td>
+                    <td width="46%">
+                      <select name="list_profession" id="list_profession" onchange="check_profession(this.value, profession_old.value)">
+                        <option value="" selected="selected">--Select--</option>
+                        <option value="farmer">Farmer</option>
+                        <option value="scientist">Scientist</option>
+                        <option value="engineer">Engineer</option>
+                        <option value="doctor">Doctor</option>
+                        <option value="chef">Chef</option>
+                        <option value="boxer">Boxer</option>
+                        <option value="soldier">Soldier</option>
+                        <option value="policeofficer">Police Officer</option>
+                        <option value="fireman">Fireman</option>
+                        <option value="athlete">Athlete</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="priest">Priest</option>
+                        <option value="lawyer">Lawyer</option>
+                        <option value="accountant">Accountant</option>
+                        <option value="journalist">Journalist</option>
+                        <option value="actor">Actor</option>
+                        <option value="stockbroker">Stock Broker</option>
+                        <option value="architect">Architect</option>
+                        <option value="entertainer">Entertainer</option>
+                        <option value="student">Student</option>
+                      </select>
+                      <input type="hidden" name="profession_old" id="profession_old" /> </td>
+                  </tr>
+                  <tr>
+                    <td>Target Level</td>
+                    <td><input type="text" name="target_level" id="target_level" size="3" value="1" onchange="check_target_level(this.value)"
+                        class="inputnumber_editable" /> </td>
+                  </tr>
+                  <tr>
+                    <td>Stat Point Available</td>
+                    <td><input type="text" name="stat_available_point" id="stat_available_point" size="3" value="0"
+                        readonly="readonly" class="inputnumber" />
+                      <input type="hidden" name="total_stat_point_used" id="total_stat_point_used" size="3" value="0" />
+                      <input type="hidden" name="max_stat_point" id="max_stat_point" size="3" value="0" /> </td>
+                  </tr>
+                  <tr>
+                    <td>Proficiency Points Available</td>
+                    <td><input type="text" name="proficiency_available_point" id="proficiency_available_point" size="3"
+                        value="0" readonly="readonly" class="inputnumber" />
+                      <input type="hidden" name="total_proficiency_point_used" id="total_proficiency_point_used" size="3"
+                        value="0" />
+                      <input type="hidden" name="max_proficiency_point" id="max_proficiency_point" size="3" value="0" />
+                    </td>
+                  </tr>
+                </table>
+              </td>
             </tr>
             <tr>
-              <td>Target Level</td>
-              <td><input type="text" name="target_level" id="target_level" size="3" value="1" onchange="check_target_level(this.value)" class="inputnumber_editable"/>             </td>
+              <td>
+                <table width="100%" border="0">
+                  <tr>
+                    <td colspan="2" align="left" bgcolor="#333333"><strong>
+                        <font color="#FFFFFF">Stats</font>
+                      </strong></td>
+                  </tr>
+                  <tr>
+                    <td width="53%">Strength</td>
+                    <td width="47%"><input type="text" name="strength" id="strength" size="3" value="25" onchange="sum_all_stat()"
+                        readonly="readonly" class="inputnumber_editable" />
+                      <input type="hidden" name="strength_default" id="strength_default" size="3" value="25" /></td>
+                  </tr>
+                  <tr>
+                    <td>Endurance</td>
+                    <td><input type="text" name="endurance" id="endurance" size="3" value="25" onchange="sum_all_stat()"
+                        readonly="readonly" class="inputnumber_editable" />
+                      <input type="hidden" name="endurance_default" id="endurance_default" size="3" value="25" /></td>
+                  </tr>
+                  <tr>
+                    <td>Agility</td>
+                    <td><input type="text" name="agility" id="agility" size="3" value="25" onchange="sum_all_stat()"
+                        readonly="readonly" class="inputnumber_editable" />
+                      <input type="hidden" name="agility_default" id="agility_default" size="3" value="25" /></td>
+                  </tr>
+                  <tr>
+                    <td>Accuracy</td>
+                    <td><input type="text" name="accuracy" id="accuracy" size="3" value="25" onchange="sum_all_stat()"
+                        readonly="readonly" class="inputnumber_editable" />
+                      <input type="hidden" name="accuracy_default" id="accuracy_default" size="3" value="25" /> </td>
+                  </tr>
+                  <tr>
+                    <td>Critical Hit</td>
+                    <td><input type="text" name="critical_hit" id="critical_hit" size="3" value="25" onchange="sum_all_stat()"
+                        readonly="readonly" class="inputnumber_editable" />
+                      <input type="hidden" name="critical_hit_default" id="critical_hit_default" size="3" value="25" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Reloading</td>
+                    <td><input type="text" name="reloading" id="reloading" size="3" value="25" onchange="sum_all_stat()"
+                        readonly="readonly" class="inputnumber_editable" />
+                      <input type="hidden" name="reloading_default" id="reloading_default" size="3" value="25" /> </td>
+                  </tr>
+                </table>
+              </td>
             </tr>
             <tr>
-              <td>Stat Point Available</td>
-              <td><input type="text" name="stat_available_point" id="stat_available_point" size="3" value="0" readonly="readonly" class="inputnumber"/>
-              <input type="hidden" name="total_stat_point_used" id="total_stat_point_used" size="3" value="0" />
-              <input type="hidden" name="max_stat_point" id="max_stat_point" size="3" value="0" />              </td>
+              <td>
+                <table width="100%" border="0">
+                  <tr>
+                    <td colspan="2" align="left" bgcolor="#333333"><strong>
+                        <font color="#FFFFFF">Profiencies</font>
+                      </strong></td>
+                  </tr>
+                  <tr>
+                    <td width="53%">Melee</td>
+                    <td width="47%"><input type="text" name="melee" id="melee" size="3" value="5" onchange="sum_all_proficiency()"
+                        readonly="readonly" class="inputnumber_editable" />
+                      <input type="hidden" name="melee_default" id="melee_default" size="3" value="5" /> </td>
+                  </tr>
+                  <tr>
+                    <td>Pistols</td>
+                    <td><input type="text" name="pistol" id="pistol" size="3" value="5" onchange="sum_all_proficiency()"
+                        readonly="readonly" class="inputnumber_editable" />
+                      <input type="hidden" name="pistol_default" id="pistol_default" size="3" value="5" /> </td>
+                  </tr>
+                  <tr>
+                    <td>Rifles</td>
+                    <td><input type="text" name="rifle" id="rifle" size="3" value="0" onchange="sum_all_proficiency()"
+                        readonly="readonly" class="inputnumber_editable" />
+                      <input type="hidden" name="rifle_default" id="rifle_default" size="3" value="0" /> </td>
+                  </tr>
+                  <tr>
+                    <td>Shotguns</td>
+                    <td><input type="text" name="shotgun" id="shotgun" size="3" value="0" onchange="sum_all_proficiency()"
+                        readonly="readonly" class="inputnumber_editable" />
+                      <input type="hidden" name="shotgun_default" id="shotgun_default" size="3" value="0" /> </td>
+                  </tr>
+                  <tr>
+                    <td>Machine Guns</td>
+                    <td><input type="text" name="machine_gun" id="machine_gun" size="3" value="0" onchange="sum_all_proficiency()"
+                        readonly="readonly" class="inputnumber_editable" />
+                      <input type="hidden" name="machine_gun_default" id="machine_gun_default" size="3" value="0" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Explosives</td>
+                    <td><input type="text" name="explosive" id="explosive" size="3" value="0" onchange="sum_all_proficiency()"
+                        readonly="readonly" class="inputnumber_editable" />
+                      <input type="hidden" name="explosive_default" id="explosive_default" size="3" value="0" /> </td>
+                  </tr>
+                </table>
+              </td>
             </tr>
-            <tr>
-              <td>Proficiency Points Available</td>
-              <td><input type="text" name="proficiency_available_point" id="proficiency_available_point" size="3" value="0" readonly="readonly" class="inputnumber"/>
-              <input type="hidden" name="total_proficiency_point_used" id="total_proficiency_point_used" size="3" value="0"/>
-              <input type="hidden" name="max_proficiency_point" id="max_proficiency_point" size="3" value="0" />              </td>
-            </tr>
-          </table></td>
-        </tr>
-        <tr>
-          <td><table width="100%" border="0">
-            <tr>
-              <td colspan="2" align="left" bgcolor="#333333"><strong><font color="#FFFFFF">Stats</font></strong></td>
-              </tr>
-            <tr>
-              <td width="53%">Strength</td>
-              <td width="47%"><input type="text" name="strength" id="strength" size="3" value="25" onchange="sum_all_stat()" readonly="readonly" class="inputnumber_editable"/>
-                <input type="hidden" name="strength_default" id="strength_default" size="3" value="25"/></td>
-            </tr>
-            <tr>
-              <td>Endurance</td>
-              <td><input type="text" name="endurance" id="endurance" size="3" value="25" onchange="sum_all_stat()" readonly="readonly" class="inputnumber_editable"/>
-                <input type="hidden" name="endurance_default" id="endurance_default" size="3" value="25"/></td>
-            </tr>
-            <tr>
-              <td>Agility</td>
-              <td><input type="text" name="agility" id="agility" size="3" value="25" onchange="sum_all_stat()" readonly="readonly" class="inputnumber_editable"/>
-              <input type="hidden" name="agility_default" id="agility_default" size="3" value="25"/></td>
-            </tr>
-            <tr>
-              <td>Accuracy</td>
-              <td><input type="text" name="accuracy" id="accuracy" size="3" value="25" onchange="sum_all_stat()" readonly="readonly" class="inputnumber_editable"/>
-              <input type="hidden" name="accuracy_default" id="accuracy_default" size="3" value="25"/>              </td>
-            </tr>
-            <tr>
-              <td>Critical Hit</td>
-              <td><input type="text" name="critical_hit" id="critical_hit" size="3" value="25" onchange="sum_all_stat()" readonly="readonly" class="inputnumber_editable"/>
-              <input type="hidden" name="critical_hit_default" id="critical_hit_default" size="3" value="25"/>              </td>
-            </tr>
-            <tr>
-              <td>Reloading</td>
-              <td><input type="text" name="reloading" id="reloading" size="3" value="25" onchange="sum_all_stat()" readonly="readonly" class="inputnumber_editable"/>
-              <input type="hidden" name="reloading_default" id="reloading_default" size="3" value="25"/>               </td>
-            </tr>
-          </table></td>
-        </tr>
-        <tr>
-          <td><table width="100%" border="0">
-            <tr>
-              <td colspan="2" align="left"bgcolor="#333333"><strong><font color="#FFFFFF">Profiencies</font></strong></td>
-              </tr>
-            <tr>
-              <td width="53%">Melee</td>
-              <td width="47%"><input type="text" name="melee" id="melee" size="3" value="5" onchange="sum_all_proficiency()" readonly="readonly" class="inputnumber_editable"/>
-              <input type="hidden" name="melee_default" id="melee_default" size="3" value="5"/>              </td>
-            </tr>
-            <tr>
-              <td>Pistols</td>
-              <td><input type="text" name="pistol" id="pistol" size="3" value="5" onchange="sum_all_proficiency()" readonly="readonly" class="inputnumber_editable"/>
-              <input type="hidden" name="pistol_default" id="pistol_default" size="3" value="5"/>              </td>
-            </tr>
-            <tr>
-              <td>Rifles</td>
-              <td><input type="text" name="rifle" id="rifle" size="3" value="0" onchange="sum_all_proficiency()" readonly="readonly" class="inputnumber_editable"/>
-              <input type="hidden" name="rifle_default" id="rifle_default" size="3" value="0"/>              </td>
-            </tr>
-            <tr>
-              <td>Shotguns</td>
-              <td><input type="text" name="shotgun" id="shotgun" size="3" value="0" onchange="sum_all_proficiency()" readonly="readonly" class="inputnumber_editable"/>
-              <input type="hidden" name="shotgun_default" id="shotgun_default" size="3" value="0"/>              </td>
-            </tr>
-            <tr>
-              <td>Machine Guns</td>
-              <td><input type="text" name="machine_gun" id="machine_gun" size="3" value="0" onchange="sum_all_proficiency()" readonly="readonly" class="inputnumber_editable"/>
-              <input type="hidden" name="machine_gun_default" id="machine_gun_default" size="3" value="0"/>              </td>
-            </tr>
-            <tr>
-              <td>Explosives</td>
-              <td><input type="text" name="explosive" id="explosive" size="3" value="0" onchange="sum_all_proficiency()" readonly="readonly" class="inputnumber_editable"/>
-              <input type="hidden" name="explosive_default" id="explosive_default" size="3" value="0"/>              </td>
-            </tr>
-          </table></td>
-        </tr>
-       
-      </table></td>
-      <td width="56%" valign="top"><table width="100%" border="0">
-        <tr>
-          <td><table width="100%" border="0">
-            <tr>
-              <td colspan="4" align="left" bgcolor="#333333"><strong><font color="#FFFFFF">Totals</font></strong></td>
-              </tr>
-            <tr>
-              <td colspan="2">Current Level</td>
-              <td colspan="2"><input type="text" name="curr_level" id="curr_level" size="3" value="0" readonly="readonly" class="inputnumber"/></td>
-              </tr>
-            <tr>
-              <td width="25%">Strength</td>
-              <td width="20%"><input type="text" name="curr_strength" id="curr_strength" size="3" value="0" readonly="readonly" class="inputnumber"/></td>
-              <td width="23%">Accuracy</td>
-              <td width="32%"><input type="text" name="curr_accuracy" id="curr_accuracy" size="3" value="0" readonly="readonly" class="inputnumber"/></td>
-            </tr>
-            <tr>
-              <td>Endurance</td>
-              <td><input type="text" name="curr_endurance" id="curr_endurance" size="3" value="0" readonly="readonly" class="inputnumber"/></td>
-              <td>Critical Hit</td>
-              <td><input type="text" name="curr_critical_hit" id="curr_critical_hit" size="3" value="0" readonly="readonly" class="inputnumber"/></td>
-            </tr>
-            <tr>
-              <td>Agility</td>
-              <td><input type="text" name="curr_agility" id="curr_agility" size="3" value="0" readonly="readonly" class="inputnumber"/></td>
-              <td>Reloading</td>
-              <td><input type="text" name="curr_reloading" id="curr_reloading" size="3" value="0" readonly="readonly" class="inputnumber"/></td>
-            </tr>
-          </table></td>
-        </tr>
-        <tr>
-          <td><table width="100%" border="0">
-            <tr>
-              <td colspan="2" align="left"bgcolor="#333333"><strong><font color="#FFFFFF">Weapon 1 Stats</font></strong></td>
-              </tr>
-            <tr>
-              <td width="25%">Accuracy</td>
-              <td width="75%"><input type="text" name="weapon_accuracy1" id="weapon_accuracy1" size="3" value="0" onchange="check_added_stat(this.id,this.value)" readonly="readonly" class="inputnumber_editable"/></td>
-            </tr>
-            <tr>
-              <td>Reloading</td>
-              <td><input type="text" name="weapon_reloading1" id="weapon_reloading1" size="3" value="0" onchange="check_added_stat(this.id,this.value)" readonly="readonly" class="inputnumber_editable"/></td>
-            </tr>
-            <tr>
-              <td>Critical Hit</td>
-              <td><input type="text" name="weapon_critical_hit1" id="weapon_critical_hit1" size="3" value="0" onchange="check_added_stat(this.id,this.value)" readonly="readonly" class="inputnumber_editable"/></td>
-            </tr>
-          </table></td>
-        </tr>
-        <tr>
-          <td><table width="100%" border="0">
-            <tr>
-              <td colspan="2" align="left"bgcolor="#333333"><strong><font color="#FFFFFF">Weapon 2 Stats</font></strong></td>
-            </tr>
-            <tr>
-              <td width="25%">Accuracy</td>
-              <td width="75%"><input type="text" name="weapon_accuracy2" id="weapon_accuracy2" size="3" value="0" onchange="check_added_stat(this.id,this.value)" readonly="readonly" class="inputnumber_editable"/></td>
-            </tr>
-            <tr>
-              <td>Reloading</td>
-              <td><input type="text" name="weapon_reloading2" id="weapon_reloading2" size="3" value="0" onchange="check_added_stat(this.id,this.value)" readonly="readonly" class="inputnumber_editable"/></td>
-            </tr>
-            <tr>
-              <td>Critical Hit</td>
-              <td><input type="text" name="weapon_critical_hit2" id="weapon_critical_hit2" size="3" value="0" onchange="check_added_stat(this.id,this.value)" readonly="readonly" class="inputnumber_editable"/></td>
-            </tr>
-          </table></td>
-        </tr>
-        <tr>
-          <td><table width="100%" border="0">
-            <tr>
-              <td colspan="2" align="left" bgcolor="#333333"><strong><font color="#FFFFFF">Weapon 3 Stats</font></strong></td>
-            </tr>
-            <tr>
-              <td width="25%">Accuracy</td>
-              <td width="75%"><input type="text" name="weapon_accuracy3" id="weapon_accuracy3" size="3" value="0" onchange="check_added_stat(this.id,this.value)" readonly="readonly" class="inputnumber_editable"/></td>
-            </tr>
-            <tr>
-              <td>Reloading</td>
-              <td><input type="text" name="weapon_reloading3" id="weapon_reloading3" size="3" value="0" onchange="check_added_stat(this.id,this.value)" readonly="readonly" class="inputnumber_editable"/></td>
-            </tr>
-            <tr>
-              <td>Critical Hit</td>
-              <td><input type="text" name="weapon_critical_hit3" id="weapon_critical_hit3" size="3" value="0" onchange="check_added_stat(this.id,this.value)" readonly="readonly" class="inputnumber_editable"/></td>
-            </tr>
-          </table></td>
-        </tr>
-      </table>
-        <table width="100%" border="0">
-          <tr>
-            <td><table width="100%" border="0">
-              <tr>
-                <td colspan="2" align="left" bgcolor="#333333"><strong><font color="#FFFFFF">Armor</font></strong></td>
-              </tr>
-              
-              <tr>
-                <td width="25%">Endurance</td>
-                <td width="75%"><input type="text" name="armor_endurance" id="armor_endurance" size="3" onchange="check_added_stat_armor(this.id,this.value)" value="0" readonly="readonly" class="inputnumber_editable"/></td>
-              </tr>
-              <tr>
-                <td>Agility</td>
-                <td><input type="text" name="armor_agility" id="armor_agility" size="3" onchange="check_added_stat_armor(this.id,this.value)" value="0" readonly="readonly"class="inputnumber_editable"/>                </td>
-              </tr>
 
-              <tr>
-                    <td align="right" colspan="2"><font color="#FFFFFF">Made by Hurricanos @2017</font></td>
-</tr>
-            </table></td>
-          </tr>
-        </table></td>
-    </tr>
-     <tr>
-    <td align="center" colspan="2" >
-    	<input type="button" id="btndownload" name="btndownload" value="Download Excel Formula" onclick="download_excel_formula()"/>
-    </td>
-</tr>
-              <tr>
-                  <td colspan="2" align="center">
-                 <!--
+          </table>
+        </td>
+        <td width="56%" valign="top">
+          <table width="100%" border="0">
+            <tr>
+              <td>
+                <table width="100%" border="0">
+                  <tr>
+                    <td colspan="4" align="left" bgcolor="#333333"><strong>
+                        <font color="#FFFFFF">Totals</font>
+                      </strong></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">Current Level</td>
+                    <td colspan="2"><input type="text" name="curr_level" id="curr_level" size="3" value="0" readonly="readonly"
+                        class="inputnumber" /></td>
+                  </tr>
+                  <tr>
+                    <td width="25%">Strength</td>
+                    <td width="20%"><input type="text" name="curr_strength" id="curr_strength" size="3" value="0"
+                        readonly="readonly" class="inputnumber" /></td>
+                    <td width="23%">Accuracy</td>
+                    <td width="32%"><input type="text" name="curr_accuracy" id="curr_accuracy" size="3" value="0"
+                        readonly="readonly" class="inputnumber" /></td>
+                  </tr>
+                  <tr>
+                    <td>Endurance</td>
+                    <td><input type="text" name="curr_endurance" id="curr_endurance" size="3" value="0" readonly="readonly"
+                        class="inputnumber" /></td>
+                    <td>Critical Hit</td>
+                    <td><input type="text" name="curr_critical_hit" id="curr_critical_hit" size="3" value="0" readonly="readonly"
+                        class="inputnumber" /></td>
+                  </tr>
+                  <tr>
+                    <td>Agility</td>
+                    <td><input type="text" name="curr_agility" id="curr_agility" size="3" value="0" readonly="readonly"
+                        class="inputnumber" /></td>
+                    <td>Reloading</td>
+                    <td><input type="text" name="curr_reloading" id="curr_reloading" size="3" value="0" readonly="readonly"
+                        class="inputnumber" /></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <table width="100%" border="0">
+                  <tr>
+                    <td colspan="2" align="left" bgcolor="#333333"><strong>
+                        <font color="#FFFFFF">Weapon 1 Stats</font>
+                      </strong></td>
+                  </tr>
+                  <tr>
+                    <td width="25%">Accuracy</td>
+                    <td width="75%"><input type="text" name="weapon_accuracy1" id="weapon_accuracy1" size="3" value="0"
+                        onchange="check_added_stat(this.id,this.value)" readonly="readonly" class="inputnumber_editable" /></td>
+                  </tr>
+                  <tr>
+                    <td>Reloading</td>
+                    <td><input type="text" name="weapon_reloading1" id="weapon_reloading1" size="3" value="0" onchange="check_added_stat(this.id,this.value)"
+                        readonly="readonly" class="inputnumber_editable" /></td>
+                  </tr>
+                  <tr>
+                    <td>Critical Hit</td>
+                    <td><input type="text" name="weapon_critical_hit1" id="weapon_critical_hit1" size="3" value="0"
+                        onchange="check_added_stat(this.id,this.value)" readonly="readonly" class="inputnumber_editable" /></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <table width="100%" border="0">
+                  <tr>
+                    <td colspan="2" align="left" bgcolor="#333333"><strong>
+                        <font color="#FFFFFF">Weapon 2 Stats</font>
+                      </strong></td>
+                  </tr>
+                  <tr>
+                    <td width="25%">Accuracy</td>
+                    <td width="75%"><input type="text" name="weapon_accuracy2" id="weapon_accuracy2" size="3" value="0"
+                        onchange="check_added_stat(this.id,this.value)" readonly="readonly" class="inputnumber_editable" /></td>
+                  </tr>
+                  <tr>
+                    <td>Reloading</td>
+                    <td><input type="text" name="weapon_reloading2" id="weapon_reloading2" size="3" value="0" onchange="check_added_stat(this.id,this.value)"
+                        readonly="readonly" class="inputnumber_editable" /></td>
+                  </tr>
+                  <tr>
+                    <td>Critical Hit</td>
+                    <td><input type="text" name="weapon_critical_hit2" id="weapon_critical_hit2" size="3" value="0"
+                        onchange="check_added_stat(this.id,this.value)" readonly="readonly" class="inputnumber_editable" /></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <table width="100%" border="0">
+                  <tr>
+                    <td colspan="2" align="left" bgcolor="#333333"><strong>
+                        <font color="#FFFFFF">Weapon 3 Stats</font>
+                      </strong></td>
+                  </tr>
+                  <tr>
+                    <td width="25%">Accuracy</td>
+                    <td width="75%"><input type="text" name="weapon_accuracy3" id="weapon_accuracy3" size="3" value="0"
+                        onchange="check_added_stat(this.id,this.value)" readonly="readonly" class="inputnumber_editable" /></td>
+                  </tr>
+                  <tr>
+                    <td>Reloading</td>
+                    <td><input type="text" name="weapon_reloading3" id="weapon_reloading3" size="3" value="0" onchange="check_added_stat(this.id,this.value)"
+                        readonly="readonly" class="inputnumber_editable" /></td>
+                  </tr>
+                  <tr>
+                    <td>Critical Hit</td>
+                    <td><input type="text" name="weapon_critical_hit3" id="weapon_critical_hit3" size="3" value="0"
+                        onchange="check_added_stat(this.id,this.value)" readonly="readonly" class="inputnumber_editable" /></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+          <table width="100%" border="0">
+            <tr>
+              <td>
+                <table width="100%" border="0">
+                  <tr>
+                    <td colspan="2" align="left" bgcolor="#333333"><strong>
+                        <font color="#FFFFFF">Armor</font>
+                      </strong></td>
+                  </tr>
+
+                  <tr>
+                    <td width="25%">Endurance</td>
+                    <td width="75%"><input type="text" name="armor_endurance" id="armor_endurance" size="3" onchange="check_added_stat_armor(this.id,this.value)"
+                        value="0" readonly="readonly" class="inputnumber_editable" /></td>
+                  </tr>
+                  <tr>
+                    <td>Agility</td>
+                    <td><input type="text" name="armor_agility" id="armor_agility" size="3" onchange="check_added_stat_armor(this.id,this.value)"
+                        value="0" readonly="readonly" class="inputnumber_editable" /> </td>
+                  </tr>
+
+                  <tr>
+                    <td align="right" colspan="2">
+                      <font color="#FFFFFF">Made by Hurricanos @2017</font>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" colspan="2">
+          <input type="button" id="btndownload" name="btndownload" value="Download Excel Formula" onclick="download_excel_formula()" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">
+          <!--
                   <audio autoplay loop>
                       <source src="df_breaching_secronom.m4a" type="audio/ogg">
                     </audio>
                     -->
-                  </td>
-              </tr>
-    <tr>
-    <td colspan="2" bgcolor="#333333"><font color="#FFFFFF">
-    <h2 align="center">Best View With Mozilla Firefox and Google Chrome at 1366 x 768 pixels</h2>
-    </font></td>
-  </tr>
-  </table>
-</form>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" bgcolor="#333333">
+          <font color="#FFFFFF">
+            <h2 align="center">Best View With Mozilla Firefox and Google Chrome at 1366 x 768 pixels</h2>
+          </font>
+        </td>
+      </tr>
+    </table>
+  </form>
 
 </body>
+
 </html>
