@@ -1,6 +1,9 @@
 function display() {
 	document.getElementById('table_enhance').style.display = 'block';
 	document.getElementById('table_dye').style.display = 'none';
+	
+	document.getElementById('lbl_result_weapon').style.display = 'block';
+	document.getElementById('lbl_result_armor').style.display = 'none';
 }
 
 function check_mode_choices(mode_choices_param) {

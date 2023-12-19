@@ -271,9 +271,11 @@
                   </tr>
                   <tr>
                     <td>Enhance Cost</td>
-                    <td><input type="text" name="enhance_cost" id="enhance_cost" class="inputnumber" readonly="readonly"
-                        size="3" />
-                      Dollars</td>
+                    <td>
+						<input type="hidden" name="enhance_item_type" id="enhance_item_type"/>
+						<input type="hidden" name="enhance_item_name" id="enhance_item_name"/>
+						<input type="text" name="enhance_cost" id="enhance_cost" class="inputnumber" readonly="readonly" size="3" /> Dollars
+					</td>
                   </tr>
                   <tr id="tr_weapon_enhance_target">
                     <td>Target Weapon Enhance</td>
@@ -281,13 +283,13 @@
                         disabled="disabled" />
                       MC&nbsp;
                       <input type="text" name="weapon_accuracy_mc" id="weapon_accuracy_mc" class="inputnumber" value=""
-                        size="2" maxlength="2" onchange="check_max_weapon_enhance(this.value, this.id);" disabled="disabled">
+                        size="2" maxlength="2" onchange="" disabled="disabled">
                       &nbsp;/&nbsp;
                       <input type="text" name="weapon_reloading_mc" id="weapon_reloading_mc" class="inputnumber" value=""
-                        size="2" maxlength="2" onchange="check_max_weapon_enhance(this.value, this.id);" disabled="disabled">
+                        size="2" maxlength="2" onchange="" disabled="disabled">
                       &nbsp;/&nbsp;
                       <input type="text" name="weapon_criticalhit_mc" id="weapon_criticalhit_mc" class="inputnumber"
-                        value="" size="2" maxlength="2" onchange="check_max_weapon_enhance(this.value, this.id);"
+                        value="" size="2" maxlength="2" onchange=""
                         disabled="disabled"> </td>
                   </tr>
                   <tr id="tr_armor_enhance_target">
@@ -295,10 +297,10 @@
                     <td><input type="text" name="armor_item_target" id="armor_item_target" readonly="readonly" disabled="disabled" />
                       MC&nbsp;
                       <input type="text" name="armor_agility_mc" id="armor_agility_mc" class="inputnumber" value=""
-                        size="2" maxlength="2" onchange="check_max_armor_enhance(this.value, this.id);" disabled="disabled">
+                        size="2" maxlength="2" onchange="" disabled="disabled">
                       &nbsp;/&nbsp;
                       <input type="text" name="armor_endurance_mc" id="armor_endurance_mc" class="inputnumber" value=""
-                        size="2" maxlength="2" onchange="check_max_armor_enhance(this.value, this.id);" disabled="disabled">
+                        size="2" maxlength="2" onchange="" disabled="disabled">
                     </td>
                   </tr>
 
@@ -446,27 +448,28 @@
                   </tr>
                   <tr>
                     <td width="24%">Enhance or Dye Formula</td>
-                    <td width="76%">Random Chance per Item * Dye or Enhance Cost</td>
+                    <td width="76%">Random Chance per Item</td>
                   </tr>
                   <tr>
                     <td>Total Cost Used</td>
-                    <td><input type="text" name="total_cost_used" id="total_cost_used" size="30" class="inputnumber" />
+                    <td><input type="text" name="total_cost_used" id="total_cost_used" size="30" class="inputnumber" value="0"/>
                       Dollars</td>
                   </tr>
                   <tr>
                     <td>Result</td>
                     <td>
-                      <input type="text" name="result_item" id="result_item" readonly="readonly" size="30" />
-                      <input type="text" name="result_item_accuracy" id="result_item_accuracy" readonly="readonly" size="3"
-                        value="0" />
-                      <input type="text" name="result_item_criticalhit" id="result_item_criticalhit" readonly="readonly"
-                        size="3" value="0" />
-                      <input type="text" name="result_item_reloading" id="result_item_reloading" readonly="readonly"
-                        size="3" value="0" />
-                      <input type="text" name="result_item_agility" id="result_item_agility" readonly="readonly" size="3"
-                        value="0" />
-                      <input type="text" name="result_item_endurance" id="result_item_endurance" readonly="readonly"
-                        size="3" value="0" /> </td>
+					  <label id='lbl_result_weapon'>
+						  <input type="text" name="result_item_weapon" id="result_item_weapon" readonly="readonly" size="30" />
+						  <input type="text" name="result_item_accuracy" id="result_item_accuracy"  class="inputnumber" readonly="readonly" size="3" value="0" />
+						  <input type="text" name="result_item_criticalhit" id="result_item_criticalhit" class="inputnumber"  readonly="readonly" size="3" value="0" />
+						  <input type="text" name="result_item_reloading" id="result_item_reloading"  class="inputnumber" readonly="readonly"size="3" value="0" />
+					  </label>
+                      <label id='lbl_result_armor'>
+						  <input type="text" name="result_item_armor" id="result_item_armor" readonly="readonly" size="30" />
+						  <input type="text" name="result_item_agility" id="result_item_agility"  class="inputnumber" readonly="readonly" size="3" value="0" />
+						  <input type="text" name="result_item_endurance" id="result_item_endurance"  class="inputnumber" readonly="readonly"size="3" value="0" />
+					  </label>
+					  </td>
                   </tr>
                 </table>
               </td>

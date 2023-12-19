@@ -1012,6 +1012,9 @@ function get_enhance_cost(item_enhance_param) {
 	}
 
 	document.getElementById("enhance_cost").value = enhance_cost;
+	document.getElementById("enhance_item_type").value = enhance_item_type;
+	document.getElementById("enhance_item_name").value = enhance_item_name;
+
 	if (enhance_item_type == "armor") {
 		document.getElementById("weapon_item_target").value = "";
 		document.getElementById("weapon_item_target").disabled = true;
@@ -1033,6 +1036,9 @@ function get_enhance_cost(item_enhance_param) {
 		document.getElementById("armor_endurance_mc").className = "inputnumber_editable";
 		document.getElementById("armor_agility_mc").value = 24;
 		document.getElementById("armor_endurance_mc").value = 24;
+		
+		document.getElementById('lbl_result_weapon').style.display = 'none';
+		document.getElementById('lbl_result_armor').style.display = 'block';
 
 	} else if (enhance_item_type == "weapon") {
 		document.getElementById("weapon_item_target").value = enhance_item_name;
@@ -1055,5 +1061,142 @@ function get_enhance_cost(item_enhance_param) {
 		document.getElementById("armor_endurance_mc").className = "inputnumber";
 		document.getElementById("armor_agility_mc").value = "";
 		document.getElementById("armor_endurance_mc").value = "";
+		
+		document.getElementById('lbl_result_weapon').style.display = 'block';
+		document.getElementById('lbl_result_armor').style.display = 'none';
+	}
+}
+
+function process_all()
+{
+	var mode_choices = document.getElementById("mode_choices").value;
+	var bank = document.getElementById("bank").value;
+	var total_cost = document.getElementById("total_cost_used").value;
+	
+	if (mode_choices == "enhance")
+	{
+		var enhance_item_name = document.getElementById("enhance_item_name").value;
+		
+		var result_item_criticalhit=0;
+		var result_item_reloading=0;
+		var result_item_accuracy=0;
+		var result_item_agility=0;
+		var result_item_endurance=0;
+
+		var min_weapon_stat = 1;
+		var max_weapon_stat = 9;
+		var min_armor_stat = 1;
+		var max_armor_stat = 25;
+
+		var weapon_accuracy_mc = document.getElementById("weapon_accuracy_mc").value;
+		var weapon_reloading_mc = document.getElementById("weapon_reloading_mc").value;
+		var weapon_criticalhit_mc = document.getElementById("weapon_criticalhit_mc").value;
+
+		var armor_agility_mc = document.getElementById("armor_agility_mc").value;
+		var armor_endurance_mc = document.getElementById("armor_endurance_mc").value;
+
+		var enhance_item_type = document.getElementById("enhance_item_type").value;
+
+		var enhance_cost = document.getElementById("enhance_cost").value;
+		total_cost = eval(total_cost) + eval(enhance_cost);
+		bank = eval(bank) - eval(total_cost);
+		
+		if (bank > 0 || 
+				((
+					enhance_item_type == "weapon" && 
+					(
+						weapon_criticalhit_mc != result_item_accuracy && 
+						weapon_reloading_mc != result_item_reloading && 
+						weapon_criticalhit_mc != result_item_criticalhit
+					)
+				) 
+				||
+				(
+					enhance_item_type == "armor" && 
+					(
+						armor_agility_mc != result_item_agility && 
+						armor_endurance_mc != result_item_endurance
+					)
+				))
+			)
+		{
+			document.getElementById("total_cost_used").value = total_cost;
+			document.getElementById("bank").value = bank;
+			
+			if (enhance_item_type == "weapon")
+			{
+				class_result_item_criticalhit = document.getElementById("result_item_criticalhit");
+				class_result_item_reloading = document.getElementById("result_item_reloading");
+				class_result_item_accuracy = document.getElementById("result_item_accuracy");
+				
+				result_item_criticalhit = Math.floor(Math.random() * (eval(max_weapon_stat) - eval(min_weapon_stat)) + eval(min_weapon_stat));
+				result_item_reloading = Math.floor(Math.random() * (eval(max_weapon_stat) - eval(min_weapon_stat)) + eval(min_weapon_stat));
+				result_item_accuracy = Math.floor(Math.random() * (eval(max_weapon_stat) - eval(min_weapon_stat)) + eval(min_weapon_stat));
+					
+				if (result_item_criticalhit == 8) {
+					class_result_item_criticalhit.classList.add('gc_stat');
+				} 
+				else{
+					class_result_item_criticalhit.classList.remove('gc_stat');
+				}
+				
+				if (result_item_reloading == 8) {
+					class_result_item_reloading.classList.add('gc_stat');
+				} 
+				else{
+					class_result_item_reloading.classList.remove('gc_stat');
+				}
+				
+				if (result_item_accuracy == 8) {
+					class_result_item_accuracy.classList.add('gc_stat');
+				} 
+				else{
+					class_result_item_accuracy.classList.remove('gc_stat');
+				}
+				
+				if (result_item_reloading == 8 && result_item_accuracy == 8 && result_item_criticalhit == 8) {
+					class_result_item_reloading.classList.add('full_gc_stat');
+				} 
+
+				document.getElementById("result_item_criticalhit").value = result_item_criticalhit;
+				document.getElementById("result_item_reloading").value = result_item_reloading;
+				document.getElementById("result_item_accuracy").value = result_item_accuracy;
+				document.getElementById("result_item_weapon").value=enhance_item_name;
+			}
+			
+			if (enhance_item_type == "armor")
+			{
+				class_result_item_endurance = document.getElementById("result_item_endurance");
+				class_result_item_agility = document.getElementById("result_item_agility");
+				
+				result_item_agility = Math.floor(Math.random() * (eval(max_armor_stat) - eval(min_armor_stat)) + eval(min_armor_stat));
+				result_item_endurance = Math.floor(Math.random() * (eval(max_armor_stat) - eval(min_armor_stat)) + eval(min_armor_stat));
+
+				if (result_item_endurance == 24) {
+					class_result_item_endurance.classList.add('gc_stat');
+				} 
+				else{
+					class_result_item_endurance.classList.remove('gc_stat');
+				}
+				
+				if (result_item_agility == 24) {
+					class_result_item_agility.classList.add('gc_stat');
+				} 
+				else{
+					class_result_item_agility.classList.remove('gc_stat');
+				}
+
+				if (result_item_agility == 24 && result_item_endurance == 24) {
+					class_result_item_reloading.classList.add('full_gc_stat');
+				} 
+
+				document.getElementById("result_item_agility").value = result_item_agility;
+				document.getElementById("result_item_endurance").value = result_item_endurance;
+				document.getElementById("result_item_armor").value=enhance_item_name;
+			}
+			
+			
+		}
+		
 	}
 }

@@ -32,6 +32,15 @@
 	background-color: #FFFF00;
 }
 
+.gc_stat {
+	background-color: #FFFF00;
+}
+
+.full_gc_stat {
+	background-color: #CCFF66;
+}
+
+
 .no_loot_item {
 	background-color: #CCCCCC;
 }
