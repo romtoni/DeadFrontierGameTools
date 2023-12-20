@@ -1273,11 +1273,16 @@ function process_all()
 				))
 			)
 		{
+				
 			if (enhance_item_type == "weapon")
 			{
 				class_result_item_criticalhit = document.getElementById("result_item_criticalhit");
 				class_result_item_reloading = document.getElementById("result_item_reloading");
 				class_result_item_accuracy = document.getElementById("result_item_accuracy");
+				
+				class_result_item_reloading.classList.remove('full_gc_stat');
+				class_result_item_accuracy.classList.remove('full_gc_stat');
+				class_result_item_criticalhit.classList.remove('full_gc_stat');
 				
 				result_item_criticalhit = Math.floor(Math.random() * (eval(max_weapon_stat) - eval(min_weapon_stat)) + eval(min_weapon_stat));
 				result_item_reloading = Math.floor(Math.random() * (eval(max_weapon_stat) - eval(min_weapon_stat)) + eval(min_weapon_stat));
@@ -1347,6 +1352,9 @@ function process_all()
 				class_result_item_endurance = document.getElementById("result_item_endurance");
 				class_result_item_agility = document.getElementById("result_item_agility");
 				
+				class_result_item_agility.classList.remove('full_gc_stat');
+				class_result_item_endurance.classList.remove('full_gc_stat');
+					
 				result_item_agility = Math.floor(Math.random() * (eval(max_armor_stat) - eval(min_armor_stat)) + eval(min_armor_stat));
 				result_item_endurance = Math.floor(Math.random() * (eval(max_armor_stat) - eval(min_armor_stat)) + eval(min_armor_stat));
 
