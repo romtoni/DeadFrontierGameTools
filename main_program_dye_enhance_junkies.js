@@ -4,6 +4,11 @@ function display() {
 	
 	document.getElementById('lbl_result_weapon').style.display = 'block';
 	document.getElementById('lbl_result_armor').style.display = 'none';
+	
+	document.getElementById('dye_cost').value = "";
+	document.getElementById('dye_cost').disabled = true;
+
+	
 }
 
 function check_mode_choices(mode_choices_param) {
@@ -12,19 +17,34 @@ function check_mode_choices(mode_choices_param) {
 	if (mode_choices == "enhance") {
 		document.getElementById('table_enhance').style.display = 'block';
 		document.getElementById('table_dye').style.display = 'none';
-
+		
+		document.getElementById('enhance_cost').value = "";
+		document.getElementById('enhance_cost').disabled = false;
+		document.getElementById('dye_cost').value = "";
+		document.getElementById('dye_cost').disabled = true;
+		
+		document.getElementById('lbl_result_weapon').style.display = 'block';
+		document.getElementById('lbl_result_armor').style.display = 'none';
+		document.getElementById('lbl_result_color').style.display = 'none';
 	}
 
 	if (mode_choices == "dye") {
 		document.getElementById('table_enhance').style.display = 'none';
 		document.getElementById('table_dye').style.display = 'block';
-
+		
+		document.getElementById('enhance_cost').value = "";
+		document.getElementById('enhance_cost').disabled = true;
+		document.getElementById('dye_cost').value = "";
+		document.getElementById('dye_cost').disabled = false;
+		
+		document.getElementById('lbl_result_weapon').style.display = 'none';
+		document.getElementById('lbl_result_armor').style.display = 'none';
+		document.getElementById('lbl_result_color').style.display = 'block';
 	}
 	document.getElementById("item_choices_dye").value = "";
 	document.getElementById("dye_cost").value = "";
 	document.getElementById("item_target_dye").value = "";
 
-	document.getElementById("item_color_available").innerHTML = "<select name='item_color_available' id='item_color_available'><option value='' selected='selected'>--Colors Available--</option></select>";
 	document.getElementById("item_choices").value = "";
 	document.getElementById("enhance_cost").value = "";
 	document.getElementById("weapon_item_target").value = "";

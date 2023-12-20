@@ -1,4 +1,120 @@
 // JavaScript Document
+function get_dye_cost(item_dye_param) {
+	
+	var colorArray = [
+						'Grey',
+						'Black',
+						'White',
+						'Green',
+						'Brown',
+						'Blue',
+						'Yellow',
+						'Red',
+						'Purple'
+					];
+	var randomNumber = Math.floor(Math.random()*colorArray.length);
+	document.getElementById("random_color").value=colorArray[randomNumber];
+	
+	var item_dye = item_dye_param;
+	var dye_cost;
+	var dye_item_name;
+	switch (item_dye) {
+		case "shirt": dye_cost = 15000;  dye_item_name="Shirt"; break;
+		case "t-shirt": dye_cost = 15000;  dye_item_name="T-Shirt"; break;
+		case "vest": dye_cost = 15000;  dye_item_name="Vest"; break;
+		case "trousers": dye_cost = 15000;  dye_item_name="Trousers"; break;
+		case "jeans": dye_cost = 15000;  dye_item_name="Jeans"; break;
+		case "cargopants": dye_cost = 15000;  dye_item_name="Cargo Pants"; break;
+		case "leatherpants": dye_cost = 15000;  dye_item_name="Leather Pants"; break;
+		case "combats": dye_cost = 15000;  dye_item_name="Combats"; break;
+		case "jacket": dye_cost = 15000;  dye_item_name="Jacket"; break;
+		case "bomberjacket": dye_cost = 15000;  dye_item_name="Bomber Jacket"; break;
+		case "furrcoat": dye_cost = 15000;  dye_item_name="Furr Coat"; break;
+		case "leatherjacket": dye_cost = 15000;  dye_item_name="Leather Jacket"; break;
+		case "wintercoat": dye_cost = 15000;  dye_item_name="Winter Coat"; break;
+		case "motorcyclejacket": dye_cost = 15000;  dye_item_name="Motorcycle Jacket"; break;
+		case "trenchcoat": dye_cost = 15000;  dye_item_name="Trench Coat"; break;
+		case "cloak": dye_cost = 15000;  dye_item_name="Cloak"; break;
+		case "bobblehat": dye_cost = 15000;  dye_item_name="Bobble Hat"; break;
+		case "winterhat": dye_cost = 15000;  dye_item_name="Winter Hat"; break;
+		case "militaryhelmet": dye_cost = 15000;  dye_item_name="Military Helmet"; break;
+		case "beret": dye_cost = 15000;  dye_item_name="Beret"; break;
+		case "tinhelmet": dye_cost = 15000;  dye_item_name="Tin Helmet"; break;
+		case "crashhelmet": dye_cost = 15000;  dye_item_name="Crash Helmet"; break;
+		case "bandana": dye_cost = 15000;  dye_item_name="Bandana"; break;
+		case "cowboyhat": dye_cost = 15000;  dye_item_name="Cowboy Hat"; break;
+		case "christmashat": dye_cost = 15000;  dye_item_name="Christmas Hat"; break;
+		case "constructionhelmet": dye_cost = 15000;  dye_item_name="Construction Helmet"; break;
+		case "firemanhelmet": dye_cost = 15000;  dye_item_name="Fireman Helmet"; break;
+		case "flyingcap": dye_cost = 15000;  dye_item_name="Flying Helmet"; break;
+		case "hazmathelmet": dye_cost = 15000;  dye_item_name="Hazmat Helmet"; break;
+		case "potatosack": dye_cost = 15000;  dye_item_name="Potato Sack"; break;
+		case "riothelmet": dye_cost = 15000;  dye_item_name="Riot Helmet"; break;
+		case "officercap": dye_cost = 15000;  dye_item_name="Officer Cap"; break;
+		case "surgicalhat": dye_cost = 15000;  dye_item_name="Surgical Hat"; break;
+		case "tophat": dye_cost = 15000;  dye_item_name="Top Hat"; break;
+		case "turban": dye_cost = 15000;  dye_item_name="Turban"; break;
+		case "biohelmet": dye_cost = 15000;  dye_item_name="Bio Helmet"; break;
+		case "steelcasehelmet": dye_cost = 15000;  dye_item_name="Steelcase Helmet"; break;
+		case "baseballhelmet": dye_cost = 15000;  dye_item_name="Baseball Helmet"; break;
+		case "clownmask": dye_cost = 15000;  dye_item_name="Clown Mask"; break;
+		case "eyepatch": dye_cost = 15000;  dye_item_name="Eye Patch"; break;
+		case "facebandana": dye_cost = 15000;  dye_item_name="Face Bandana"; break;
+		case "tacticalgoogles": dye_cost = 15000;  dye_item_name="Tactical Googles"; break;
+		case "gimpmask": dye_cost = 15000;  dye_item_name="Gimp Mask"; break;
+		case "rebreather": dye_cost = 15000;  dye_item_name="Rebreather"; break;
+		case "samuraimask": dye_cost = 15000;  dye_item_name="Samurai Mask"; break;
+		case "skimask": dye_cost = 15000;  dye_item_name="Ski Mask"; break;
+		case "sunglasses": dye_cost = 15000;  dye_item_name="Sunglasses"; break;
+		case "surgicalmask": dye_cost = 15000;  dye_item_name="Surgical Mask"; break;
+		case "scavengermask": dye_cost = 15000;  dye_item_name="Scavenger Mask"; break;
+		case "nomadhelmet": dye_cost = 15000;  dye_item_name="Nomad Helmet"; break;
+		case "vengeancemask": dye_cost = 15000;  dye_item_name="Vengeance Mask"; break;
+		case "shemagh": dye_cost = 15000;  dye_item_name="Shemagh"; break;
+		case "weldingmask": dye_cost = 15000;  dye_item_name="Welding Mask"; break;
+		case "anonymousmask": dye_cost = 15000;  dye_item_name="Anonymous Mask"; break;
+		case "exterminatorhelmet": dye_cost = 15000;  dye_item_name="Exterminator Helmet"; break;
+		case "hockeymask": dye_cost = 15000;  dye_item_name="Hockey Mask"; break;
+		case "insanitymask": dye_cost = 15000;  dye_item_name="Insanity Mask"; break;
+		case "gasmask": dye_cost = 15000;  dye_item_name="Gas Mask"; break;
+		case "duskhelmet": dye_cost = 15000;  dye_item_name="Dusk Helmet"; break;
+		case "x-duskhelmet": dye_cost = 15000;  dye_item_name="X Dusk Helmet"; break;
+		case "pumpkinhead": dye_cost = 15000;  dye_item_name="Pumpkin Head"; break;
+		case "corpsemask": dye_cost = 15000;  dye_item_name="Corpse Mask"; break;
+		case "sportsarmour": dye_cost = 15000;  dye_item_name="Sports Armour"; break;
+		case "zylonvest": dye_cost = 15000;  dye_item_name="Zylon Vest"; break;
+		case "kevlarvest": dye_cost = 15000;  dye_item_name="Kevlar Vest"; break;
+		case "meshslx": dye_cost = 15000;  dye_item_name="Mesh SLX"; break;
+		case "meshrx2": dye_cost = 15000;  dye_item_name="Mesh RX2"; break;
+		case "exterminatormesh": dye_cost = 15000;  dye_item_name="Exterminator Mesh"; break;
+		case "exterminatormeshgt": dye_cost = 15000;  dye_item_name="Exterminator Mesh GT"; break;
+		case "nomadmesh": dye_cost = 15000;  dye_item_name="Nomad Mesh"; break;
+		case "duskmesh": dye_cost = 15000;  dye_item_name="Dusk Mesh"; break;
+		case "scavengermesh": dye_cost = 15000;  dye_item_name="Scavenger Mesh"; break;
+		case "shinobumesh": dye_cost = 15000;  dye_item_name="Shinobu Mesh"; break;
+		case "xduskmesh": dye_cost = 15000;  dye_item_name="X Dusk Mesh"; break;
+		case "hazardmesh": dye_cost = 15000;  dye_item_name="Hazard Mesh"; break;
+		case "flakjacket": dye_cost = 15000;  dye_item_name="Flak Jacket"; break;
+		case "sn42": dye_cost = 15000;  dye_item_name="SN-42"; break;
+		case "corpsecarapace": dye_cost = 15000;  dye_item_name="Corpse Carapace"; break;
+		case "reactiveslx": dye_cost = 15000;  dye_item_name="Reactive SLX"; break;
+		case "reactivext800": dye_cost = 15000;  dye_item_name="Reactive XT800"; break;
+		case "exterminatorreactive": dye_cost = 15000;  dye_item_name="Exterminator Reactive"; break;
+		case "exterminatorreactivext": dye_cost = 15000;  dye_item_name="Exterminator Reactive XT"; break;
+		case "bioreactive": dye_cost = 15000;  dye_item_name="Bio Reactive"; break;
+		case "duskreactive": dye_cost = 15000;  dye_item_name="Dusk Reactive"; break;
+		case "steelcasereactive": dye_cost = 15000;  dye_item_name="Steelcase Reactive"; break;
+		case "tatakaureactive": dye_cost = 15000;  dye_item_name="Tatakau Reactive"; break;
+		case "xduskreactive": dye_cost = 15000;  dye_item_name="X Dusk Reactive"; break;
+		case "scarabreactive": dye_cost = 15000;  dye_item_name="Scarab Reactive"; break;
+		case "vengeanceguard": dye_cost = 15000;  dye_item_name="Vengeance Guard"; break;
+		default : dye_cost = 0;  dye_item_name=""; break;
+	}
+	document.getElementById("dye_item_name").value=dye_item_name;
+	document.getElementById("dye_cost").value=dye_cost;
+
+}
+
 function get_enhance_cost(item_enhance_param) {
 	var item_enhance = item_enhance_param;
 	var enhance_cost;
@@ -1073,8 +1189,45 @@ function process_all()
 	var bank = document.getElementById("bank").value;
 	var total_cost = document.getElementById("total_cost_used").value;
 	
+	if (mode_choices == "dye")
+	{
+		var dye_item_name = document.getElementById("dye_item_name").value;
+		document.getElementById("result_item_dye").value=dye_item_name;
+		
+		var item_target_dye = document.getElementById("item_target_dye");
+		var item_target_dye_value = item_target_dye.value;
+		var item_target_dye_text = item_target_dye.options[item_target_dye.selectedIndex].text;
+		
+		var dye_cost = document.getElementById("dye_cost").value;
+		total_cost = eval(total_cost) + eval(dye_cost);
+		bank = eval(bank) - eval(total_cost);
+		
+		if (bank > 0)
+		{
+			var colorArray = [
+									'Grey',
+									'Black',
+									'White',
+									'Green',
+									'Brown',
+									'Blue',
+									'Yellow',
+									'Red',
+									'Purple'
+								];
+			var randomNumber = Math.floor(Math.random()*colorArray.length);
+			var result_item_color = colorArray[randomNumber];	
+			document.getElementById("result_item_color").value =result_item_color;
+
+			if (result_item_color == item_target_dye_text) alert("Congratulations!! You got your target dye color (" + result_item_color +")!!");
+		}		
+	}
+
 	if (mode_choices == "enhance")
 	{
+		var result_item_weapon_desc = "";
+		var result_item_armor_desc = "";
+		
 		var enhance_item_name = document.getElementById("enhance_item_name").value;
 		
 		var result_item_criticalhit=0;
@@ -1120,9 +1273,6 @@ function process_all()
 				))
 			)
 		{
-			document.getElementById("total_cost_used").value = total_cost;
-			document.getElementById("bank").value = bank;
-			
 			if (enhance_item_type == "weapon")
 			{
 				class_result_item_criticalhit = document.getElementById("result_item_criticalhit");
@@ -1155,13 +1305,41 @@ function process_all()
 				}
 				
 				if (result_item_reloading == 8 && result_item_accuracy == 8 && result_item_criticalhit == 8) {
+					class_result_item_accuracy.classList.remove('gc_stat');
+					class_result_item_reloading.classList.remove('gc_stat');
+					class_result_item_criticalhit.classList.remove('gc_stat');
+					
 					class_result_item_reloading.classList.add('full_gc_stat');
+					class_result_item_accuracy.classList.add('full_gc_stat');
+					class_result_item_criticalhit.classList.add('full_gc_stat');
+					result_item_weapon_desc = "GC";
+					alert("Congratulation!! You got GodCrafted!!");
 				} 
+				else if (result_item_reloading == 7 && result_item_accuracy == 7 && result_item_criticalhit == 7) {
+					result_item_weapon_desc = "AC";
+					alert("Congratulation!! You got AngelCrafted!!");
+				}
+				else if (result_item_reloading == 6 && result_item_accuracy == 6 && result_item_criticalhit == 6) {
+					result_item_weapon_desc = "HC";
+					alert("Congratulation!! You got HellCrafted!!");
+				}
+				else if ((result_item_reloading == 8 && result_item_accuracy == 8 && result_item_criticalhit == 7)
+						|| (result_item_reloading == 7 && result_item_accuracy == 8 && result_item_criticalhit == 8)
+						|| (result_item_reloading == 8 && result_item_accuracy == 7 && result_item_criticalhit == 8))
+				{
+					result_item_weapon_desc = "NGC";
+					alert("Congratulation!! You got Near GodCrafted!!");
+				}
+				else {
+					result_item_weapon_desc = "MC";
+				}
 
 				document.getElementById("result_item_criticalhit").value = result_item_criticalhit;
 				document.getElementById("result_item_reloading").value = result_item_reloading;
 				document.getElementById("result_item_accuracy").value = result_item_accuracy;
 				document.getElementById("result_item_weapon").value=enhance_item_name;
+				document.getElementById("result_item_weapon_desc").value=result_item_weapon_desc;
+
 			}
 			
 			if (enhance_item_type == "armor")
@@ -1187,16 +1365,32 @@ function process_all()
 				}
 
 				if (result_item_agility == 24 && result_item_endurance == 24) {
-					class_result_item_reloading.classList.add('full_gc_stat');
+					class_result_item_agility.classList.remove('gc_stat');
+					class_result_item_endurance.classList.remove('gc_stat');
+					
+					class_result_item_agility.classList.add('full_gc_stat');
+					class_result_item_endurance.classList.add('full_gc_stat');
+					result_item_armor_desc = "GC";
+
+					alert("Congratulation!! You got GodCrafted!!");
 				} 
+				else if ((result_item_agility == 23 && result_item_endurance == 23) 
+						|| (result_item_agility == 24 && result_item_endurance == 23)
+						|| (result_item_agility == 23 && result_item_endurance == 24))
+				{
+					result_item_armor_desc = "NGC";
+					alert("Congratulation!! You got Near GodCrafted!!");
+				} 
+				else result_item_armor_desc = "MC";
 
 				document.getElementById("result_item_agility").value = result_item_agility;
 				document.getElementById("result_item_endurance").value = result_item_endurance;
 				document.getElementById("result_item_armor").value=enhance_item_name;
+				document.getElementById("result_item_armor_desc").value=result_item_armor_desc;
 			}
-			
-			
 		}
-		
 	}
+	
+	document.getElementById("total_cost_used").value = total_cost;
+	document.getElementById("bank").value = bank;
 }
