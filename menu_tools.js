@@ -6,4 +6,5 @@ function check_tools(tool_param) {
 	else if (tool == 'estimate_travelling_time') location.href = "df_estimate_travelling_time.html";
 	else if (tool == 'stat_calculator') location.href = "df_stat_calculator.html";
 	else if (tool == 'loot_simulator') location.href = "df_looting_simulator.html";
+	else if (tool == 'dye_enhance_junkies') location.href = "df_dye_enhance_junkies.html";
 }
