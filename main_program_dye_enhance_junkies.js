@@ -5,9 +5,7 @@ function display() {
 	document.getElementById('lbl_result_weapon').style.display = 'block';
 	document.getElementById('lbl_result_armor').style.display = 'none';
 	
-	document.getElementById('dye_cost').value = "";
-	document.getElementById('dye_cost').disabled = true;
-
+	document.getElementById('lbl_result_color').style.display  = 'none';
 	
 }
 
@@ -18,28 +16,32 @@ function check_mode_choices(mode_choices_param) {
 		document.getElementById('table_enhance').style.display = 'block';
 		document.getElementById('table_dye').style.display = 'none';
 		
-		document.getElementById('enhance_cost').value = "";
+		document.getElementById('enhance_cost').value = 0;
 		document.getElementById('enhance_cost').disabled = false;
-		document.getElementById('dye_cost').value = "";
+		document.getElementById('dye_cost').value = 0;
 		document.getElementById('dye_cost').disabled = true;
 		
 		document.getElementById('lbl_result_weapon').style.display = 'block';
 		document.getElementById('lbl_result_armor').style.display = 'none';
 		document.getElementById('lbl_result_color').style.display = 'none';
+		
+		document.getElementById("total_cost_used").value = 0;
 	}
 
 	if (mode_choices == "dye") {
 		document.getElementById('table_enhance').style.display = 'none';
 		document.getElementById('table_dye').style.display = 'block';
 		
-		document.getElementById('enhance_cost').value = "";
+		document.getElementById('enhance_cost').value = 0;
 		document.getElementById('enhance_cost').disabled = true;
-		document.getElementById('dye_cost').value = "";
+		document.getElementById('dye_cost').value = 0;
 		document.getElementById('dye_cost').disabled = false;
 		
 		document.getElementById('lbl_result_weapon').style.display = 'none';
 		document.getElementById('lbl_result_armor').style.display = 'none';
 		document.getElementById('lbl_result_color').style.display = 'block';
+		
+		document.getElementById("total_cost_used").value = 0;
 	}
 	document.getElementById("item_choices_dye").value = "";
 	document.getElementById("dye_cost").value = "";
