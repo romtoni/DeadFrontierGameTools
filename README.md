@@ -1,6 +1,7 @@
 # DeadFrontierGameTools
 
-![Status: OUTDATED](https://img.shields.io/badge/status-outdated-red)
+![Status: Finished](https://img.shields.io/badge/status-finished-brightgreen)  
+![Status: Outdated](https://img.shields.io/badge/status-outdated-red)
 
 **DeadFrontierGameTools** is a simulator designed to replicate various aspects of the game *Dead Frontier*. This tool aims to help players gain insights into the game mechanics through user-friendly interactive simulations.
 
