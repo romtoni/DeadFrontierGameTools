@@ -1,7 +1,6 @@
 # 🎮 Dead Frontier Game Tools
 
-![Status: Finished](https://img.shields.io/badge/status-finished-brightgreen)  
-![Status: Outdated](https://img.shields.io/badge/status-outdated-red)
+![Finished](https://img.shields.io/badge/finished-brightgreen) ![Outdated](https://img.shields.io/badge/outdated-red)
 
 ## 🚀 Tech Stack
 
