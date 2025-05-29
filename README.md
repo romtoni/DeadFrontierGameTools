@@ -37,6 +37,11 @@ git clone https://github.com/username/DeadFrontierGameTools.git
 1. Run the simulator for the module you want to test
 2. Enjoy the analysis
 ```
+
+## Demo
+
+Visit this link to see the live demo : [Dead Frontier Game Tools](https://romtoni.github.io/DeadFrontierGameTools/) 
+
 ## Contribution
 
 Contributions are very welcome! Feel free to submit pull requests for feature improvements, new simulations, or bug fixes.
